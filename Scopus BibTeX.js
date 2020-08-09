@@ -41,25 +41,25 @@
 
 function detectImport() {
 	var maxChars = 1048576; // 1MB
-	
+
 	var inComment = false;
 	var block = "";
 	var buffer = "";
 	var chr = "";
 	var charsRead = 0;
-	
+
 	var re = /^\s*@[a-zA-Z]+[\(\{]/;
 	while ((buffer = Zotero.read(4096)) && charsRead < maxChars) {
 		Zotero.debug("Scanning " + buffer.length + " characters for BibTeX");
 		charsRead += buffer.length;
 		for (var i=0; i<buffer.length; i++) {
 			chr = buffer[i];
-			
+
 			if (inComment && chr != "\r" && chr != "\n") {
 				continue;
 			}
 			inComment = false;
-			
+
 			if (chr == "%") {
 				// read until next newline
 				block = "";
@@ -72,7 +72,7 @@ function detectImport() {
 				if (re.test(block)) {
 					return true;
 				}
-				
+
 				block = "";
 			} else if (!" \n\r\t".includes(chr)) {
 				block += chr;
@@ -122,7 +122,7 @@ var extraIdentifiers = {
 	zmnumber: 'Zbl',
 	pmid: 'PMID',
 	pmcid: 'PMCID'
-	
+
 	//Mostly from Wikipedia citation templates
 	//asin - Amazon ID
 	//bibcode/refcode - used in astronomy, but haven't seen any Bib(La)TeX examples
@@ -143,7 +143,7 @@ for (var field in extraIdentifiers) {
 // Import only. Exported by BibLaTeX
 var eprintIds = {
 	// eprinttype: Zotero label
-	
+
 	// From BibLaTeX manual
 	'arxiv': 'arXiv', // Sorry, but no support for eprintclass yet
 	'jstor': 'JSTOR',
@@ -177,7 +177,7 @@ function extraFieldsToString(extra) {
 			str += '\n' + extra[i].raw;
 		}
 	}
-	
+
 	return str.substr(1);
 }
 
@@ -280,7 +280,8 @@ var keyRe = /[a-zA-Z0-9\-]/;
 // This is purely for historical reasons. Otherwise we risk breaking tag import
 // from some websites
 var keywordSplitOnSpace = !!Zotero.parentTranslator;
-var keywordDelimRe = /\s*[;]\s*/;
+var keywordDelimRe = /\s*[;,]\s*/;
+var keywordDelimRe2 = /\s*[;]\s*/;
 
 function setKeywordSplitOnSpace( val ) {
 	keywordSplitOnSpace = val;
@@ -293,7 +294,7 @@ function setKeywordDelimRe( val, flags ) {
 		flags = val.slice(val.lastIndexOf('/')+1);
 		val = val.slice(1, val.lastIndexOf('/'));
 	}
-	
+
 	keywordDelimRe = new RegExp(val, flags);
 }
 
@@ -313,7 +314,7 @@ function processField(item, field, value, rawValue) {
 		if (!item.title) item.title = '';
 		item.title = item.title.trim();
 		value = value.trim();
-		
+
 		if (!/[-–—:!?.;]$/.test(item.title)
 			&& !/^[-–—:.;¡¿]/.test(value)
 		) {
@@ -321,7 +322,7 @@ function processField(item, field, value, rawValue) {
 		} else if (item.title.length) {
 			item.title += ' ';
 		}
-		
+
 		item.title += value;
 	} else if (field == "journal") {
 		if (item.publicationTitle) {
@@ -342,7 +343,7 @@ function processField(item, field, value, rawValue) {
 			var name = names[i];
 			// skip empty names
 			if (!name) continue;
-			
+
 			// Names in BibTeX can have three commas
 			var pieces = splitUnprotected(name, /\s*,\s*/g);
 			var creator = {};
@@ -387,7 +388,7 @@ function processField(item, field, value, rawValue) {
 		} else {
 			value += " ";
 		}
-		
+
 		if (item.date) {
 			if (value.includes(item.date)) {
 				// value contains year and more
@@ -438,30 +439,37 @@ function processField(item, field, value, rawValue) {
 				item._extraFields.push({field: 'Published', value: value});
 			}
 		}
-	
+
 	}
 	//accept lastchecked or urldate for access date. These should never both occur.
 	//If they do we don't know which is better so we might as well just take the second one
 	else if (field == "lastchecked"|| field == "urldate"){
 		item.accessDate = value;
 	} else if (field == "keywords" || field == "keyword") {
-		const tag_groups = value.match(/(.*?), ([A-Z].*)/);
-		let EMTREEtags = tag_groups[1].split(keywordDelimRe);
-		for(var i=0;i<EMTREEtags.length;i++){
-			EMTREEtags[i]="EMTREE:"+EMTREEtags[i];
+		if ( value.search(/, [A-Z]/) > 0) {
+			const tag_groups = value.match(/(.*?), ([A-Z].*)/);
+			let EMTREEtags = tag_groups[1].split(keywordDelimRe2);
+			for(var i=0;i<EMTREEtags.length;i++){
+				EMTREEtags[i]="EMTREE:"+EMTREEtags[i];
+			}
+			let MeSHtags = tag_groups[2].split(keywordDelimRe2);
+			for(var i=0;i<MeSHtags.length;i++){
+				MeSHtags[i]="MeSH:"+MeSHtags[i];
+			}
+			item.tags = (item.tags === undefined) ? EMTREEtags.concat(MeSHtags): item.tags.concat(EMTREEtags).concat(MeSHtags);
+		} else {
+			let EMTREEtags = value.split(keywordDelimRe2);
+			for(var i=0;i<EMTREEtags.length;i++){
+				EMTREEtags[i]="EMTREE:"+EMTREEtags[i];
+			}
+			item.tags = (item.tags === undefined) ? EMTREEtags : item.tags.concat(EMTREEtags);
 		}
-		let MeSHtags = tag_groups[2].split(keywordDelimRe);
-		for(var i=0;i<MeSHtags.length;i++){
-			MeSHtags[i]="MeSH:"+MeSHtags[i];
-		}
-		item.tags = item.tags.concat(EMTREEtags).concat(MeSHtags);
-		//item.tags = value.split(keywordDelimRe);
 	} else if (field == "author_keywords") {
-		let AUTHORkeywords = value.split(keywordDelimRe);
+		let AUTHORkeywords = value.split(keywordDelimRe2);
 		for(var i=0;i<AUTHORkeywords.length;i++){
 			AUTHORkeywords[i]=""+AUTHORkeywords[i];
 		}
-		item.tags = item.tags.concat(AUTHORkeywords)
+		item.tags = (item.tags === undefined ) ? AUTHORkeywords : item.tags.concat(AUTHORkeywords)
 	} else if (field == "comment" || field == "annote" || field == "review" || field == "notes") {
 		item.notes.push({note:Zotero.Utilities.text2html(value)});
 	} else if (field == "pdf" || field == "path" /*Papers2 compatibility*/) {
@@ -483,24 +491,24 @@ function processField(item, field, value, rawValue) {
 				start = i+1;
 			}
 		}
-		
+
 		attachment = parseFilePathRecord(rawValue.slice(start));
 		if (attachment) item.attachments.push(attachment);
 	} else if (field == "eprint" || field == "eprinttype") {
 		// Support for IDs exported by BibLaTeX
 		if (field == 'eprint') item._eprint = value;
 		else item._eprinttype = value;
-		
+
 		var eprint = item._eprint;
 		var eprinttype = item._eprinttype;
 		// If we don't have both yet, continue
 		if (!eprint || !eprinttype) return;
-		
+
 		var label = eprintIds[eprinttype.trim().toLowerCase()];
 		if (!label) return;
-		
+
 		item._extraFields.push({field: label, value: eprint.trim()});
-		
+
 		delete item._eprinttype;
 		delete item._eprint;
 	} else if (extraIdentifiers[field]) {
@@ -519,7 +527,7 @@ function splitUnprotected(str, delim) {
 	delim.lastIndex = 0; // In case we're reusing a regexp
 	var nextPossibleSplit = delim.exec(str);
 	if (!nextPossibleSplit) return [str];
-	
+
 	var parts = [], open = 0, nextPartStart = 0;
 	for (var i=0; i<str.length; i++) {
 		if (i>nextPossibleSplit.index) {
@@ -530,26 +538,26 @@ function splitUnprotected(str, delim) {
 				return parts;
 			}
 		}
-		
+
 		if (str[i] == '\\') {
 			// Skip next character
 			i++;
 			continue;
 		}
-		
+
 		if (str[i] == '{') {
 			open++;
 			continue;
 		}
-		
+
 		if (str[i] == '}') {
 			open--;
 			if (open < 0) open = 0; // Shouldn't happen, but...
 			continue;
 		}
-		
+
 		if (open) continue;
-		
+
 		if (i == nextPossibleSplit.index) {
 			parts.push(str.substring(nextPartStart, i));
 			i += nextPossibleSplit[0].length - 1; // We can jump past the split delim
@@ -561,12 +569,12 @@ function splitUnprotected(str, delim) {
 			}
 		}
 	}
-	
+
 	// I don't think we should ever get here*, but just to be safe
 	// *we should always be returning from the for loop
 	var last = str.substr(nextPartStart).trim();
 	if (last) parts.push(last);
-	
+
 	return parts;
 }
 
@@ -582,14 +590,14 @@ function parseFilePathRecord(record) {
 			start = i+1;
 		}
 	}
-	
+
 	fields.push(decodeFilePathComponent(record.slice(start)));
-	
+
 	if (fields.length != 3 && fields.length != 1) {
 		Zotero.debug("Unknown file path record format: " + record);
 		return;
 	}
-	
+
 	var attachment = {};
 	if (fields.length == 3) {
 		attachment.title = fields[0].trim() || 'Attachment';
@@ -602,10 +610,10 @@ function parseFilePathRecord(record) {
 		attachment.title = 'Attachment';
 		attachment.path = fields[0];
 	}
-	
+
 	attachment.path = attachment.path.trim();
 	if (!attachment.path) return;
-	
+
 	return attachment;
 }
 
@@ -621,13 +629,13 @@ function getFieldValue(read) {
 				nextAsLiteral = false;
 				continue;
 			}
-			
+
 			if (read == "\\") {
 				value += read;
 				nextAsLiteral = true;
 				continue;
 			}
-			
+
 			if (read == "{") {
 				openBraces++;
 				value += "{";
@@ -642,7 +650,7 @@ function getFieldValue(read) {
 				value += read;
 			}
 		}
-		
+
 	} else if (read == '"') {
 		var openBraces = 0;
 		while (read = Zotero.read(1)) {
@@ -665,7 +673,7 @@ function getFieldValue(read) {
 
 function unescapeBibTeX(value) {
 	if (value.length < 2) return value;
-	
+
 	// replace accented characters (yucky slow)
 	value = value.replace(/{?(\\[`"'^~=]){?\\?([A-Za-z])}/g, "{$1$2}");
 	// normalize some special characters, e.g. caron \v{c} -> {\v c}
@@ -685,13 +693,13 @@ function unescapeBibTeX(value) {
 			value = value.replace(mapped, unicode);
 		}
 	}
-	
+
 	// kill braces
 	value = value.replace(/([^\\])[{}]+/g, "$1");
 	if (value[0] == "{") {
 		value = value.substr(1);
 	}
-	
+
 	// chop off backslashes
 	value = value.replace(/([^\\])\\([#$%&~_^\\{}])/g, "$1$2");
 	value = value.replace(/([^\\])\\([#$%&~_^\\{}])/g, "$1$2");
@@ -703,17 +711,17 @@ function unescapeBibTeX(value) {
 	}
 	value = value.replace(/\\\\/g, "\\");
 	value = value.replace(/\s+/g, " ");
-	
+
 	// Unescape HTML entities coming from web translators
 	if (Zotero.parentTranslator && value.includes('&')) {
 		value = value.replace(/&#?\w+;/g, function(entity) {
 			var char = ZU.unescapeHTML(entity);
 			if (char == entity) char = ZU.unescapeHTML(entity.toLowerCase()); // Sometimes case can be incorrect and entities are case-sensitive
-			
+
 			return char;
 		});
 	}
-	
+
 	return value;
 }
 
@@ -872,21 +880,21 @@ function beginRecord(type, closeChar) {
 		var item = new Zotero.Item(zoteroType);
 		item._extraFields = [];
 	}
-	
+
 	// For theses write the thesisType determined by the BibTeX type.
 	if (type == "mastersthesis" && item) item.type = "Master's Thesis";
 	if (type == "phdthesis" && item) item.type = "PhD Thesis";
 
 	var field = "";
-	
+
 	// by setting dontRead to true, we can skip a read on the next iteration
 	// of this loop. this is useful after we read past the end of a string.
 	var dontRead = false;
-	
+
 	var value, rawValue;
 	while (dontRead || (read = Zotero.read(1))) {
 		dontRead = false;
-		
+
 		// the equal sign indicate the start of the value
 		// which will be handled in the following part
 		// possible formats are:
@@ -906,25 +914,25 @@ function beginRecord(type, closeChar) {
 				while (" \n\r\t".includes(read)) {
 					read = Zotero.read(1);
 				}
-				
+
 				if (keyRe.test(read)) {
 					// read numeric data here, since we might get an end bracket
 					// that we should care about
 					value = "";
 					value += read;
-					
+
 					// character is a number or part of a string name
 					while ((read = Zotero.read(1)) && /[a-zA-Z0-9\-:_]/.test(read)) {
 						value += read;
 					}
-					
+
 					// don't read the next char; instead, process the character
 					// we already read past the end of the string
 					dontRead = true;
-					
+
 					// see if there's a defined string
 					if (strings[value.toLowerCase()]) value = strings[value.toLowerCase()];
-					
+
 					// rawValue has to be set for some fields to process
 					// thus, in this case, we set it equal to value
 					rawValue = value;
@@ -932,19 +940,19 @@ function beginRecord(type, closeChar) {
 					rawValue = getFieldValue(read);
 					value = unescapeBibTeX(rawValue);
 				}
-				
+
 				valueArray.push(value);
 				rawValueArray.push(rawValue);
-				
+
 				while (" \n\r\t".includes(read)) {
 					read = Zotero.read(1);
 				}
-			
+
 			} while (read === "#");
-			
+
 			value = valueArray.join('');
 			rawValue = rawValueArray.join('');
-			
+
 			if (item) {
 				processField(item, field.toLowerCase(), value, rawValue);
 			} else if (type == "string") {
@@ -972,10 +980,10 @@ function beginRecord(type, closeChar) {
 					}
 					delete item.backupLocation;
 				}
-				
+
 				item.extra = extraFieldsToString(item._extraFields);
 				delete item._extraFields;
-				
+
 				if (!item.publisher && item.backupPublisher){
 					item.publisher=item.backupPublisher;
 					delete item.backupPublisher;
@@ -1011,11 +1019,11 @@ function doImport() {
 function readString(resolve, reject) {
 	var read = "";
 	var type = false;
-	
+
 	var next = function () {
 		readString(resolve, reject);
 	};
-	
+
 	try {
 		while (read = Zotero.read(1)) {
 			if (read == "@") {
@@ -1052,7 +1060,7 @@ function readString(resolve, reject) {
 		reject(e);
 		return;
 	}
-	
+
 	resolve();
 }
 
@@ -1068,7 +1076,7 @@ function writeField(field, value, isMacro) {
 	if (!isMacro && !(field == "url" || field == "doi" || field == "file" || field == "lccn" )) {
 		// I hope these are all the escape characters!
 		value = escapeSpecialCharacters(value);
-		
+
 		if (caseProtectedFields.includes(field)) {
 			value = ZU.XRegExp.replace(value, protectCapsRE, "$1{$2$3}"); // only $2 or $3 will have a value, not both
 		}
@@ -1145,7 +1153,7 @@ var vphantomRe = /\\vphantom{\\}}((?:.(?!\\vphantom{\\}}))*)\\vphantom{\\{}/g;
 function escapeSpecialCharacters(str) {
 	var newStr = str.replace(/[|\<\>\~\^\\\{\}]/g, function(c) { return alwaysMap[c]; })
 		.replace(/([\#\$\%\&\_])/g, "\\$1");
-	
+
 	// We escape each brace in the text by making sure that it has a counterpart,
 	// but sometimes this is overkill if the brace already has a counterpart in
 	// the text.
@@ -1158,7 +1166,7 @@ function escapeSpecialCharacters(str) {
 			vphantomRe.lastIndex = 0; // Start over, because the previous replacement could have created a new pair
 		}
 	}
-	
+
 	return newStr;
 }
 
@@ -1254,9 +1262,9 @@ function buildCiteKey (item, extraFields, citekeys) {
 		const citationKey = extraFields.findIndex(field => field.field && field.value && field.field.toLowerCase() === 'citation key');
 		if (citationKey >= 0) return extraFields.splice(citationKey, 1)[0].value;
 	}
-	
+
   	if (item.citationKey) return item.citationKey;
-	
+
 	var basekey = "";
 	var counter = 0;
 	var citeKeyFormatRemaining = citeKeyFormat;
@@ -1330,11 +1338,11 @@ function doExport() {
 				+ "|^([\\p{Letter}\\d]+\\p{Uppercase_Letter}[\\p{Letter}\\d]*)" // Initial word with capital in non-initial position
 			, 'g');
 	}
-	
+
 	//Zotero.write("% BibTeX export generated by Zotero "+Zotero.Utilities.getVersion());
 	// to make sure the BOM gets ignored
 	Zotero.write("\n");
-	
+
 	var first = true;
 	var citekeys = new Object();
 	var item;
@@ -1362,15 +1370,15 @@ function doExport() {
 		}
 
 		if (!type) type = "misc";
-		
+
 		// create a unique citation key
 		var extraFields = item.extra ? parseExtraFields(item.extra) : null;
 		var citekey = buildCiteKey(item, extraFields, citekeys);
-		
+
 		// write citation key
 		Zotero.write((first ? "" : "\n\n") + "@"+type+"{"+citekey);
 		first = false;
-		
+
 		for (var field in fieldMap) {
 			if (item[fieldMap[field]]) {
 				writeField(field, item[fieldMap[field]]);
@@ -1380,12 +1388,12 @@ function doExport() {
 		if (item.reportNumber || item.issue || item.seriesNumber || item.patentNumber) {
 			writeField("number", item.reportNumber || item.issue || item.seriesNumber|| item.patentNumber);
 		}
-		
+
 		if (item.accessDate){
 			var accessYMD = item.accessDate.replace(/\s*\d+:\d+:\d+/, "");
 			writeField("urldate", accessYMD);
 		}
-		
+
 		if (item.publicationTitle) {
 			if (item.itemType == "bookSection" || item.itemType == "conferencePaper") {
 				writeField("booktitle", item.publicationTitle);
@@ -1395,7 +1403,7 @@ function doExport() {
 				writeField("journal", item.publicationTitle);
 			}
 		}
-		
+
 		if (item.publisher) {
 			if (item.itemType == "thesis") {
 				writeField("school", item.publisher);
@@ -1405,7 +1413,7 @@ function doExport() {
 				writeField("publisher", item.publisher);
 			}
 		}
-		
+
 		if (item.creators && item.creators.length) {
 			// split creators into subcategories
 			var author = "";
@@ -1424,9 +1432,9 @@ function doExport() {
 				} else {
 					creatorString = creator.lastName;
 				}
-				
+
 				creatorString = escapeSpecialCharacters(creatorString);
-				
+
 				if (creator.fieldMode == true) { // fieldMode true, assume corporate author
 					creatorString = "{" + creatorString + "}";
 				} else {
@@ -1443,7 +1451,7 @@ function doExport() {
 					collaborator += " and "+creatorString;
 				}
 			}
-			
+
 			if (author) {
 				writeField("author", "{" + author.substr(5) + "}", true);
 			}
@@ -1457,7 +1465,7 @@ function doExport() {
 				writeField("collaborator",  "{" + collaborator.substr(5) + "}", true);
 			}
 		}
-		
+
 		if (item.date) {
 			var date = Zotero.Utilities.strToDate(item.date);
 			// need to use non-localized abbreviation
@@ -1468,7 +1476,7 @@ function doExport() {
 				writeField("year", date.year);
 			}
 		}
-		
+
 		if (extraFields) {
 			// Export identifiers
 			for (var i=0; i<extraFields.length; i++) {
@@ -1484,7 +1492,7 @@ function doExport() {
 			var extra = extraFieldsToString(extraFields); // Make sure we join exactly with what we split
 			if (extra) writeField("note", extra);
 		}
-		
+
 		if (item.tags && item.tags.length) {
 			var tagString = "";
 			for (var i in item.tags) {
@@ -1493,19 +1501,19 @@ function doExport() {
 			}
 			writeField("keywords", tagString.substr(2));
 		}
-		
+
 		if (item.pages) {
 			writeField("pages", item.pages.replace(/[-\u2012-\u2015\u2053]+/g,"--"));
 		}
-		
+
 		// Commented out, because we don't want a books number of pages in the BibTeX "pages" field for books.
 		//if (item.numPages) {
 		//	writeField("pages", item.numPages);
 		//}
-		
+
 		/* We'll prefer url over howpublished see
 		https://forums.zotero.org/discussion/24554/bibtex-doubled-url/#Comment_157802
-		
+
 		if (item.itemType == "webpage") {
 			writeField("howpublished", item.url);
 		}*/
@@ -1515,10 +1523,10 @@ function doExport() {
 				writeField("annote", Zotero.Utilities.unescapeHTML(note["note"]));
 			}
 		}
-		
+
 		if (item.attachments) {
 			var attachmentString = "";
-			
+
 			for (var i in item.attachments) {
 				var attachment = item.attachments[i];
 				// Unfortunately, it looks like \{ in file field breaks BibTeX (0.99d)
@@ -1526,29 +1534,29 @@ function doExport() {
 				// it doesn't make it into this field at all
 				var title = cleanFilePath(attachment.title),
 					path = null;
-				
+
 				if (Zotero.getOption("exportFileData") && attachment.saveFile) {
 					path = cleanFilePath(attachment.defaultPath);
 					attachment.saveFile(path, true);
 				} else if (attachment.localPath) {
 					path = cleanFilePath(attachment.localPath);
 				}
-				
+
 				if (path) {
 					attachmentString += ";" + encodeFilePathComponent(title)
 						+ ":" + encodeFilePathComponent(path)
 						+ ":" + encodeFilePathComponent(attachment.mimeType);
 				}
 			}
-			
+
 			if (attachmentString) {
 				writeField("file", attachmentString.substr(1));
 			}
 		}
-		
+
 		Zotero.write("\n}");
 	}
-	
+
 	Zotero.write("\n");
 }
 
@@ -2592,7 +2600,7 @@ var reversemappingTable = {
 	"{\\textasciicircum}"             : "\u02C6", // MODIFIER LETTER CIRCUMFLEX ACCENT
 	//    "\\~{}"                           : "\u02DC", // SMALL TILDE
 	"{\\textacutedbl}"                : "\u02DD", // DOUBLE ACUTE ACCENT
-	
+
 	//Greek Letters Courtesy of Spartanroc
 	"$\\Gamma$" : "\u0393", // GREEK Gamma
 	"$\\Delta$" : "\u0394", // GREEK Delta
@@ -2704,7 +2712,7 @@ var reversemappingTable = {
 	"{\\texttrademark}"               : "\u2122", // TRADE MARK SIGN
 	"{\\textohm}"                     : "\u2126", // OHM SIGN
 	"{\\textestimated}"               : "\u212E", // ESTIMATED SYMBOL
-	
+
 	/*" 1/3"                            : "\u2153", // VULGAR FRACTION ONE THIRD
 	" 2/3"                            : "\u2154", // VULGAR FRACTION TWO THIRDS
 	" 1/5"                            : "\u2155", // VULGAR FRACTION ONE FIFTH
@@ -2718,7 +2726,7 @@ var reversemappingTable = {
 	" 5/8"                            : "\u215D", // VULGAR FRACTION FIVE EIGHTHS
 	" 7/8"                            : "\u215E", // VULGAR FRACTION SEVEN EIGHTHS
 	" 1/"                             : "\u215F", // FRACTION NUMERATOR ONE */
-	
+
 	"{\\textleftarrow}"               : "\u2190", // LEFTWARDS ARROW
 	"{\\textuparrow}"                 : "\u2191", // UPWARDS ARROW
 	"{\\textrightarrow}"              : "\u2192", // RIGHTWARDS ARROW
@@ -2728,7 +2736,7 @@ var reversemappingTable = {
 	"=>"                              : "\u21D2", // RIGHTWARDS DOUBLE ARROW
 	"<=>"                             : "\u21D4", // LEFT RIGHT DOUBLE ARROW */
 	"$\\infty$"                       : "\u221E", // INFINITY
-	
+
 	/*"||"                              : "\u2225", // PARALLEL TO
 	"/="                              : "\u2260", // NOT EQUAL TO
 	"<="                              : "\u2264", // LESS-THAN OR EQUAL TO
@@ -2745,7 +2753,7 @@ var reversemappingTable = {
 	"|="                              : "\u22A7", // MODELS
 	"|="                              : "\u22A8", // TRUE
 	"||-"                             : "\u22A9", // FORCES */
-	
+
 	"$\\#$"                           : "\u22D5", // EQUAL AND PARALLEL TO
 	//"<<<"                             : "\u22D8", // VERY MUCH LESS-THAN
 	//">>>"                             : "\u22D9", // VERY MUCH GREATER-THAN
@@ -3935,6 +3943,793 @@ var testCases = [
 				"seeAlso": []
 			}
 		]
-	}
+	},
+{
+	"type": "import",
+	"input": "@ARTICLE{Zhang202047,\nauthor={Zhang, D. and Zhou, X. and Yan, S. and Tian, R. and Su, L. and Ding, X. and Xiao, M. and Chen, Y. and Zhao, H. and Chen, H. and Zhang, H. and Li, Z. and Li, Q. and Xu, Y. and Yan, X. and Li, Y. and Zhang, S.},\ntitle={Correlation between cytokines and coagulation-related parameters in patients with coronavirus disease 2019 admitted to ICU},\njournal={Clinica Chimica Acta},\nyear={2020},\nvolume={510},\npages={47-53},\ndoi={10.1016/j.cca.2020.07.002},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087872687&doi=10.1016%2fj.cca.2020.07.002&partnerID=40&md5=0dc09d8434258376df732ecb51c0de5d},\naffiliation={Department of Clinical Laboratory, Peking Union Medical College Hospital, Peking Union Medical College and Chinese Academy of Medical Sciences, Beijing, 100730, China; Department of Pulmonary and Critical Care Medicine, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences, Beijing, 100730, China; Department of Cardiology, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences, Beijing, 100730, China},\nabstract={Background: The novel SARS-CoV-2 caused a large number of infections and deaths worldwide. Thus, new ideas for an appropriated assessment of patients’ condition and clinical treatment are of utmost importance. Therefore, in this study, the laboratory parameters of patients with coronavirus disease 2019 (COVID-19) were evaluated to identify the correlation between cytokine expression and other laboratory parameters. Methods: A retrospective and single-center study was performed in Wuhan, involving 83 severe or critical COVID-19 patients admitted to the intensive care unit (ICU). Laboratory parameters in ICU patients with laboratory-confirmed infection of SARS-CoV2 were collected. The association between parameters was assessed by Spearman's rank correlation. Results: Patients’ median age was 66 years (IQR, 57–73), and 55 (66%) were men. Among the 83 patients, 61 (73%) had 1 or more coexisting medical condition. The median concentration of IL-2R, IL-6, IL8, IL10, and TNFα were above the normal range, without IL-1β. A significant negative correlation between IL-6 and platelet count was discovered (r2 = −0.448, P &lt; 0.001) as well as a significant correlation between IL-6 and other platelet parameters. Finally, a correlation between multiple cytokines and coagulation indicators was found, pro-inflammatory factors were found to be more associated to coagulation parameters, with the highest correlation between IL-6 and the International normalized ratio (INR) (r2 = 0.444, P &lt; 0.001). Conclusions: Our results suggested that cytokines play an important role in the pathogenesis of COVID-19. In addition, IL-6 seems more relevant in the evaluation of the condition of COVID-19 patients. © 2020 The Author(s)},\nauthor_keywords={Coagulation;  Correlation;  COVID-19;  Cytokines;  IL-6},\nkeywords={interleukin 10;  interleukin 1beta;  interleukin 2 receptor;  interleukin 6;  interleukin 8;  tumor necrosis factor, adult;  aged;  aging;  Article;  blood clotting;  China;  comorbidity;  coronavirus disease 2019;  disease association;  female;  hospital admission;  human;  human cell;  intensive care unit;  international normalized ratio;  laboratory test;  major clinical study;  male;  pathogenesis;  platelet count;  priority journal;  protein expression;  retrospective study;  Severe acute respiratory syndrome coronavirus 2},\nchemicals_cas={interleukin 8, 114308-91-7},\nfunding_details={2017-I2M-3-001},\nfunding_details={National Natural Science Foundation of ChinaNational Natural Science Foundation of China, NSFC, 81671618, 81871302},\nfunding_text 1={This research was supported by grants from the National Natural Science Foundation of China Grants ( 81671618 , 81871302 ), CAMS Innovation Fund for Medical Sciences (CIFMS) ( 2017-I2M-3-001 ), CAMS Innovation Fund for Medical Sciences (CIFMS) ( 2017-I2M-B&R-01 ).},\ncorrespondence_address1={Li, Y.; Department of Clinical Laboratory, Peking Union Medical College Hospital, Peking Union Medical College and Chinese Academy of Medical SciencesChina; email: yongzhelipumch@126.com},\npublisher={Elsevier B.V.},\nissn={00098981},\ncoden={CCATA},\npubmed_id={32645391},\nlanguage={English},\nabbrev_source_title={Clin. Chim. Acta},\ndocument_type={Article},\nsource={Scopus},\n}",
+	"items": [
+		{
+			"itemType": "journalArticle",
+			"title": "Correlation between cytokines and coagulation-related parameters in patients with coronavirus disease 2019 admitted to ICU",
+			"creators": [
+				{
+					"firstName": "D.",
+					"lastName": "Zhang",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "X.",
+					"lastName": "Zhou",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "S.",
+					"lastName": "Yan",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "R.",
+					"lastName": "Tian",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "L.",
+					"lastName": "Su",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "X.",
+					"lastName": "Ding",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "M.",
+					"lastName": "Xiao",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "Y.",
+					"lastName": "Chen",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "H.",
+					"lastName": "Zhao",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "H.",
+					"lastName": "Chen",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "H.",
+					"lastName": "Zhang",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "Z.",
+					"lastName": "Li",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "Q.",
+					"lastName": "Li",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "Y.",
+					"lastName": "Xu",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "X.",
+					"lastName": "Yan",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "Y.",
+					"lastName": "Li",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "S.",
+					"lastName": "Zhang",
+					"creatorType": "author"
+				}
+			],
+			"date": "2020",
+			"DOI": "10.1016/j.cca.2020.07.002",
+			"ISSN": "00098981",
+			"abstractNote": "Background: The novel SARS-CoV-2 caused a large number of infections and deaths worldwide. Thus, new ideas for an appropriated assessment of patients’ condition and clinical treatment are of utmost importance. Therefore, in this study, the laboratory parameters of patients with coronavirus disease 2019 (COVID-19) were evaluated to identify the correlation between cytokine expression and other laboratory parameters. Methods: A retrospective and single-center study was performed in Wuhan, involving 83 severe or critical COVID-19 patients admitted to the intensive care unit (ICU). Laboratory parameters in ICU patients with laboratory-confirmed infection of SARS-CoV2 were collected. The association between parameters was assessed by Spearman's rank correlation. Results: Patients’ median age was 66 years (IQR, 57–73), and 55 (66%) were men. Among the 83 patients, 61 (73%) had 1 or more coexisting medical condition. The median concentration of IL-2R, IL-6, IL8, IL10, and TNFα were above the normal range, without IL-1β. A significant negative correlation between IL-6 and platelet count was discovered (r2 = −0.448, P &lt; 0.001) as well as a significant correlation between IL-6 and other platelet parameters. Finally, a correlation between multiple cytokines and coagulation indicators was found, pro-inflammatory factors were found to be more associated to coagulation parameters, with the highest correlation between IL-6 and the International normalized ratio (INR) (r2 = 0.444, P &lt; 0.001). Conclusions: Our results suggested that cytokines play an important role in the pathogenesis of COVID-19. In addition, IL-6 seems more relevant in the evaluation of the condition of COVID-19 patients. © 2020 The Author(s)",
+			"itemID": "Zhang202047",
+			"language": "English",
+			"pages": "47-53",
+			"publicationTitle": "Clinica Chimica Acta",
+			"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087872687&doi=10.1016%2fj.cca.2020.07.002&partnerID=40&md5=0dc09d8434258376df732ecb51c0de5d",
+			"volume": "510",
+			"attachments": [],
+			"tags": [
+				{
+					"tag": "COVID-19"
+				},
+				{
+					"tag": "Coagulation"
+				},
+				{
+					"tag": "Correlation"
+				},
+				{
+					"tag": "Cytokines"
+				},
+				{
+					"tag": "EMTREE:Article"
+				},
+				{
+					"tag": "EMTREE:China"
+				},
+				{
+					"tag": "EMTREE:Severe acute respiratory syndrome coronavirus 2"
+				},
+				{
+					"tag": "EMTREE:aged"
+				},
+				{
+					"tag": "EMTREE:aging"
+				},
+				{
+					"tag": "EMTREE:blood clotting"
+				},
+				{
+					"tag": "EMTREE:comorbidity"
+				},
+				{
+					"tag": "EMTREE:coronavirus disease 2019"
+				},
+				{
+					"tag": "EMTREE:disease association"
+				},
+				{
+					"tag": "EMTREE:female"
+				},
+				{
+					"tag": "EMTREE:hospital admission"
+				},
+				{
+					"tag": "EMTREE:human"
+				},
+				{
+					"tag": "EMTREE:human cell"
+				},
+				{
+					"tag": "EMTREE:intensive care unit"
+				},
+				{
+					"tag": "EMTREE:interleukin 10"
+				},
+				{
+					"tag": "EMTREE:interleukin 1beta"
+				},
+				{
+					"tag": "EMTREE:interleukin 2 receptor"
+				},
+				{
+					"tag": "EMTREE:interleukin 6"
+				},
+				{
+					"tag": "EMTREE:interleukin 8"
+				},
+				{
+					"tag": "EMTREE:international normalized ratio"
+				},
+				{
+					"tag": "EMTREE:laboratory test"
+				},
+				{
+					"tag": "EMTREE:major clinical study"
+				},
+				{
+					"tag": "EMTREE:male"
+				},
+				{
+					"tag": "EMTREE:pathogenesis"
+				},
+				{
+					"tag": "EMTREE:platelet count"
+				},
+				{
+					"tag": "EMTREE:priority journal"
+				},
+				{
+					"tag": "EMTREE:protein expression"
+				},
+				{
+					"tag": "EMTREE:retrospective study"
+				},
+				{
+					"tag": "EMTREE:tumor necrosis factor, adult"
+				},
+				{
+					"tag": "IL-6"
+				}
+			],
+			"notes": [
+				{
+					"note": "<p>cited By 0</p>"
+				}
+			],
+			"seeAlso": []
+		}
+	]
+},
+{
+	"type": "import",
+	"input": "@ARTICLE{EdgarPatricio2020,\nauthor={Edgar Patricio, C.-D. and Eleanor, T.H.G. and Francisco José, C.-Z. and Gabriela, A.C.M. and Hyland, A.-O. and Fernando, G.L. and María, T.A. and Beatriz, N. and Marcos, S.-D. and Alfredo, G.P.W.},\ntitle={Clinical and radiological profile of neuromyelitis optica spectrum disorders in an Ecuadorian cohort},\njournal={Multiple Sclerosis and Related Disorders},\nyear={2020},\nvolume={44},\ndoi={10.1016/j.msard.2020.102208},\nart_number={102208},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086449309&doi=10.1016%2fj.msard.2020.102208&partnerID=40&md5=97b459965bf00dcf87287d56505b6ca2},\naffiliation={Department of Neurology. Hospital Carlos Andrade Marín. Quito. Universidad Central del Ecuador. Quito, Address: Avenida 18 de Septiembre y Ayacucho, Ecuador; Department of Neurology. Hospital Teodoro Maldonado Carbo. Guayaquil, Address: Avenida 25 de Julio, Ecuador; Department of Neurology. Hospital de Especialidades Eugenio Espejo, Quito, Address: Avenida Gran Colombia, Ecuador; Department of Neurology. Hospital José Carrasco Arteaga de Cuenca, Address: Intersección Popayán, Ecuador; Department of Neurology. Hospital de Especialidades Eugenio Espejo, Quito, Address: Avenida Gran Colombia, Ecuador; Department of Neurology. Hospital Carlos Andrade Marín. Quito. Pontificia Universidad Católica del Ecuador. Quito, Address: Avenida 12 de Octubre, Ecuador},\nabstract={Background: Neuromyelitis optica spectrum disorder (NMOSD) is a complex disease characterized by a severe inflammation of the central nervous system (CNS). This disease typically manifests with recurrent optic neuritis (ON) and acute transverse myelitis (ATM). The clinical and radiological spectrum of NMOSD is little known in Latin America (LATAM) and few reports have been published in the literature so far. In Ecuador, no reports on NMOSD have been published. For this reason we aimed to assess the demographic, clinical and imaging characteristics of patients with NMOSD from third level hospitals from Ecuador. Methods: This is a descriptive study in which we assessed medical reports of patients with inflammatory demyelinating diseases who were attended in third level hospitals from Ecuador in 2017. Then we applied the 2015 diagnostic criteria, those patients who met the new NMOSD diagnostic criteria were selected and analyzed. Additionally, exploratory sub-analyses were subsequently carried out. Results: We identified 59 patients with NMOSD, the relative frequency of NMOSD was 15.9%. The multiple sclerosis (MS) /NMOSD ratio was 5.2:1. Twenty four percent of patients were newly defined as having NMOSD when 2015 criteria was applied. The median time to diagnoses was shorter by the 2015 criteria than 2006 criteria (p<0.001). NMOSD was more prevalent in women (female/male ratio 4.4:1). The disease onset was more frequent at the fourth decade of life. The most common symptoms at the disease onset were ON and the association of ON with ATM. The mean of expanded disability status scale (EDSS) was 4.8 (SD±1.8). Concomitant autoimmune diseases were infrequent in this population (11.9%). The brain magnetic resonance imaging (MRI) abnormalities were present in 25.7% of patients at disease onset. Spinal cord MRI showed longitudinally extensive transverse myelitis (LETM) in 91.5% of cases. Recurrent NMOSD was frequent in this cohort (88%). Positivity for antibodies against aquaporin-4 (AQP4-IgG) which was measured through indirect immunofluorescence assay (IIF) was identified in 81% of the patients tested. Patients with seronegative AQP4-IgG had higher grade of disability than seropositive patients (p<0.05). Ninety eight percent of patients received treatment with immunosuppressive drugs. Three patients died due to gastric cancer (1 patient) and infectious diseases (2 patients). Conclusions: This is the first descriptive study in an Ecuadorian cohort of patients with NMOSD. We show a wide epidemiological, clinical and radiological spectrum of NMOSD. © 2020 Elsevier B.V.},\nauthor_keywords={AQP4-IgG;  Ecuador;  Epidemiology;  Neuromyelitis optica spectrum disorder},\nkeywords={aquaporin 4;  azathioprine;  immunoglobulin G;  immunosuppressive agent;  mycophenolic acid;  prednisone;  rituximab, adult;  Article;  autoimmune disease;  cause of death;  cohort analysis;  controlled study;  demyelinating disease;  descriptive research;  Ecuador;  Ecuadorean;  Expanded Disability Status Scale;  female;  human;  immunofluorescence;  immunosuppressive treatment;  infection;  major clinical study;  male;  myelitis;  myelooptic neuropathy;  neuroimaging;  nuclear magnetic resonance imaging;  onset age;  prevalence;  recurrent disease;  retrospective study;  sex ratio;  spinal cord;  stomach cancer},\nchemicals_cas={aquaporin 4, 175960-54-0; azathioprine, 446-86-6; immunoglobulin G, 97794-27-9; mycophenolic acid, 23047-11-2, 24280-93-1; prednisone, 53-03-2; rituximab, 174722-31-7},\ncorrespondence_address1={Edgar Patricio, C.-D.; Department of Neurology. Hospital Carlos Andrade Marín. Quito. Universidad Central del Ecuador. Quito, Address: Avenida 18 de Septiembre y Ayacucho, Ecuador; email: patocorrea2010@yahoo.com},\npublisher={Elsevier B.V.},\nissn={22110348},\npubmed_id={32562910},\nlanguage={English},\nabbrev_source_title={Mult. Scler. Relat. Disord.},\ndocument_type={Article},\nsource={Scopus},\n}",
+	"items": [
+		{
+			"itemType": "journalArticle",
+			"title": "Clinical and radiological profile of neuromyelitis optica spectrum disorders in an Ecuadorian cohort",
+			"creators": [
+				{
+					"firstName": "C.-D.",
+					"lastName": "Edgar Patricio",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "T.H.G.",
+					"lastName": "Eleanor",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "C.-Z.",
+					"lastName": "Francisco José",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "A.C.M.",
+					"lastName": "Gabriela",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "A.-O.",
+					"lastName": "Hyland",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "G.L.",
+					"lastName": "Fernando",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "T.A.",
+					"lastName": "María",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "N.",
+					"lastName": "Beatriz",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "S.-D.",
+					"lastName": "Marcos",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "G.P.W.",
+					"lastName": "Alfredo",
+					"creatorType": "author"
+				}
+			],
+			"date": "2020",
+			"DOI": "10.1016/j.msard.2020.102208",
+			"ISSN": "22110348",
+			"abstractNote": "Background: Neuromyelitis optica spectrum disorder (NMOSD) is a complex disease characterized by a severe inflammation of the central nervous system (CNS). This disease typically manifests with recurrent optic neuritis (ON) and acute transverse myelitis (ATM). The clinical and radiological spectrum of NMOSD is little known in Latin America (LATAM) and few reports have been published in the literature so far. In Ecuador, no reports on NMOSD have been published. For this reason we aimed to assess the demographic, clinical and imaging characteristics of patients with NMOSD from third level hospitals from Ecuador. Methods: This is a descriptive study in which we assessed medical reports of patients with inflammatory demyelinating diseases who were attended in third level hospitals from Ecuador in 2017. Then we applied the 2015 diagnostic criteria, those patients who met the new NMOSD diagnostic criteria were selected and analyzed. Additionally, exploratory sub-analyses were subsequently carried out. Results: We identified 59 patients with NMOSD, the relative frequency of NMOSD was 15.9%. The multiple sclerosis (MS) /NMOSD ratio was 5.2:1. Twenty four percent of patients were newly defined as having NMOSD when 2015 criteria was applied. The median time to diagnoses was shorter by the 2015 criteria than 2006 criteria (p<0.001). NMOSD was more prevalent in women (female/male ratio 4.4:1). The disease onset was more frequent at the fourth decade of life. The most common symptoms at the disease onset were ON and the association of ON with ATM. The mean of expanded disability status scale (EDSS) was 4.8 (SD±1.8). Concomitant autoimmune diseases were infrequent in this population (11.9%). The brain magnetic resonance imaging (MRI) abnormalities were present in 25.7% of patients at disease onset. Spinal cord MRI showed longitudinally extensive transverse myelitis (LETM) in 91.5% of cases. Recurrent NMOSD was frequent in this cohort (88%). Positivity for antibodies against aquaporin-4 (AQP4-IgG) which was measured through indirect immunofluorescence assay (IIF) was identified in 81% of the patients tested. Patients with seronegative AQP4-IgG had higher grade of disability than seropositive patients (p<0.05). Ninety eight percent of patients received treatment with immunosuppressive drugs. Three patients died due to gastric cancer (1 patient) and infectious diseases (2 patients). Conclusions: This is the first descriptive study in an Ecuadorian cohort of patients with NMOSD. We show a wide epidemiological, clinical and radiological spectrum of NMOSD. © 2020 Elsevier B.V.",
+			"itemID": "EdgarPatricio2020",
+			"language": "English",
+			"publicationTitle": "Multiple Sclerosis and Related Disorders",
+			"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086449309&doi=10.1016%2fj.msard.2020.102208&partnerID=40&md5=97b459965bf00dcf87287d56505b6ca2",
+			"volume": "44",
+			"attachments": [],
+			"tags": [
+				{
+					"tag": "AQP4-IgG"
+				},
+				{
+					"tag": "EMTREE:Article"
+				},
+				{
+					"tag": "EMTREE:Ecuador"
+				},
+				{
+					"tag": "EMTREE:Ecuadorean"
+				},
+				{
+					"tag": "EMTREE:Expanded Disability Status Scale"
+				},
+				{
+					"tag": "EMTREE:aquaporin 4"
+				},
+				{
+					"tag": "EMTREE:autoimmune disease"
+				},
+				{
+					"tag": "EMTREE:azathioprine"
+				},
+				{
+					"tag": "EMTREE:cause of death"
+				},
+				{
+					"tag": "EMTREE:cohort analysis"
+				},
+				{
+					"tag": "EMTREE:controlled study"
+				},
+				{
+					"tag": "EMTREE:demyelinating disease"
+				},
+				{
+					"tag": "EMTREE:descriptive research"
+				},
+				{
+					"tag": "EMTREE:female"
+				},
+				{
+					"tag": "EMTREE:human"
+				},
+				{
+					"tag": "EMTREE:immunofluorescence"
+				},
+				{
+					"tag": "EMTREE:immunoglobulin G"
+				},
+				{
+					"tag": "EMTREE:immunosuppressive agent"
+				},
+				{
+					"tag": "EMTREE:immunosuppressive treatment"
+				},
+				{
+					"tag": "EMTREE:infection"
+				},
+				{
+					"tag": "EMTREE:major clinical study"
+				},
+				{
+					"tag": "EMTREE:male"
+				},
+				{
+					"tag": "EMTREE:mycophenolic acid"
+				},
+				{
+					"tag": "EMTREE:myelitis"
+				},
+				{
+					"tag": "EMTREE:myelooptic neuropathy"
+				},
+				{
+					"tag": "EMTREE:neuroimaging"
+				},
+				{
+					"tag": "EMTREE:nuclear magnetic resonance imaging"
+				},
+				{
+					"tag": "EMTREE:onset age"
+				},
+				{
+					"tag": "EMTREE:prednisone"
+				},
+				{
+					"tag": "EMTREE:prevalence"
+				},
+				{
+					"tag": "EMTREE:recurrent disease"
+				},
+				{
+					"tag": "EMTREE:retrospective study"
+				},
+				{
+					"tag": "EMTREE:rituximab, adult"
+				},
+				{
+					"tag": "EMTREE:sex ratio"
+				},
+				{
+					"tag": "EMTREE:spinal cord"
+				},
+				{
+					"tag": "EMTREE:stomach cancer"
+				},
+				{
+					"tag": "Ecuador"
+				},
+				{
+					"tag": "Epidemiology"
+				},
+				{
+					"tag": "Neuromyelitis optica spectrum disorder"
+				}
+			],
+			"notes": [
+				{
+					"note": "<p>cited By 0</p>"
+				}
+			],
+			"seeAlso": []
+		}
+	]
+},
+{
+	"type": "import",
+	"input": "@ARTICLE{Salama20203167,\nauthor={Salama, M. and Akan, A. and Mueller, M.R.},\ntitle={Transcutaneous Stimulation of Auricular Branch of the Vagus Nerve Attenuates the Acute Inflammatory Response After Lung Lobectomy},\njournal={World Journal of Surgery},\nyear={2020},\nvolume={44},\nnumber={9},\npages={3167-3174},\ndoi={10.1007/s00268-020-05543-w},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85083958097&doi=10.1007%2fs00268-020-05543-w&partnerID=40&md5=1877aeab77a87729f1a5c34953c76eb0},\naffiliation={Department of Thoracic Surgery, North Clinic, Bruennerstrasse 68, Vienna, 1210, Austria; Medical Faculty, Thoracic Surgery, Sigmund Freud University, Vienna, Austria; Institute of Thoracic Oncology, Karl Landsteiner Society, St. Poelten, Austria},\nabstract={Objectives: Systemic inflammation is a potentially debilitating complication of thoracic surgeries with significant physical and economic morbidity. There is compelling evidence for the role of the central nervous system in regulating inflammatory processes through humoral mechanisms. Activation of the afferent vagus nerve by cytokines triggers anti-inflammatory responses. Peripheral electrical stimulation of the vagus nerve in vivo during lethal endotoxemia in rats inhibited tumor necrosis factor synthesis and prevented shock development. However, the vagal regulatory role of systemic inflammation after lung lobectomy is unknown. Methods: One hundred patients who underwent lobectomy via thoracotomy were recruited and equally randomized to treated group or controls. Intermittent stimulation of the auricular branch of vagus nerve in the triangular fossa was applied in the treated group using neurostimulator V (Ducest®, Germany), starting 24 h preoperatively and continued till the 4th postoperative day (POD). Inflammatory interleukins (IL) were analyzed using ELISA preoperatively, on the 1st and 4th POD. Results: On the 1st POD, patients who underwent neurostimulation had reduced serum concentrations of CRP (p = 0.01), IL6 (p = 0.02) but elevated IL10 (p = 0.03) versus controls. On the 4th POD, serum concentrations of CRP, IL6 and IL10 were similar in both groups. Moreover, the treated group was associated with lower incidence of pneumonia (p = 0.04) and shorter hospitalization time (p = 0.04) versus controls. Conclusions: Modulations in the brain stem caused by noninvasive transcutaneous stimulation of the vagus nerve after lung lobectomy attenuate the acute postsurgical inflammatory response by the regulation of IL6 and IL10, resulting in reduced incidence of postoperative pneumonia and short hospitalization time. Clinical Trial Registry Number: NCT03204968. © 2020, Société Internationale de Chirurgie.},\nfunding_text 1={This study was supported by the grant to Dr. Salama from ACMIT—Austrian Center for Medical Innovation and Technology.},\ncorrespondence_address1={Mueller, M.R.; Department of Thoracic Surgery, North Clinic, Bruennerstrasse 68, Austria; email: michael.rolf.mueller@wienkav.at},\npublisher={Springer},\nissn={03642313},\ncoden={WJSUD},\npubmed_id={32358638},\nlanguage={English},\nabbrev_source_title={World J. Surg.},\ndocument_type={Article},\nsource={Scopus},\n}",
+	"items": [
+		{
+			"itemType": "journalArticle",
+			"title": "Transcutaneous Stimulation of Auricular Branch of the Vagus Nerve Attenuates the Acute Inflammatory Response After Lung Lobectomy",
+			"creators": [
+				{
+					"firstName": "M.",
+					"lastName": "Salama",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "A.",
+					"lastName": "Akan",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "M.R.",
+					"lastName": "Mueller",
+					"creatorType": "author"
+				}
+			],
+			"date": "2020",
+			"DOI": "10.1007/s00268-020-05543-w",
+			"ISSN": "03642313",
+			"abstractNote": "Objectives: Systemic inflammation is a potentially debilitating complication of thoracic surgeries with significant physical and economic morbidity. There is compelling evidence for the role of the central nervous system in regulating inflammatory processes through humoral mechanisms. Activation of the afferent vagus nerve by cytokines triggers anti-inflammatory responses. Peripheral electrical stimulation of the vagus nerve in vivo during lethal endotoxemia in rats inhibited tumor necrosis factor synthesis and prevented shock development. However, the vagal regulatory role of systemic inflammation after lung lobectomy is unknown. Methods: One hundred patients who underwent lobectomy via thoracotomy were recruited and equally randomized to treated group or controls. Intermittent stimulation of the auricular branch of vagus nerve in the triangular fossa was applied in the treated group using neurostimulator V (Ducest®, Germany), starting 24 h preoperatively and continued till the 4th postoperative day (POD). Inflammatory interleukins (IL) were analyzed using ELISA preoperatively, on the 1st and 4th POD. Results: On the 1st POD, patients who underwent neurostimulation had reduced serum concentrations of CRP (p = 0.01), IL6 (p = 0.02) but elevated IL10 (p = 0.03) versus controls. On the 4th POD, serum concentrations of CRP, IL6 and IL10 were similar in both groups. Moreover, the treated group was associated with lower incidence of pneumonia (p = 0.04) and shorter hospitalization time (p = 0.04) versus controls. Conclusions: Modulations in the brain stem caused by noninvasive transcutaneous stimulation of the vagus nerve after lung lobectomy attenuate the acute postsurgical inflammatory response by the regulation of IL6 and IL10, resulting in reduced incidence of postoperative pneumonia and short hospitalization time. Clinical Trial Registry Number: NCT03204968. © 2020, Société Internationale de Chirurgie.",
+			"issue": "9",
+			"itemID": "Salama20203167",
+			"language": "English",
+			"pages": "3167-3174",
+			"publicationTitle": "World Journal of Surgery",
+			"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85083958097&doi=10.1007%2fs00268-020-05543-w&partnerID=40&md5=1877aeab77a87729f1a5c34953c76eb0",
+			"volume": "44",
+			"attachments": [],
+			"tags": [],
+			"notes": [
+				{
+					"note": "<p>cited By 0</p>"
+				}
+			],
+			"seeAlso": []
+		}
+	]
+},
+{
+	"type": "import",
+	"input": "@ARTICLE{Blincoe2020901,\nauthor={Blincoe, A. and Heeg, M. and Campbell, P.K. and Hines, M. and Khojah, A. and Klein-Gitelman, M. and Talano, J.-A. and Speckmann, C. and Touzot, F. and Lankester, A. and Legger, G.E. and Rivière, J.G. and Garcia-Prat, M. and Alonso, L. and Putti, M.C. and Lehmberg, K. and Maier, S. and El Chazli, Y. and Elmaksoud, M.A. and Astigarraga, I. and Kurjane, N. and Bulina, I. and Kenina, V. and Bryceson, Y. and Rascon, J. and Lortie, A. and Goldstein, G. and Booth, C. and Worth, A. and Wassmer, E. and Schmitt, E.G. and Warren, J.T. and Bednarski, J.J. and Ali, S. and Chiang, K.-Y. and Krueger, J. and Henry, M.M. and Holland, S.M. and Marsh, R.A. and Ehl, S. and Haddad, E.},\ntitle={Neuroinflammatory Disease as an Isolated Manifestation of Hemophagocytic Lymphohistiocytosis},\njournal={Journal of Clinical Immunology},\nyear={2020},\nvolume={40},\nnumber={6},\npages={901-916},\ndoi={10.1007/s10875-020-00814-6},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087567833&doi=10.1007%2fs10875-020-00814-6&partnerID=40&md5=a3b29cad9138e1a56f75e64ceb15eec3},\naffiliation={CHU Sainte-Justine, Department of Pediatrics, Department of Microbiology, Infectious Diseases and Immunology, University of Montreal, Montreal, QC  H3T 1C5, Canada; Department of Paediatric Immunology and Allergy, Starship Children’s Health, Auckland, New Zealand; Institute for Immunodeficiency, Center for Chronic Immunodeficiency, Medical Center, Faculty of Medicine, University of Freiburg, Breisacher Strasse 115, Freiburg, 79106, Germany; Center for Pediatrics, Medical Center - University of Freiburg, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Berta-Ottenstein-Programme, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Department of Oncology, St. Jude Children’s Research Hospital, Memphis, TN, United States; Department of Pediatric Medicine, Division of Critical Care, St Jude Children’s Research Hospital, Memphis, TN, United States; Department of Rheumatology, Ann and Robert H Lurie Children’s Hospital and Children’s Hospital of Chicago, Chicago, IL, United States; Department of Rheumatology, Northwestern University Feinberg School of Medicine, Chicago, IL, United States; Pediatric Hematology and Oncology, Children’s Hospital of Wisconsin-Milwaukee Campus, Milwaukee, WI, United States; Department of Pediatric and Adolescent Medicine, Division of Pediatric Hematology and Oncology, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Willem-Alexander Children’s Hospital, Department of Pediatrics, Leiden University Medical Center, Leiden, Netherlands; Department of Pediatrics, University of Groningen, University Medical Centre Groningen, Groningen, Netherlands; Pediatric Infectious Diseases and Immunodeficiencies Unit, Hospital Universitari Vall d’Hebron, Vall d’Hebron Research Institute, Universitat Autònoma de Barcelona, Barcelona, Spain; Jeffrey Modell Foundation Excellence Centre, Barcelona, Spain; Pediatric Hematology and Oncology Department, Hospital Universitari Vall d’Hebron, Vall d’Hebron Research Institute, Universitat Autònoma de Barcelona, Barcelona, Spain; Department of Pediatrics, University of Padua Medical School, Padua, Italy; Division of Pediatric Stem Cell Transplantation and Immunology, University Medical Center, Hamburg, Germany; Hematology and Oncology Unit, Alexandria University Children’s Hospital, Department of Pediatrics, Faculty of Medicine, Alexandria University, Alexandria, Egypt; Neurology Unit, Alexandria University Children’s Hospital, Department of Pediatrics, Faculty of Medicine, Alexandria University, Alexandria, Egypt; Department of Pediatrics, Hospital Universitario Cruces, IIS BioCruces Bizkaia, Department of Pediatrics, Faculty of Medicine, UPV/EHU, Barakaldo, Bizkaia, Spain; Stradins Clinical University Hospital, Riga, Latvia; Department of Biology and Microbiology, Rigas Stradins University, Riga, Latvia; Department of Rheumatology, Stradins Clinical University Hospital, Riga, Latvia; Department of Neurology, Hospital Gailezers, Riga, Latvia; Center for Hematology and Regenerative Medicine, Department of Medicine Huddinge, Karolinska Institutet, Karolinska University Hospital, Stockholm, Sweden; Center for Pediatric Oncology and Hematology, Vilnius University Hospital Santaros Klinikos, Vilnius, Lithuania; Institute of Clinical Medicine, Vilnius University, Vilnius, Lithuania; CHU Sainte Justine, Department of Neurology, Cerebral Electrophysiology Laboratory, Department of Neurosciences, University of Montreal, Montreal, QC, Canada; Department of Pediatric Hematology-Oncology, Hadassah-Hebrew University Medical Center, Ein Kerem, Jerusalem, Israel; Department of Pediatric Immunology, Great Ormond Street Hospital, London, WC1N 3JH, United Kingdom; Department of Neurology, Birmingham Women’s and Children’s Hospital, Birmingham, United Kingdom; Department of Pediatrics, Washington University School of Medicine in St. Louis, St. Louis, MO, United States; Division of Hematology/Oncology/BMT, The Hospital for Sick Children, Toronto, ON, Canada; Department of Pediatrics, University of Toronto, Toronto, ON, Canada; Centre for Cancer and Blood Disorders, Phoenix Children’s Hospital, Phoenix, United States; Division of Intramural Research, Laboratory of Clinical Immunology and Microbiology, National Institute of Allergy and Infectious Diseases, National Institutes of Health, Bethesda, United States; Department of Pediatrics, University of Cincinnati, Division of Bone Marrow Transplantation and Immune Deficiency, Cincinnati Children’s Medical Centre, Cincinnati, OH, United States},\nabstract={Isolated neuroinflammatory disease has been described in case reports of familial hemophagocytic lymphohistiocytosis (FHL), but the clinical spectrum of disease manifestations, response to therapy and prognosis remain poorly defined. We combined an international survey with a literature search to identify FHL patients with (i) initial presentation with isolated neurological symptoms; (ii) absence of cytopenia and splenomegaly at presentation; and (iii) systemic HLH features no earlier than 3 months after neurological presentation. Thirty-eight (20 unreported) patients were identified with initial diagnoses including acute demyelinating encephalopathy, leukoencephalopathy, CNS vasculitis, multiple sclerosis, and encephalitis. Median age at presentation was 6.5 years, most commonly with ataxia/gait disturbance (75%) and seizures (53%). Diffuse multifocal white matter changes (79%) and cerebellar involvement (61%) were common MRI findings. CSF cell count and protein were increased in 22/29 and 15/29 patients, respectively. Fourteen patients progressed to systemic inflammatory disease fulfilling HLH-2004 criteria at a mean of 36.9 months after initial neurological presentation. Mutations were detected in PRF1 in 23 patients (61%), RAB27A in 10 (26%), UNC13D in 3 (8%), LYST in 1 (3%), and STXBP2 in 1 (3%) with a mean interval to diagnosis of 28.3 months. Among 19 patients who underwent HSCT, 11 neurologically improved, 4 were stable, one relapsed, and 3 died. Among 14 non-transplanted patients, only 3 improved or had stable disease, one relapsed, and 10 died. Isolated CNS-HLH is a rare and often overlooked cause of inflammatory brain disease. HLH-directed therapy followed by HSCT seems to improve survival and outcome. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.},\nauthor_keywords={CNS disease;  CNS inflammation;  Familial hemophagocytic lymphohistiocytosis;  therapy},\nfunding_details={Bundesministerium fÃ¼r Bildung und ForschungBundesministerium fÃ¼r Bildung und Forschung, BMBF, 01EO1303},\nfunding_details={Deutsche ForschungsgemeinschaftDeutsche Forschungsgemeinschaft, DFG, SFB1160, TPA01},\nfunding_details={Deutsche KinderkrebsstiftungDeutsche Kinderkrebsstiftung, DKS 2018.11, DKS 2016.04},\nfunding_details={Deutsche ForschungsgemeinschaftDeutsche Forschungsgemeinschaft, DFG},\nfunding_text 1={This study was supported by the German Research Foundation (DFG SFB1160, TPA01), the Bundesministerium für Bildung und Forschung (01EO1303), the Deutsche Kinderkrebsstiftung (DKS 2016.04 and DKS 2018.11), and the Pediatric Immunology Research Chair, Bank of Montreal.},\ncorrespondence_address1={Haddad, E.; CHU Sainte-Justine, Department of Pediatrics, Department of Microbiology, Infectious Diseases and Immunology, University of Montreal, Institute for Immunodeficiency, Center for Chronic Immunodeficiency, Medical Center, Faculty of Medicine, University of Freiburg, Breisacher Strasse 115, Canada; email: elie.haddad@umontreal.ca},\npublisher={Springer},\nissn={02719142},\ncoden={JCIMD},\npubmed_id={32638196},\nlanguage={English},\nabbrev_source_title={J. Clin. Immunol.},\ndocument_type={Article},\nsource={Scopus},\n}",
+	"items": [
+		{
+			"itemType": "journalArticle",
+			"title": "Neuroinflammatory Disease as an Isolated Manifestation of Hemophagocytic Lymphohistiocytosis",
+			"creators": [
+				{
+					"firstName": "A.",
+					"lastName": "Blincoe",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "M.",
+					"lastName": "Heeg",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "P.K.",
+					"lastName": "Campbell",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "M.",
+					"lastName": "Hines",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "A.",
+					"lastName": "Khojah",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "M.",
+					"lastName": "Klein-Gitelman",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "J.-A.",
+					"lastName": "Talano",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "C.",
+					"lastName": "Speckmann",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "F.",
+					"lastName": "Touzot",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "A.",
+					"lastName": "Lankester",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "G.E.",
+					"lastName": "Legger",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "J.G.",
+					"lastName": "Rivière",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "M.",
+					"lastName": "Garcia-Prat",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "L.",
+					"lastName": "Alonso",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "M.C.",
+					"lastName": "Putti",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "K.",
+					"lastName": "Lehmberg",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "S.",
+					"lastName": "Maier",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "Y.",
+					"lastName": "El Chazli",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "M.A.",
+					"lastName": "Elmaksoud",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "I.",
+					"lastName": "Astigarraga",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "N.",
+					"lastName": "Kurjane",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "I.",
+					"lastName": "Bulina",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "V.",
+					"lastName": "Kenina",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "Y.",
+					"lastName": "Bryceson",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "J.",
+					"lastName": "Rascon",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "A.",
+					"lastName": "Lortie",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "G.",
+					"lastName": "Goldstein",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "C.",
+					"lastName": "Booth",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "A.",
+					"lastName": "Worth",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "E.",
+					"lastName": "Wassmer",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "E.G.",
+					"lastName": "Schmitt",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "J.T.",
+					"lastName": "Warren",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "J.J.",
+					"lastName": "Bednarski",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "S.",
+					"lastName": "Ali",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "K.-Y.",
+					"lastName": "Chiang",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "J.",
+					"lastName": "Krueger",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "M.M.",
+					"lastName": "Henry",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "S.M.",
+					"lastName": "Holland",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "R.A.",
+					"lastName": "Marsh",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "S.",
+					"lastName": "Ehl",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "E.",
+					"lastName": "Haddad",
+					"creatorType": "author"
+				}
+			],
+			"date": "2020",
+			"DOI": "10.1007/s10875-020-00814-6",
+			"ISSN": "02719142",
+			"abstractNote": "Isolated neuroinflammatory disease has been described in case reports of familial hemophagocytic lymphohistiocytosis (FHL), but the clinical spectrum of disease manifestations, response to therapy and prognosis remain poorly defined. We combined an international survey with a literature search to identify FHL patients with (i) initial presentation with isolated neurological symptoms; (ii) absence of cytopenia and splenomegaly at presentation; and (iii) systemic HLH features no earlier than 3 months after neurological presentation. Thirty-eight (20 unreported) patients were identified with initial diagnoses including acute demyelinating encephalopathy, leukoencephalopathy, CNS vasculitis, multiple sclerosis, and encephalitis. Median age at presentation was 6.5 years, most commonly with ataxia/gait disturbance (75%) and seizures (53%). Diffuse multifocal white matter changes (79%) and cerebellar involvement (61%) were common MRI findings. CSF cell count and protein were increased in 22/29 and 15/29 patients, respectively. Fourteen patients progressed to systemic inflammatory disease fulfilling HLH-2004 criteria at a mean of 36.9 months after initial neurological presentation. Mutations were detected in PRF1 in 23 patients (61%), RAB27A in 10 (26%), UNC13D in 3 (8%), LYST in 1 (3%), and STXBP2 in 1 (3%) with a mean interval to diagnosis of 28.3 months. Among 19 patients who underwent HSCT, 11 neurologically improved, 4 were stable, one relapsed, and 3 died. Among 14 non-transplanted patients, only 3 improved or had stable disease, one relapsed, and 10 died. Isolated CNS-HLH is a rare and often overlooked cause of inflammatory brain disease. HLH-directed therapy followed by HSCT seems to improve survival and outcome. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.",
+			"issue": "6",
+			"itemID": "Blincoe2020901",
+			"language": "English",
+			"pages": "901-916",
+			"publicationTitle": "Journal of Clinical Immunology",
+			"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087567833&doi=10.1007%2fs10875-020-00814-6&partnerID=40&md5=a3b29cad9138e1a56f75e64ceb15eec3",
+			"volume": "40",
+			"attachments": [],
+			"tags": [
+				{
+					"tag": "CNS disease"
+				},
+				{
+					"tag": "CNS inflammation"
+				},
+				{
+					"tag": "Familial hemophagocytic lymphohistiocytosis"
+				},
+				{
+					"tag": "therapy"
+				}
+			],
+			"notes": [
+				{
+					"note": "<p>cited By 0</p>"
+				}
+			],
+			"seeAlso": []
+		}
+	]
+},
+{
+	"type": "import",
+	"input": "@ARTICLE{Al-Saud2020833,\nauthor={Al-Saud, B. and Al Alawi, Z. and Hussain, F.B. and Hershfield, M. and Alkuraya, F.S. and Al-Mayouf, S.M.},\ntitle={A Case with Purine Nucleoside Phosphorylase Deficiency Suffering from Late-Onset Systemic Lupus Erythematosus and Lymphoma},\njournal={Journal of Clinical Immunology},\nyear={2020},\nvolume={40},\nnumber={6},\npages={833-839},\ndoi={10.1007/s10875-020-00800-y},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086152473&doi=10.1007%2fs10875-020-00800-y&partnerID=40&md5=e53625b83074f1e86a0c52daba9e0535},\naffiliation={Section of Allergy and Immunology, Department of Pediatrics, Division of Allergy & Immunology, King Faisal Specialist Hospital & Research Center, P.O. Box 3354, MBC-58, Riyadh, 11211, Saudi Arabia; College of Medicine, Alfaisal University, Riyadh, Saudi Arabia; Department of Pediatrics, College of Medicine, King Faisal University, Alhasa, Saudi Arabia; Department of Radiology, King Faisal Specialist Hospital & Research Center, Riyadh, Saudi Arabia; Department of Medicine, Duke University Medical Center, Durham, NC, United States; Department of Genetics, King Faisal Specialist Hospital and Research Center, Riyadh, Saudi Arabia; Department of Pediatrics, Division of Rheumatology, King Faisal Specialist Hospital & Research Center, Riyadh, Saudi Arabia},\nabstract={Background: Purine nucleoside phosphorylase (PNP) deficiency accounts for about 4% of severe combined immunodeficiency diseases. PNP deficiency is a variable disease with recurrent infections and neurodevelopmental delay. Autoimmunity and malignancy can still occur in one-third of patients. Methods: Case report. Case Presentation: An 8-year-old Saudi female who was apparently healthy presented at the age of 7 years with confirmed systemic lupus erythematosus (SLE) and lupus nephritis that were poorly controlled with conventional therapy. She also had frequent sinopulmonary and varicella infections. Preliminary immunological workup showed severe lymphopenia and depressed lymphocyte proliferation assay. The uric acid was within normal levels at 179 μmol/L (normal range, 150 to 350 μmol/L) 6 weeks after blood transfusion. Genetic study revealed a homozygous missense mutation c.265G>A in the PNP gene, resulting in a substitution of glutamic acid to lysine at amino acid 89 of the encoded protein (E89K). The PNP serum level was 798 nmol/h/mg (normal level 1354 ± 561 nmol/h/mg) 6 weeks after blood transfusion. Hematopoietic stem cell transplantation (HSCT) was planned from a matched unrelated donor; however, she developed an EBV and varicella meningoencephalitis. Atypical malignant cells suggestive of lymphoma were discovered, likely induced by EBV, and suspicious lesions were shown on brain MRI and PET scan. Unfortunately, she passed away before HSCT due to multiorgan failure. Conclusion: This report emphasizes the challenges in recognizing PNP deficiency in a patient suffering from SLE. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.},\nauthor_keywords={CNS lymphoma;  Epstein-Barr virus;  PNP;  severe combined immunodeficiency;  systemic lupus erythematosus},\ncorrespondence_address1={Al-Saud, B.; Section of Allergy and Immunology, Department of Pediatrics, Division of Allergy & Immunology, King Faisal Specialist Hospital & Research Center, P.O. Box 3354, MBC-58, Saudi Arabia; email: balsaud@kfshrc.edu.sa},\npublisher={Springer},\nissn={02719142},\ncoden={JCIMD},\npubmed_id={32514656},\nlanguage={English},\nabbrev_source_title={J. Clin. Immunol.},\ndocument_type={Article},\nsource={Scopus},\n}",
+	"items": [
+		{
+			"itemType": "journalArticle",
+			"title": "A Case with Purine Nucleoside Phosphorylase Deficiency Suffering from Late-Onset Systemic Lupus Erythematosus and Lymphoma",
+			"creators": [
+				{
+					"firstName": "B.",
+					"lastName": "Al-Saud",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "Z.",
+					"lastName": "Al Alawi",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "F.B.",
+					"lastName": "Hussain",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "M.",
+					"lastName": "Hershfield",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "F.S.",
+					"lastName": "Alkuraya",
+					"creatorType": "author"
+				},
+				{
+					"firstName": "S.M.",
+					"lastName": "Al-Mayouf",
+					"creatorType": "author"
+				}
+			],
+			"date": "2020",
+			"DOI": "10.1007/s10875-020-00800-y",
+			"ISSN": "02719142",
+			"abstractNote": "Background: Purine nucleoside phosphorylase (PNP) deficiency accounts for about 4% of severe combined immunodeficiency diseases. PNP deficiency is a variable disease with recurrent infections and neurodevelopmental delay. Autoimmunity and malignancy can still occur in one-third of patients. Methods: Case report. Case Presentation: An 8-year-old Saudi female who was apparently healthy presented at the age of 7 years with confirmed systemic lupus erythematosus (SLE) and lupus nephritis that were poorly controlled with conventional therapy. She also had frequent sinopulmonary and varicella infections. Preliminary immunological workup showed severe lymphopenia and depressed lymphocyte proliferation assay. The uric acid was within normal levels at 179 μmol/L (normal range, 150 to 350 μmol/L) 6 weeks after blood transfusion. Genetic study revealed a homozygous missense mutation c.265G>A in the PNP gene, resulting in a substitution of glutamic acid to lysine at amino acid 89 of the encoded protein (E89K). The PNP serum level was 798 nmol/h/mg (normal level 1354 ± 561 nmol/h/mg) 6 weeks after blood transfusion. Hematopoietic stem cell transplantation (HSCT) was planned from a matched unrelated donor; however, she developed an EBV and varicella meningoencephalitis. Atypical malignant cells suggestive of lymphoma were discovered, likely induced by EBV, and suspicious lesions were shown on brain MRI and PET scan. Unfortunately, she passed away before HSCT due to multiorgan failure. Conclusion: This report emphasizes the challenges in recognizing PNP deficiency in a patient suffering from SLE. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.",
+			"issue": "6",
+			"itemID": "Al-Saud2020833",
+			"language": "English",
+			"pages": "833-839",
+			"publicationTitle": "Journal of Clinical Immunology",
+			"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086152473&doi=10.1007%2fs10875-020-00800-y&partnerID=40&md5=e53625b83074f1e86a0c52daba9e0535",
+			"volume": "40",
+			"attachments": [],
+			"tags": [
+				{
+					"tag": "CNS lymphoma"
+				},
+				{
+					"tag": "Epstein-Barr virus"
+				},
+				{
+					"tag": "PNP"
+				},
+				{
+					"tag": "severe combined immunodeficiency"
+				},
+				{
+					"tag": "systemic lupus erythematosus"
+				}
+			],
+			"notes": [
+				{
+					"note": "<p>cited By 0</p>"
+				}
+			],
+			"seeAlso": []
+		}
+	]
+}
 ]
 /** END TEST CASES **/
