@@ -280,7 +280,7 @@ var keyRe = /[a-zA-Z0-9\-]/;
 // This is purely for historical reasons. Otherwise we risk breaking tag import
 // from some websites
 var keywordSplitOnSpace = !!Zotero.parentTranslator;
-var keywordDelimRe = /\s*[,;]\s*/;
+var keywordDelimRe = /\s*[;]\s*/;
 
 function setKeywordSplitOnSpace( val ) {
 	keywordSplitOnSpace = val;
@@ -298,7 +298,7 @@ function setKeywordDelimRe( val, flags ) {
 }
 
 function processField(item, field, value, rawValue) {
-	if (Zotero.Utilities.trim(value) == '') return null;
+	if (Zotero.Utilities.trim(value) === '') return null;
 	if (fieldMap[field]) {
 		//map DOIs + Label to Extra for unsupported item types
 		if (field == "doi" &&!ZU.fieldIsValidForType("DOI", item.itemType) && ZU.cleanDOI(value)) {
@@ -445,10 +445,23 @@ function processField(item, field, value, rawValue) {
 	else if (field == "lastchecked"|| field == "urldate"){
 		item.accessDate = value;
 	} else if (field == "keywords" || field == "keyword") {
-		item.tags = value.split(keywordDelimRe);
-		if (item.tags.length == 1 && keywordSplitOnSpace) {
-			item.tags = value.split(/\s+/);
+		const tag_groups = value.match(/(.*?), ([A-Z].*)/);
+		let EMTREEtags = tag_groups[1].split(keywordDelimRe);
+		for(var i=0;i<EMTREEtags.length;i++){
+			EMTREEtags[i]="EMTREE:"+EMTREEtags[i];
 		}
+		let MeSHtags = tag_groups[2].split(keywordDelimRe);
+		for(var i=0;i<MeSHtags.length;i++){
+			MeSHtags[i]="MeSH:"+MeSHtags[i];
+		}
+		item.tags = item.tags.concat(EMTREEtags).concat(MeSHtags);
+		//item.tags = value.split(keywordDelimRe);
+	} else if (field == "author_keywords") {
+		let AUTHORkeywords = value.split(keywordDelimRe);
+		for(var i=0;i<AUTHORkeywords.length;i++){
+			AUTHORkeywords[i]=""+AUTHORkeywords[i];
+		}
+		item.tags = item.tags.concat(AUTHORkeywords)
 	} else if (field == "comment" || field == "annote" || field == "review" || field == "notes") {
 		item.notes.push({note:Zotero.Utilities.text2html(value)});
 	} else if (field == "pdf" || field == "path" /*Papers2 compatibility*/) {
