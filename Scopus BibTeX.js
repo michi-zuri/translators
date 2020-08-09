@@ -18,7 +18,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 1,
-	"lastUpdated": "2020-08-09 20:18:49"
+	"lastUpdated": "2020-08-09 21:54:12"
 }
 
 /*
@@ -3944,792 +3944,1331 @@ var testCases = [
 			}
 		]
 	},
-{
-	"type": "import",
-	"input": "@ARTICLE{Zhang202047,\nauthor={Zhang, D. and Zhou, X. and Yan, S. and Tian, R. and Su, L. and Ding, X. and Xiao, M. and Chen, Y. and Zhao, H. and Chen, H. and Zhang, H. and Li, Z. and Li, Q. and Xu, Y. and Yan, X. and Li, Y. and Zhang, S.},\ntitle={Correlation between cytokines and coagulation-related parameters in patients with coronavirus disease 2019 admitted to ICU},\njournal={Clinica Chimica Acta},\nyear={2020},\nvolume={510},\npages={47-53},\ndoi={10.1016/j.cca.2020.07.002},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087872687&doi=10.1016%2fj.cca.2020.07.002&partnerID=40&md5=0dc09d8434258376df732ecb51c0de5d},\naffiliation={Department of Clinical Laboratory, Peking Union Medical College Hospital, Peking Union Medical College and Chinese Academy of Medical Sciences, Beijing, 100730, China; Department of Pulmonary and Critical Care Medicine, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences, Beijing, 100730, China; Department of Cardiology, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences, Beijing, 100730, China},\nabstract={Background: The novel SARS-CoV-2 caused a large number of infections and deaths worldwide. Thus, new ideas for an appropriated assessment of patients’ condition and clinical treatment are of utmost importance. Therefore, in this study, the laboratory parameters of patients with coronavirus disease 2019 (COVID-19) were evaluated to identify the correlation between cytokine expression and other laboratory parameters. Methods: A retrospective and single-center study was performed in Wuhan, involving 83 severe or critical COVID-19 patients admitted to the intensive care unit (ICU). Laboratory parameters in ICU patients with laboratory-confirmed infection of SARS-CoV2 were collected. The association between parameters was assessed by Spearman's rank correlation. Results: Patients’ median age was 66 years (IQR, 57–73), and 55 (66%) were men. Among the 83 patients, 61 (73%) had 1 or more coexisting medical condition. The median concentration of IL-2R, IL-6, IL8, IL10, and TNFα were above the normal range, without IL-1β. A significant negative correlation between IL-6 and platelet count was discovered (r2 = −0.448, P &lt; 0.001) as well as a significant correlation between IL-6 and other platelet parameters. Finally, a correlation between multiple cytokines and coagulation indicators was found, pro-inflammatory factors were found to be more associated to coagulation parameters, with the highest correlation between IL-6 and the International normalized ratio (INR) (r2 = 0.444, P &lt; 0.001). Conclusions: Our results suggested that cytokines play an important role in the pathogenesis of COVID-19. In addition, IL-6 seems more relevant in the evaluation of the condition of COVID-19 patients. © 2020 The Author(s)},\nauthor_keywords={Coagulation;  Correlation;  COVID-19;  Cytokines;  IL-6},\nkeywords={interleukin 10;  interleukin 1beta;  interleukin 2 receptor;  interleukin 6;  interleukin 8;  tumor necrosis factor, adult;  aged;  aging;  Article;  blood clotting;  China;  comorbidity;  coronavirus disease 2019;  disease association;  female;  hospital admission;  human;  human cell;  intensive care unit;  international normalized ratio;  laboratory test;  major clinical study;  male;  pathogenesis;  platelet count;  priority journal;  protein expression;  retrospective study;  Severe acute respiratory syndrome coronavirus 2},\nchemicals_cas={interleukin 8, 114308-91-7},\nfunding_details={2017-I2M-3-001},\nfunding_details={National Natural Science Foundation of ChinaNational Natural Science Foundation of China, NSFC, 81671618, 81871302},\nfunding_text 1={This research was supported by grants from the National Natural Science Foundation of China Grants ( 81671618 , 81871302 ), CAMS Innovation Fund for Medical Sciences (CIFMS) ( 2017-I2M-3-001 ), CAMS Innovation Fund for Medical Sciences (CIFMS) ( 2017-I2M-B&R-01 ).},\ncorrespondence_address1={Li, Y.; Department of Clinical Laboratory, Peking Union Medical College Hospital, Peking Union Medical College and Chinese Academy of Medical SciencesChina; email: yongzhelipumch@126.com},\npublisher={Elsevier B.V.},\nissn={00098981},\ncoden={CCATA},\npubmed_id={32645391},\nlanguage={English},\nabbrev_source_title={Clin. Chim. Acta},\ndocument_type={Article},\nsource={Scopus},\n}",
-	"items": [
-		{
-			"itemType": "journalArticle",
-			"title": "Correlation between cytokines and coagulation-related parameters in patients with coronavirus disease 2019 admitted to ICU",
-			"creators": [
-				{
-					"firstName": "D.",
-					"lastName": "Zhang",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "X.",
-					"lastName": "Zhou",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "S.",
-					"lastName": "Yan",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "R.",
-					"lastName": "Tian",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "L.",
-					"lastName": "Su",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "X.",
-					"lastName": "Ding",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "M.",
-					"lastName": "Xiao",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "Y.",
-					"lastName": "Chen",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "H.",
-					"lastName": "Zhao",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "H.",
-					"lastName": "Chen",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "H.",
-					"lastName": "Zhang",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "Z.",
-					"lastName": "Li",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "Q.",
-					"lastName": "Li",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "Y.",
-					"lastName": "Xu",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "X.",
-					"lastName": "Yan",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "Y.",
-					"lastName": "Li",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "S.",
-					"lastName": "Zhang",
-					"creatorType": "author"
-				}
-			],
-			"date": "2020",
-			"DOI": "10.1016/j.cca.2020.07.002",
-			"ISSN": "00098981",
-			"abstractNote": "Background: The novel SARS-CoV-2 caused a large number of infections and deaths worldwide. Thus, new ideas for an appropriated assessment of patients’ condition and clinical treatment are of utmost importance. Therefore, in this study, the laboratory parameters of patients with coronavirus disease 2019 (COVID-19) were evaluated to identify the correlation between cytokine expression and other laboratory parameters. Methods: A retrospective and single-center study was performed in Wuhan, involving 83 severe or critical COVID-19 patients admitted to the intensive care unit (ICU). Laboratory parameters in ICU patients with laboratory-confirmed infection of SARS-CoV2 were collected. The association between parameters was assessed by Spearman's rank correlation. Results: Patients’ median age was 66 years (IQR, 57–73), and 55 (66%) were men. Among the 83 patients, 61 (73%) had 1 or more coexisting medical condition. The median concentration of IL-2R, IL-6, IL8, IL10, and TNFα were above the normal range, without IL-1β. A significant negative correlation between IL-6 and platelet count was discovered (r2 = −0.448, P &lt; 0.001) as well as a significant correlation between IL-6 and other platelet parameters. Finally, a correlation between multiple cytokines and coagulation indicators was found, pro-inflammatory factors were found to be more associated to coagulation parameters, with the highest correlation between IL-6 and the International normalized ratio (INR) (r2 = 0.444, P &lt; 0.001). Conclusions: Our results suggested that cytokines play an important role in the pathogenesis of COVID-19. In addition, IL-6 seems more relevant in the evaluation of the condition of COVID-19 patients. © 2020 The Author(s)",
-			"itemID": "Zhang202047",
-			"language": "English",
-			"pages": "47-53",
-			"publicationTitle": "Clinica Chimica Acta",
-			"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087872687&doi=10.1016%2fj.cca.2020.07.002&partnerID=40&md5=0dc09d8434258376df732ecb51c0de5d",
-			"volume": "510",
-			"attachments": [],
-			"tags": [
-				{
-					"tag": "COVID-19"
-				},
-				{
-					"tag": "Coagulation"
-				},
-				{
-					"tag": "Correlation"
-				},
-				{
-					"tag": "Cytokines"
-				},
-				{
-					"tag": "EMTREE:Article"
-				},
-				{
-					"tag": "EMTREE:China"
-				},
-				{
-					"tag": "EMTREE:Severe acute respiratory syndrome coronavirus 2"
-				},
-				{
-					"tag": "EMTREE:aged"
-				},
-				{
-					"tag": "EMTREE:aging"
-				},
-				{
-					"tag": "EMTREE:blood clotting"
-				},
-				{
-					"tag": "EMTREE:comorbidity"
-				},
-				{
-					"tag": "EMTREE:coronavirus disease 2019"
-				},
-				{
-					"tag": "EMTREE:disease association"
-				},
-				{
-					"tag": "EMTREE:female"
-				},
-				{
-					"tag": "EMTREE:hospital admission"
-				},
-				{
-					"tag": "EMTREE:human"
-				},
-				{
-					"tag": "EMTREE:human cell"
-				},
-				{
-					"tag": "EMTREE:intensive care unit"
-				},
-				{
-					"tag": "EMTREE:interleukin 10"
-				},
-				{
-					"tag": "EMTREE:interleukin 1beta"
-				},
-				{
-					"tag": "EMTREE:interleukin 2 receptor"
-				},
-				{
-					"tag": "EMTREE:interleukin 6"
-				},
-				{
-					"tag": "EMTREE:interleukin 8"
-				},
-				{
-					"tag": "EMTREE:international normalized ratio"
-				},
-				{
-					"tag": "EMTREE:laboratory test"
-				},
-				{
-					"tag": "EMTREE:major clinical study"
-				},
-				{
-					"tag": "EMTREE:male"
-				},
-				{
-					"tag": "EMTREE:pathogenesis"
-				},
-				{
-					"tag": "EMTREE:platelet count"
-				},
-				{
-					"tag": "EMTREE:priority journal"
-				},
-				{
-					"tag": "EMTREE:protein expression"
-				},
-				{
-					"tag": "EMTREE:retrospective study"
-				},
-				{
-					"tag": "EMTREE:tumor necrosis factor, adult"
-				},
-				{
-					"tag": "IL-6"
-				}
-			],
-			"notes": [
-				{
-					"note": "<p>cited By 0</p>"
-				}
-			],
-			"seeAlso": []
-		}
-	]
-},
-{
-	"type": "import",
-	"input": "@ARTICLE{EdgarPatricio2020,\nauthor={Edgar Patricio, C.-D. and Eleanor, T.H.G. and Francisco José, C.-Z. and Gabriela, A.C.M. and Hyland, A.-O. and Fernando, G.L. and María, T.A. and Beatriz, N. and Marcos, S.-D. and Alfredo, G.P.W.},\ntitle={Clinical and radiological profile of neuromyelitis optica spectrum disorders in an Ecuadorian cohort},\njournal={Multiple Sclerosis and Related Disorders},\nyear={2020},\nvolume={44},\ndoi={10.1016/j.msard.2020.102208},\nart_number={102208},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086449309&doi=10.1016%2fj.msard.2020.102208&partnerID=40&md5=97b459965bf00dcf87287d56505b6ca2},\naffiliation={Department of Neurology. Hospital Carlos Andrade Marín. Quito. Universidad Central del Ecuador. Quito, Address: Avenida 18 de Septiembre y Ayacucho, Ecuador; Department of Neurology. Hospital Teodoro Maldonado Carbo. Guayaquil, Address: Avenida 25 de Julio, Ecuador; Department of Neurology. Hospital de Especialidades Eugenio Espejo, Quito, Address: Avenida Gran Colombia, Ecuador; Department of Neurology. Hospital José Carrasco Arteaga de Cuenca, Address: Intersección Popayán, Ecuador; Department of Neurology. Hospital de Especialidades Eugenio Espejo, Quito, Address: Avenida Gran Colombia, Ecuador; Department of Neurology. Hospital Carlos Andrade Marín. Quito. Pontificia Universidad Católica del Ecuador. Quito, Address: Avenida 12 de Octubre, Ecuador},\nabstract={Background: Neuromyelitis optica spectrum disorder (NMOSD) is a complex disease characterized by a severe inflammation of the central nervous system (CNS). This disease typically manifests with recurrent optic neuritis (ON) and acute transverse myelitis (ATM). The clinical and radiological spectrum of NMOSD is little known in Latin America (LATAM) and few reports have been published in the literature so far. In Ecuador, no reports on NMOSD have been published. For this reason we aimed to assess the demographic, clinical and imaging characteristics of patients with NMOSD from third level hospitals from Ecuador. Methods: This is a descriptive study in which we assessed medical reports of patients with inflammatory demyelinating diseases who were attended in third level hospitals from Ecuador in 2017. Then we applied the 2015 diagnostic criteria, those patients who met the new NMOSD diagnostic criteria were selected and analyzed. Additionally, exploratory sub-analyses were subsequently carried out. Results: We identified 59 patients with NMOSD, the relative frequency of NMOSD was 15.9%. The multiple sclerosis (MS) /NMOSD ratio was 5.2:1. Twenty four percent of patients were newly defined as having NMOSD when 2015 criteria was applied. The median time to diagnoses was shorter by the 2015 criteria than 2006 criteria (p<0.001). NMOSD was more prevalent in women (female/male ratio 4.4:1). The disease onset was more frequent at the fourth decade of life. The most common symptoms at the disease onset were ON and the association of ON with ATM. The mean of expanded disability status scale (EDSS) was 4.8 (SD±1.8). Concomitant autoimmune diseases were infrequent in this population (11.9%). The brain magnetic resonance imaging (MRI) abnormalities were present in 25.7% of patients at disease onset. Spinal cord MRI showed longitudinally extensive transverse myelitis (LETM) in 91.5% of cases. Recurrent NMOSD was frequent in this cohort (88%). Positivity for antibodies against aquaporin-4 (AQP4-IgG) which was measured through indirect immunofluorescence assay (IIF) was identified in 81% of the patients tested. Patients with seronegative AQP4-IgG had higher grade of disability than seropositive patients (p<0.05). Ninety eight percent of patients received treatment with immunosuppressive drugs. Three patients died due to gastric cancer (1 patient) and infectious diseases (2 patients). Conclusions: This is the first descriptive study in an Ecuadorian cohort of patients with NMOSD. We show a wide epidemiological, clinical and radiological spectrum of NMOSD. © 2020 Elsevier B.V.},\nauthor_keywords={AQP4-IgG;  Ecuador;  Epidemiology;  Neuromyelitis optica spectrum disorder},\nkeywords={aquaporin 4;  azathioprine;  immunoglobulin G;  immunosuppressive agent;  mycophenolic acid;  prednisone;  rituximab, adult;  Article;  autoimmune disease;  cause of death;  cohort analysis;  controlled study;  demyelinating disease;  descriptive research;  Ecuador;  Ecuadorean;  Expanded Disability Status Scale;  female;  human;  immunofluorescence;  immunosuppressive treatment;  infection;  major clinical study;  male;  myelitis;  myelooptic neuropathy;  neuroimaging;  nuclear magnetic resonance imaging;  onset age;  prevalence;  recurrent disease;  retrospective study;  sex ratio;  spinal cord;  stomach cancer},\nchemicals_cas={aquaporin 4, 175960-54-0; azathioprine, 446-86-6; immunoglobulin G, 97794-27-9; mycophenolic acid, 23047-11-2, 24280-93-1; prednisone, 53-03-2; rituximab, 174722-31-7},\ncorrespondence_address1={Edgar Patricio, C.-D.; Department of Neurology. Hospital Carlos Andrade Marín. Quito. Universidad Central del Ecuador. Quito, Address: Avenida 18 de Septiembre y Ayacucho, Ecuador; email: patocorrea2010@yahoo.com},\npublisher={Elsevier B.V.},\nissn={22110348},\npubmed_id={32562910},\nlanguage={English},\nabbrev_source_title={Mult. Scler. Relat. Disord.},\ndocument_type={Article},\nsource={Scopus},\n}",
-	"items": [
-		{
-			"itemType": "journalArticle",
-			"title": "Clinical and radiological profile of neuromyelitis optica spectrum disorders in an Ecuadorian cohort",
-			"creators": [
-				{
-					"firstName": "C.-D.",
-					"lastName": "Edgar Patricio",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "T.H.G.",
-					"lastName": "Eleanor",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "C.-Z.",
-					"lastName": "Francisco José",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "A.C.M.",
-					"lastName": "Gabriela",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "A.-O.",
-					"lastName": "Hyland",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "G.L.",
-					"lastName": "Fernando",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "T.A.",
-					"lastName": "María",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "N.",
-					"lastName": "Beatriz",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "S.-D.",
-					"lastName": "Marcos",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "G.P.W.",
-					"lastName": "Alfredo",
-					"creatorType": "author"
-				}
-			],
-			"date": "2020",
-			"DOI": "10.1016/j.msard.2020.102208",
-			"ISSN": "22110348",
-			"abstractNote": "Background: Neuromyelitis optica spectrum disorder (NMOSD) is a complex disease characterized by a severe inflammation of the central nervous system (CNS). This disease typically manifests with recurrent optic neuritis (ON) and acute transverse myelitis (ATM). The clinical and radiological spectrum of NMOSD is little known in Latin America (LATAM) and few reports have been published in the literature so far. In Ecuador, no reports on NMOSD have been published. For this reason we aimed to assess the demographic, clinical and imaging characteristics of patients with NMOSD from third level hospitals from Ecuador. Methods: This is a descriptive study in which we assessed medical reports of patients with inflammatory demyelinating diseases who were attended in third level hospitals from Ecuador in 2017. Then we applied the 2015 diagnostic criteria, those patients who met the new NMOSD diagnostic criteria were selected and analyzed. Additionally, exploratory sub-analyses were subsequently carried out. Results: We identified 59 patients with NMOSD, the relative frequency of NMOSD was 15.9%. The multiple sclerosis (MS) /NMOSD ratio was 5.2:1. Twenty four percent of patients were newly defined as having NMOSD when 2015 criteria was applied. The median time to diagnoses was shorter by the 2015 criteria than 2006 criteria (p<0.001). NMOSD was more prevalent in women (female/male ratio 4.4:1). The disease onset was more frequent at the fourth decade of life. The most common symptoms at the disease onset were ON and the association of ON with ATM. The mean of expanded disability status scale (EDSS) was 4.8 (SD±1.8). Concomitant autoimmune diseases were infrequent in this population (11.9%). The brain magnetic resonance imaging (MRI) abnormalities were present in 25.7% of patients at disease onset. Spinal cord MRI showed longitudinally extensive transverse myelitis (LETM) in 91.5% of cases. Recurrent NMOSD was frequent in this cohort (88%). Positivity for antibodies against aquaporin-4 (AQP4-IgG) which was measured through indirect immunofluorescence assay (IIF) was identified in 81% of the patients tested. Patients with seronegative AQP4-IgG had higher grade of disability than seropositive patients (p<0.05). Ninety eight percent of patients received treatment with immunosuppressive drugs. Three patients died due to gastric cancer (1 patient) and infectious diseases (2 patients). Conclusions: This is the first descriptive study in an Ecuadorian cohort of patients with NMOSD. We show a wide epidemiological, clinical and radiological spectrum of NMOSD. © 2020 Elsevier B.V.",
-			"itemID": "EdgarPatricio2020",
-			"language": "English",
-			"publicationTitle": "Multiple Sclerosis and Related Disorders",
-			"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086449309&doi=10.1016%2fj.msard.2020.102208&partnerID=40&md5=97b459965bf00dcf87287d56505b6ca2",
-			"volume": "44",
-			"attachments": [],
-			"tags": [
-				{
-					"tag": "AQP4-IgG"
-				},
-				{
-					"tag": "EMTREE:Article"
-				},
-				{
-					"tag": "EMTREE:Ecuador"
-				},
-				{
-					"tag": "EMTREE:Ecuadorean"
-				},
-				{
-					"tag": "EMTREE:Expanded Disability Status Scale"
-				},
-				{
-					"tag": "EMTREE:aquaporin 4"
-				},
-				{
-					"tag": "EMTREE:autoimmune disease"
-				},
-				{
-					"tag": "EMTREE:azathioprine"
-				},
-				{
-					"tag": "EMTREE:cause of death"
-				},
-				{
-					"tag": "EMTREE:cohort analysis"
-				},
-				{
-					"tag": "EMTREE:controlled study"
-				},
-				{
-					"tag": "EMTREE:demyelinating disease"
-				},
-				{
-					"tag": "EMTREE:descriptive research"
-				},
-				{
-					"tag": "EMTREE:female"
-				},
-				{
-					"tag": "EMTREE:human"
-				},
-				{
-					"tag": "EMTREE:immunofluorescence"
-				},
-				{
-					"tag": "EMTREE:immunoglobulin G"
-				},
-				{
-					"tag": "EMTREE:immunosuppressive agent"
-				},
-				{
-					"tag": "EMTREE:immunosuppressive treatment"
-				},
-				{
-					"tag": "EMTREE:infection"
-				},
-				{
-					"tag": "EMTREE:major clinical study"
-				},
-				{
-					"tag": "EMTREE:male"
-				},
-				{
-					"tag": "EMTREE:mycophenolic acid"
-				},
-				{
-					"tag": "EMTREE:myelitis"
-				},
-				{
-					"tag": "EMTREE:myelooptic neuropathy"
-				},
-				{
-					"tag": "EMTREE:neuroimaging"
-				},
-				{
-					"tag": "EMTREE:nuclear magnetic resonance imaging"
-				},
-				{
-					"tag": "EMTREE:onset age"
-				},
-				{
-					"tag": "EMTREE:prednisone"
-				},
-				{
-					"tag": "EMTREE:prevalence"
-				},
-				{
-					"tag": "EMTREE:recurrent disease"
-				},
-				{
-					"tag": "EMTREE:retrospective study"
-				},
-				{
-					"tag": "EMTREE:rituximab, adult"
-				},
-				{
-					"tag": "EMTREE:sex ratio"
-				},
-				{
-					"tag": "EMTREE:spinal cord"
-				},
-				{
-					"tag": "EMTREE:stomach cancer"
-				},
-				{
-					"tag": "Ecuador"
-				},
-				{
-					"tag": "Epidemiology"
-				},
-				{
-					"tag": "Neuromyelitis optica spectrum disorder"
-				}
-			],
-			"notes": [
-				{
-					"note": "<p>cited By 0</p>"
-				}
-			],
-			"seeAlso": []
-		}
-	]
-},
-{
-	"type": "import",
-	"input": "@ARTICLE{Salama20203167,\nauthor={Salama, M. and Akan, A. and Mueller, M.R.},\ntitle={Transcutaneous Stimulation of Auricular Branch of the Vagus Nerve Attenuates the Acute Inflammatory Response After Lung Lobectomy},\njournal={World Journal of Surgery},\nyear={2020},\nvolume={44},\nnumber={9},\npages={3167-3174},\ndoi={10.1007/s00268-020-05543-w},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85083958097&doi=10.1007%2fs00268-020-05543-w&partnerID=40&md5=1877aeab77a87729f1a5c34953c76eb0},\naffiliation={Department of Thoracic Surgery, North Clinic, Bruennerstrasse 68, Vienna, 1210, Austria; Medical Faculty, Thoracic Surgery, Sigmund Freud University, Vienna, Austria; Institute of Thoracic Oncology, Karl Landsteiner Society, St. Poelten, Austria},\nabstract={Objectives: Systemic inflammation is a potentially debilitating complication of thoracic surgeries with significant physical and economic morbidity. There is compelling evidence for the role of the central nervous system in regulating inflammatory processes through humoral mechanisms. Activation of the afferent vagus nerve by cytokines triggers anti-inflammatory responses. Peripheral electrical stimulation of the vagus nerve in vivo during lethal endotoxemia in rats inhibited tumor necrosis factor synthesis and prevented shock development. However, the vagal regulatory role of systemic inflammation after lung lobectomy is unknown. Methods: One hundred patients who underwent lobectomy via thoracotomy were recruited and equally randomized to treated group or controls. Intermittent stimulation of the auricular branch of vagus nerve in the triangular fossa was applied in the treated group using neurostimulator V (Ducest®, Germany), starting 24 h preoperatively and continued till the 4th postoperative day (POD). Inflammatory interleukins (IL) were analyzed using ELISA preoperatively, on the 1st and 4th POD. Results: On the 1st POD, patients who underwent neurostimulation had reduced serum concentrations of CRP (p = 0.01), IL6 (p = 0.02) but elevated IL10 (p = 0.03) versus controls. On the 4th POD, serum concentrations of CRP, IL6 and IL10 were similar in both groups. Moreover, the treated group was associated with lower incidence of pneumonia (p = 0.04) and shorter hospitalization time (p = 0.04) versus controls. Conclusions: Modulations in the brain stem caused by noninvasive transcutaneous stimulation of the vagus nerve after lung lobectomy attenuate the acute postsurgical inflammatory response by the regulation of IL6 and IL10, resulting in reduced incidence of postoperative pneumonia and short hospitalization time. Clinical Trial Registry Number: NCT03204968. © 2020, Société Internationale de Chirurgie.},\nfunding_text 1={This study was supported by the grant to Dr. Salama from ACMIT—Austrian Center for Medical Innovation and Technology.},\ncorrespondence_address1={Mueller, M.R.; Department of Thoracic Surgery, North Clinic, Bruennerstrasse 68, Austria; email: michael.rolf.mueller@wienkav.at},\npublisher={Springer},\nissn={03642313},\ncoden={WJSUD},\npubmed_id={32358638},\nlanguage={English},\nabbrev_source_title={World J. Surg.},\ndocument_type={Article},\nsource={Scopus},\n}",
-	"items": [
-		{
-			"itemType": "journalArticle",
-			"title": "Transcutaneous Stimulation of Auricular Branch of the Vagus Nerve Attenuates the Acute Inflammatory Response After Lung Lobectomy",
-			"creators": [
-				{
-					"firstName": "M.",
-					"lastName": "Salama",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "A.",
-					"lastName": "Akan",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "M.R.",
-					"lastName": "Mueller",
-					"creatorType": "author"
-				}
-			],
-			"date": "2020",
-			"DOI": "10.1007/s00268-020-05543-w",
-			"ISSN": "03642313",
-			"abstractNote": "Objectives: Systemic inflammation is a potentially debilitating complication of thoracic surgeries with significant physical and economic morbidity. There is compelling evidence for the role of the central nervous system in regulating inflammatory processes through humoral mechanisms. Activation of the afferent vagus nerve by cytokines triggers anti-inflammatory responses. Peripheral electrical stimulation of the vagus nerve in vivo during lethal endotoxemia in rats inhibited tumor necrosis factor synthesis and prevented shock development. However, the vagal regulatory role of systemic inflammation after lung lobectomy is unknown. Methods: One hundred patients who underwent lobectomy via thoracotomy were recruited and equally randomized to treated group or controls. Intermittent stimulation of the auricular branch of vagus nerve in the triangular fossa was applied in the treated group using neurostimulator V (Ducest®, Germany), starting 24 h preoperatively and continued till the 4th postoperative day (POD). Inflammatory interleukins (IL) were analyzed using ELISA preoperatively, on the 1st and 4th POD. Results: On the 1st POD, patients who underwent neurostimulation had reduced serum concentrations of CRP (p = 0.01), IL6 (p = 0.02) but elevated IL10 (p = 0.03) versus controls. On the 4th POD, serum concentrations of CRP, IL6 and IL10 were similar in both groups. Moreover, the treated group was associated with lower incidence of pneumonia (p = 0.04) and shorter hospitalization time (p = 0.04) versus controls. Conclusions: Modulations in the brain stem caused by noninvasive transcutaneous stimulation of the vagus nerve after lung lobectomy attenuate the acute postsurgical inflammatory response by the regulation of IL6 and IL10, resulting in reduced incidence of postoperative pneumonia and short hospitalization time. Clinical Trial Registry Number: NCT03204968. © 2020, Société Internationale de Chirurgie.",
-			"issue": "9",
-			"itemID": "Salama20203167",
-			"language": "English",
-			"pages": "3167-3174",
-			"publicationTitle": "World Journal of Surgery",
-			"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85083958097&doi=10.1007%2fs00268-020-05543-w&partnerID=40&md5=1877aeab77a87729f1a5c34953c76eb0",
-			"volume": "44",
-			"attachments": [],
-			"tags": [],
-			"notes": [
-				{
-					"note": "<p>cited By 0</p>"
-				}
-			],
-			"seeAlso": []
-		}
-	]
-},
-{
-	"type": "import",
-	"input": "@ARTICLE{Blincoe2020901,\nauthor={Blincoe, A. and Heeg, M. and Campbell, P.K. and Hines, M. and Khojah, A. and Klein-Gitelman, M. and Talano, J.-A. and Speckmann, C. and Touzot, F. and Lankester, A. and Legger, G.E. and Rivière, J.G. and Garcia-Prat, M. and Alonso, L. and Putti, M.C. and Lehmberg, K. and Maier, S. and El Chazli, Y. and Elmaksoud, M.A. and Astigarraga, I. and Kurjane, N. and Bulina, I. and Kenina, V. and Bryceson, Y. and Rascon, J. and Lortie, A. and Goldstein, G. and Booth, C. and Worth, A. and Wassmer, E. and Schmitt, E.G. and Warren, J.T. and Bednarski, J.J. and Ali, S. and Chiang, K.-Y. and Krueger, J. and Henry, M.M. and Holland, S.M. and Marsh, R.A. and Ehl, S. and Haddad, E.},\ntitle={Neuroinflammatory Disease as an Isolated Manifestation of Hemophagocytic Lymphohistiocytosis},\njournal={Journal of Clinical Immunology},\nyear={2020},\nvolume={40},\nnumber={6},\npages={901-916},\ndoi={10.1007/s10875-020-00814-6},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087567833&doi=10.1007%2fs10875-020-00814-6&partnerID=40&md5=a3b29cad9138e1a56f75e64ceb15eec3},\naffiliation={CHU Sainte-Justine, Department of Pediatrics, Department of Microbiology, Infectious Diseases and Immunology, University of Montreal, Montreal, QC  H3T 1C5, Canada; Department of Paediatric Immunology and Allergy, Starship Children’s Health, Auckland, New Zealand; Institute for Immunodeficiency, Center for Chronic Immunodeficiency, Medical Center, Faculty of Medicine, University of Freiburg, Breisacher Strasse 115, Freiburg, 79106, Germany; Center for Pediatrics, Medical Center - University of Freiburg, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Berta-Ottenstein-Programme, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Department of Oncology, St. Jude Children’s Research Hospital, Memphis, TN, United States; Department of Pediatric Medicine, Division of Critical Care, St Jude Children’s Research Hospital, Memphis, TN, United States; Department of Rheumatology, Ann and Robert H Lurie Children’s Hospital and Children’s Hospital of Chicago, Chicago, IL, United States; Department of Rheumatology, Northwestern University Feinberg School of Medicine, Chicago, IL, United States; Pediatric Hematology and Oncology, Children’s Hospital of Wisconsin-Milwaukee Campus, Milwaukee, WI, United States; Department of Pediatric and Adolescent Medicine, Division of Pediatric Hematology and Oncology, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Willem-Alexander Children’s Hospital, Department of Pediatrics, Leiden University Medical Center, Leiden, Netherlands; Department of Pediatrics, University of Groningen, University Medical Centre Groningen, Groningen, Netherlands; Pediatric Infectious Diseases and Immunodeficiencies Unit, Hospital Universitari Vall d’Hebron, Vall d’Hebron Research Institute, Universitat Autònoma de Barcelona, Barcelona, Spain; Jeffrey Modell Foundation Excellence Centre, Barcelona, Spain; Pediatric Hematology and Oncology Department, Hospital Universitari Vall d’Hebron, Vall d’Hebron Research Institute, Universitat Autònoma de Barcelona, Barcelona, Spain; Department of Pediatrics, University of Padua Medical School, Padua, Italy; Division of Pediatric Stem Cell Transplantation and Immunology, University Medical Center, Hamburg, Germany; Hematology and Oncology Unit, Alexandria University Children’s Hospital, Department of Pediatrics, Faculty of Medicine, Alexandria University, Alexandria, Egypt; Neurology Unit, Alexandria University Children’s Hospital, Department of Pediatrics, Faculty of Medicine, Alexandria University, Alexandria, Egypt; Department of Pediatrics, Hospital Universitario Cruces, IIS BioCruces Bizkaia, Department of Pediatrics, Faculty of Medicine, UPV/EHU, Barakaldo, Bizkaia, Spain; Stradins Clinical University Hospital, Riga, Latvia; Department of Biology and Microbiology, Rigas Stradins University, Riga, Latvia; Department of Rheumatology, Stradins Clinical University Hospital, Riga, Latvia; Department of Neurology, Hospital Gailezers, Riga, Latvia; Center for Hematology and Regenerative Medicine, Department of Medicine Huddinge, Karolinska Institutet, Karolinska University Hospital, Stockholm, Sweden; Center for Pediatric Oncology and Hematology, Vilnius University Hospital Santaros Klinikos, Vilnius, Lithuania; Institute of Clinical Medicine, Vilnius University, Vilnius, Lithuania; CHU Sainte Justine, Department of Neurology, Cerebral Electrophysiology Laboratory, Department of Neurosciences, University of Montreal, Montreal, QC, Canada; Department of Pediatric Hematology-Oncology, Hadassah-Hebrew University Medical Center, Ein Kerem, Jerusalem, Israel; Department of Pediatric Immunology, Great Ormond Street Hospital, London, WC1N 3JH, United Kingdom; Department of Neurology, Birmingham Women’s and Children’s Hospital, Birmingham, United Kingdom; Department of Pediatrics, Washington University School of Medicine in St. Louis, St. Louis, MO, United States; Division of Hematology/Oncology/BMT, The Hospital for Sick Children, Toronto, ON, Canada; Department of Pediatrics, University of Toronto, Toronto, ON, Canada; Centre for Cancer and Blood Disorders, Phoenix Children’s Hospital, Phoenix, United States; Division of Intramural Research, Laboratory of Clinical Immunology and Microbiology, National Institute of Allergy and Infectious Diseases, National Institutes of Health, Bethesda, United States; Department of Pediatrics, University of Cincinnati, Division of Bone Marrow Transplantation and Immune Deficiency, Cincinnati Children’s Medical Centre, Cincinnati, OH, United States},\nabstract={Isolated neuroinflammatory disease has been described in case reports of familial hemophagocytic lymphohistiocytosis (FHL), but the clinical spectrum of disease manifestations, response to therapy and prognosis remain poorly defined. We combined an international survey with a literature search to identify FHL patients with (i) initial presentation with isolated neurological symptoms; (ii) absence of cytopenia and splenomegaly at presentation; and (iii) systemic HLH features no earlier than 3 months after neurological presentation. Thirty-eight (20 unreported) patients were identified with initial diagnoses including acute demyelinating encephalopathy, leukoencephalopathy, CNS vasculitis, multiple sclerosis, and encephalitis. Median age at presentation was 6.5 years, most commonly with ataxia/gait disturbance (75%) and seizures (53%). Diffuse multifocal white matter changes (79%) and cerebellar involvement (61%) were common MRI findings. CSF cell count and protein were increased in 22/29 and 15/29 patients, respectively. Fourteen patients progressed to systemic inflammatory disease fulfilling HLH-2004 criteria at a mean of 36.9 months after initial neurological presentation. Mutations were detected in PRF1 in 23 patients (61%), RAB27A in 10 (26%), UNC13D in 3 (8%), LYST in 1 (3%), and STXBP2 in 1 (3%) with a mean interval to diagnosis of 28.3 months. Among 19 patients who underwent HSCT, 11 neurologically improved, 4 were stable, one relapsed, and 3 died. Among 14 non-transplanted patients, only 3 improved or had stable disease, one relapsed, and 10 died. Isolated CNS-HLH is a rare and often overlooked cause of inflammatory brain disease. HLH-directed therapy followed by HSCT seems to improve survival and outcome. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.},\nauthor_keywords={CNS disease;  CNS inflammation;  Familial hemophagocytic lymphohistiocytosis;  therapy},\nfunding_details={Bundesministerium fÃ¼r Bildung und ForschungBundesministerium fÃ¼r Bildung und Forschung, BMBF, 01EO1303},\nfunding_details={Deutsche ForschungsgemeinschaftDeutsche Forschungsgemeinschaft, DFG, SFB1160, TPA01},\nfunding_details={Deutsche KinderkrebsstiftungDeutsche Kinderkrebsstiftung, DKS 2018.11, DKS 2016.04},\nfunding_details={Deutsche ForschungsgemeinschaftDeutsche Forschungsgemeinschaft, DFG},\nfunding_text 1={This study was supported by the German Research Foundation (DFG SFB1160, TPA01), the Bundesministerium für Bildung und Forschung (01EO1303), the Deutsche Kinderkrebsstiftung (DKS 2016.04 and DKS 2018.11), and the Pediatric Immunology Research Chair, Bank of Montreal.},\ncorrespondence_address1={Haddad, E.; CHU Sainte-Justine, Department of Pediatrics, Department of Microbiology, Infectious Diseases and Immunology, University of Montreal, Institute for Immunodeficiency, Center for Chronic Immunodeficiency, Medical Center, Faculty of Medicine, University of Freiburg, Breisacher Strasse 115, Canada; email: elie.haddad@umontreal.ca},\npublisher={Springer},\nissn={02719142},\ncoden={JCIMD},\npubmed_id={32638196},\nlanguage={English},\nabbrev_source_title={J. Clin. Immunol.},\ndocument_type={Article},\nsource={Scopus},\n}",
-	"items": [
-		{
-			"itemType": "journalArticle",
-			"title": "Neuroinflammatory Disease as an Isolated Manifestation of Hemophagocytic Lymphohistiocytosis",
-			"creators": [
-				{
-					"firstName": "A.",
-					"lastName": "Blincoe",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "M.",
-					"lastName": "Heeg",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "P.K.",
-					"lastName": "Campbell",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "M.",
-					"lastName": "Hines",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "A.",
-					"lastName": "Khojah",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "M.",
-					"lastName": "Klein-Gitelman",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "J.-A.",
-					"lastName": "Talano",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "C.",
-					"lastName": "Speckmann",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "F.",
-					"lastName": "Touzot",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "A.",
-					"lastName": "Lankester",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "G.E.",
-					"lastName": "Legger",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "J.G.",
-					"lastName": "Rivière",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "M.",
-					"lastName": "Garcia-Prat",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "L.",
-					"lastName": "Alonso",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "M.C.",
-					"lastName": "Putti",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "K.",
-					"lastName": "Lehmberg",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "S.",
-					"lastName": "Maier",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "Y.",
-					"lastName": "El Chazli",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "M.A.",
-					"lastName": "Elmaksoud",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "I.",
-					"lastName": "Astigarraga",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "N.",
-					"lastName": "Kurjane",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "I.",
-					"lastName": "Bulina",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "V.",
-					"lastName": "Kenina",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "Y.",
-					"lastName": "Bryceson",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "J.",
-					"lastName": "Rascon",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "A.",
-					"lastName": "Lortie",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "G.",
-					"lastName": "Goldstein",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "C.",
-					"lastName": "Booth",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "A.",
-					"lastName": "Worth",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "E.",
-					"lastName": "Wassmer",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "E.G.",
-					"lastName": "Schmitt",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "J.T.",
-					"lastName": "Warren",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "J.J.",
-					"lastName": "Bednarski",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "S.",
-					"lastName": "Ali",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "K.-Y.",
-					"lastName": "Chiang",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "J.",
-					"lastName": "Krueger",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "M.M.",
-					"lastName": "Henry",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "S.M.",
-					"lastName": "Holland",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "R.A.",
-					"lastName": "Marsh",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "S.",
-					"lastName": "Ehl",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "E.",
-					"lastName": "Haddad",
-					"creatorType": "author"
-				}
-			],
-			"date": "2020",
-			"DOI": "10.1007/s10875-020-00814-6",
-			"ISSN": "02719142",
-			"abstractNote": "Isolated neuroinflammatory disease has been described in case reports of familial hemophagocytic lymphohistiocytosis (FHL), but the clinical spectrum of disease manifestations, response to therapy and prognosis remain poorly defined. We combined an international survey with a literature search to identify FHL patients with (i) initial presentation with isolated neurological symptoms; (ii) absence of cytopenia and splenomegaly at presentation; and (iii) systemic HLH features no earlier than 3 months after neurological presentation. Thirty-eight (20 unreported) patients were identified with initial diagnoses including acute demyelinating encephalopathy, leukoencephalopathy, CNS vasculitis, multiple sclerosis, and encephalitis. Median age at presentation was 6.5 years, most commonly with ataxia/gait disturbance (75%) and seizures (53%). Diffuse multifocal white matter changes (79%) and cerebellar involvement (61%) were common MRI findings. CSF cell count and protein were increased in 22/29 and 15/29 patients, respectively. Fourteen patients progressed to systemic inflammatory disease fulfilling HLH-2004 criteria at a mean of 36.9 months after initial neurological presentation. Mutations were detected in PRF1 in 23 patients (61%), RAB27A in 10 (26%), UNC13D in 3 (8%), LYST in 1 (3%), and STXBP2 in 1 (3%) with a mean interval to diagnosis of 28.3 months. Among 19 patients who underwent HSCT, 11 neurologically improved, 4 were stable, one relapsed, and 3 died. Among 14 non-transplanted patients, only 3 improved or had stable disease, one relapsed, and 10 died. Isolated CNS-HLH is a rare and often overlooked cause of inflammatory brain disease. HLH-directed therapy followed by HSCT seems to improve survival and outcome. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.",
-			"issue": "6",
-			"itemID": "Blincoe2020901",
-			"language": "English",
-			"pages": "901-916",
-			"publicationTitle": "Journal of Clinical Immunology",
-			"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087567833&doi=10.1007%2fs10875-020-00814-6&partnerID=40&md5=a3b29cad9138e1a56f75e64ceb15eec3",
-			"volume": "40",
-			"attachments": [],
-			"tags": [
-				{
-					"tag": "CNS disease"
-				},
-				{
-					"tag": "CNS inflammation"
-				},
-				{
-					"tag": "Familial hemophagocytic lymphohistiocytosis"
-				},
-				{
-					"tag": "therapy"
-				}
-			],
-			"notes": [
-				{
-					"note": "<p>cited By 0</p>"
-				}
-			],
-			"seeAlso": []
-		}
-	]
-},
-{
-	"type": "import",
-	"input": "@ARTICLE{Al-Saud2020833,\nauthor={Al-Saud, B. and Al Alawi, Z. and Hussain, F.B. and Hershfield, M. and Alkuraya, F.S. and Al-Mayouf, S.M.},\ntitle={A Case with Purine Nucleoside Phosphorylase Deficiency Suffering from Late-Onset Systemic Lupus Erythematosus and Lymphoma},\njournal={Journal of Clinical Immunology},\nyear={2020},\nvolume={40},\nnumber={6},\npages={833-839},\ndoi={10.1007/s10875-020-00800-y},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086152473&doi=10.1007%2fs10875-020-00800-y&partnerID=40&md5=e53625b83074f1e86a0c52daba9e0535},\naffiliation={Section of Allergy and Immunology, Department of Pediatrics, Division of Allergy & Immunology, King Faisal Specialist Hospital & Research Center, P.O. Box 3354, MBC-58, Riyadh, 11211, Saudi Arabia; College of Medicine, Alfaisal University, Riyadh, Saudi Arabia; Department of Pediatrics, College of Medicine, King Faisal University, Alhasa, Saudi Arabia; Department of Radiology, King Faisal Specialist Hospital & Research Center, Riyadh, Saudi Arabia; Department of Medicine, Duke University Medical Center, Durham, NC, United States; Department of Genetics, King Faisal Specialist Hospital and Research Center, Riyadh, Saudi Arabia; Department of Pediatrics, Division of Rheumatology, King Faisal Specialist Hospital & Research Center, Riyadh, Saudi Arabia},\nabstract={Background: Purine nucleoside phosphorylase (PNP) deficiency accounts for about 4% of severe combined immunodeficiency diseases. PNP deficiency is a variable disease with recurrent infections and neurodevelopmental delay. Autoimmunity and malignancy can still occur in one-third of patients. Methods: Case report. Case Presentation: An 8-year-old Saudi female who was apparently healthy presented at the age of 7 years with confirmed systemic lupus erythematosus (SLE) and lupus nephritis that were poorly controlled with conventional therapy. She also had frequent sinopulmonary and varicella infections. Preliminary immunological workup showed severe lymphopenia and depressed lymphocyte proliferation assay. The uric acid was within normal levels at 179 μmol/L (normal range, 150 to 350 μmol/L) 6 weeks after blood transfusion. Genetic study revealed a homozygous missense mutation c.265G>A in the PNP gene, resulting in a substitution of glutamic acid to lysine at amino acid 89 of the encoded protein (E89K). The PNP serum level was 798 nmol/h/mg (normal level 1354 ± 561 nmol/h/mg) 6 weeks after blood transfusion. Hematopoietic stem cell transplantation (HSCT) was planned from a matched unrelated donor; however, she developed an EBV and varicella meningoencephalitis. Atypical malignant cells suggestive of lymphoma were discovered, likely induced by EBV, and suspicious lesions were shown on brain MRI and PET scan. Unfortunately, she passed away before HSCT due to multiorgan failure. Conclusion: This report emphasizes the challenges in recognizing PNP deficiency in a patient suffering from SLE. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.},\nauthor_keywords={CNS lymphoma;  Epstein-Barr virus;  PNP;  severe combined immunodeficiency;  systemic lupus erythematosus},\ncorrespondence_address1={Al-Saud, B.; Section of Allergy and Immunology, Department of Pediatrics, Division of Allergy & Immunology, King Faisal Specialist Hospital & Research Center, P.O. Box 3354, MBC-58, Saudi Arabia; email: balsaud@kfshrc.edu.sa},\npublisher={Springer},\nissn={02719142},\ncoden={JCIMD},\npubmed_id={32514656},\nlanguage={English},\nabbrev_source_title={J. Clin. Immunol.},\ndocument_type={Article},\nsource={Scopus},\n}",
-	"items": [
-		{
-			"itemType": "journalArticle",
-			"title": "A Case with Purine Nucleoside Phosphorylase Deficiency Suffering from Late-Onset Systemic Lupus Erythematosus and Lymphoma",
-			"creators": [
-				{
-					"firstName": "B.",
-					"lastName": "Al-Saud",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "Z.",
-					"lastName": "Al Alawi",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "F.B.",
-					"lastName": "Hussain",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "M.",
-					"lastName": "Hershfield",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "F.S.",
-					"lastName": "Alkuraya",
-					"creatorType": "author"
-				},
-				{
-					"firstName": "S.M.",
-					"lastName": "Al-Mayouf",
-					"creatorType": "author"
-				}
-			],
-			"date": "2020",
-			"DOI": "10.1007/s10875-020-00800-y",
-			"ISSN": "02719142",
-			"abstractNote": "Background: Purine nucleoside phosphorylase (PNP) deficiency accounts for about 4% of severe combined immunodeficiency diseases. PNP deficiency is a variable disease with recurrent infections and neurodevelopmental delay. Autoimmunity and malignancy can still occur in one-third of patients. Methods: Case report. Case Presentation: An 8-year-old Saudi female who was apparently healthy presented at the age of 7 years with confirmed systemic lupus erythematosus (SLE) and lupus nephritis that were poorly controlled with conventional therapy. She also had frequent sinopulmonary and varicella infections. Preliminary immunological workup showed severe lymphopenia and depressed lymphocyte proliferation assay. The uric acid was within normal levels at 179 μmol/L (normal range, 150 to 350 μmol/L) 6 weeks after blood transfusion. Genetic study revealed a homozygous missense mutation c.265G>A in the PNP gene, resulting in a substitution of glutamic acid to lysine at amino acid 89 of the encoded protein (E89K). The PNP serum level was 798 nmol/h/mg (normal level 1354 ± 561 nmol/h/mg) 6 weeks after blood transfusion. Hematopoietic stem cell transplantation (HSCT) was planned from a matched unrelated donor; however, she developed an EBV and varicella meningoencephalitis. Atypical malignant cells suggestive of lymphoma were discovered, likely induced by EBV, and suspicious lesions were shown on brain MRI and PET scan. Unfortunately, she passed away before HSCT due to multiorgan failure. Conclusion: This report emphasizes the challenges in recognizing PNP deficiency in a patient suffering from SLE. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.",
-			"issue": "6",
-			"itemID": "Al-Saud2020833",
-			"language": "English",
-			"pages": "833-839",
-			"publicationTitle": "Journal of Clinical Immunology",
-			"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086152473&doi=10.1007%2fs10875-020-00800-y&partnerID=40&md5=e53625b83074f1e86a0c52daba9e0535",
-			"volume": "40",
-			"attachments": [],
-			"tags": [
-				{
-					"tag": "CNS lymphoma"
-				},
-				{
-					"tag": "Epstein-Barr virus"
-				},
-				{
-					"tag": "PNP"
-				},
-				{
-					"tag": "severe combined immunodeficiency"
-				},
-				{
-					"tag": "systemic lupus erythematosus"
-				}
-			],
-			"notes": [
-				{
-					"note": "<p>cited By 0</p>"
-				}
-			],
-			"seeAlso": []
-		}
-	]
-}
+	{
+		"type": "import",
+		"input": "@ARTICLE{Zhang202047,\nauthor={Zhang, D. and Zhou, X. and Yan, S. and Tian, R. and Su, L. and Ding, X. and Xiao, M. and Chen, Y. and Zhao, H. and Chen, H. and Zhang, H. and Li, Z. and Li, Q. and Xu, Y. and Yan, X. and Li, Y. and Zhang, S.},\ntitle={Correlation between cytokines and coagulation-related parameters in patients with coronavirus disease 2019 admitted to ICU},\njournal={Clinica Chimica Acta},\nyear={2020},\nvolume={510},\npages={47-53},\ndoi={10.1016/j.cca.2020.07.002},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087872687&doi=10.1016%2fj.cca.2020.07.002&partnerID=40&md5=0dc09d8434258376df732ecb51c0de5d},\naffiliation={Department of Clinical Laboratory, Peking Union Medical College Hospital, Peking Union Medical College and Chinese Academy of Medical Sciences, Beijing, 100730, China; Department of Pulmonary and Critical Care Medicine, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences, Beijing, 100730, China; Department of Cardiology, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences, Beijing, 100730, China},\nabstract={Background: The novel SARS-CoV-2 caused a large number of infections and deaths worldwide. Thus, new ideas for an appropriated assessment of patients’ condition and clinical treatment are of utmost importance. Therefore, in this study, the laboratory parameters of patients with coronavirus disease 2019 (COVID-19) were evaluated to identify the correlation between cytokine expression and other laboratory parameters. Methods: A retrospective and single-center study was performed in Wuhan, involving 83 severe or critical COVID-19 patients admitted to the intensive care unit (ICU). Laboratory parameters in ICU patients with laboratory-confirmed infection of SARS-CoV2 were collected. The association between parameters was assessed by Spearman's rank correlation. Results: Patients’ median age was 66 years (IQR, 57–73), and 55 (66%) were men. Among the 83 patients, 61 (73%) had 1 or more coexisting medical condition. The median concentration of IL-2R, IL-6, IL8, IL10, and TNFα were above the normal range, without IL-1β. A significant negative correlation between IL-6 and platelet count was discovered (r2 = −0.448, P &lt; 0.001) as well as a significant correlation between IL-6 and other platelet parameters. Finally, a correlation between multiple cytokines and coagulation indicators was found, pro-inflammatory factors were found to be more associated to coagulation parameters, with the highest correlation between IL-6 and the International normalized ratio (INR) (r2 = 0.444, P &lt; 0.001). Conclusions: Our results suggested that cytokines play an important role in the pathogenesis of COVID-19. In addition, IL-6 seems more relevant in the evaluation of the condition of COVID-19 patients. © 2020 The Author(s)},\nauthor_keywords={Coagulation;  Correlation;  COVID-19;  Cytokines;  IL-6},\nkeywords={interleukin 10;  interleukin 1beta;  interleukin 2 receptor;  interleukin 6;  interleukin 8;  tumor necrosis factor, adult;  aged;  aging;  Article;  blood clotting;  China;  comorbidity;  coronavirus disease 2019;  disease association;  female;  hospital admission;  human;  human cell;  intensive care unit;  international normalized ratio;  laboratory test;  major clinical study;  male;  pathogenesis;  platelet count;  priority journal;  protein expression;  retrospective study;  Severe acute respiratory syndrome coronavirus 2},\nchemicals_cas={interleukin 8, 114308-91-7},\nfunding_details={2017-I2M-3-001},\nfunding_details={National Natural Science Foundation of ChinaNational Natural Science Foundation of China, NSFC, 81671618, 81871302},\nfunding_text 1={This research was supported by grants from the National Natural Science Foundation of China Grants ( 81671618 , 81871302 ), CAMS Innovation Fund for Medical Sciences (CIFMS) ( 2017-I2M-3-001 ), CAMS Innovation Fund for Medical Sciences (CIFMS) ( 2017-I2M-B&R-01 ).},\ncorrespondence_address1={Li, Y.; Department of Clinical Laboratory, Peking Union Medical College Hospital, Peking Union Medical College and Chinese Academy of Medical SciencesChina; email: yongzhelipumch@126.com},\npublisher={Elsevier B.V.},\nissn={00098981},\ncoden={CCATA},\npubmed_id={32645391},\nlanguage={English},\nabbrev_source_title={Clin. Chim. Acta},\ndocument_type={Article},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Correlation between cytokines and coagulation-related parameters in patients with coronavirus disease 2019 admitted to ICU",
+				"creators": [
+					{
+						"firstName": "D.",
+						"lastName": "Zhang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "X.",
+						"lastName": "Zhou",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.",
+						"lastName": "Yan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "R.",
+						"lastName": "Tian",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "L.",
+						"lastName": "Su",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "X.",
+						"lastName": "Ding",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.",
+						"lastName": "Xiao",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Y.",
+						"lastName": "Chen",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "H.",
+						"lastName": "Zhao",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "H.",
+						"lastName": "Chen",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "H.",
+						"lastName": "Zhang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Z.",
+						"lastName": "Li",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Q.",
+						"lastName": "Li",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Y.",
+						"lastName": "Xu",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "X.",
+						"lastName": "Yan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Y.",
+						"lastName": "Li",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.",
+						"lastName": "Zhang",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020",
+				"DOI": "10.1016/j.cca.2020.07.002",
+				"ISSN": "00098981",
+				"abstractNote": "Background: The novel SARS-CoV-2 caused a large number of infections and deaths worldwide. Thus, new ideas for an appropriated assessment of patients’ condition and clinical treatment are of utmost importance. Therefore, in this study, the laboratory parameters of patients with coronavirus disease 2019 (COVID-19) were evaluated to identify the correlation between cytokine expression and other laboratory parameters. Methods: A retrospective and single-center study was performed in Wuhan, involving 83 severe or critical COVID-19 patients admitted to the intensive care unit (ICU). Laboratory parameters in ICU patients with laboratory-confirmed infection of SARS-CoV2 were collected. The association between parameters was assessed by Spearman's rank correlation. Results: Patients’ median age was 66 years (IQR, 57–73), and 55 (66%) were men. Among the 83 patients, 61 (73%) had 1 or more coexisting medical condition. The median concentration of IL-2R, IL-6, IL8, IL10, and TNFα were above the normal range, without IL-1β. A significant negative correlation between IL-6 and platelet count was discovered (r2 = −0.448, P &lt; 0.001) as well as a significant correlation between IL-6 and other platelet parameters. Finally, a correlation between multiple cytokines and coagulation indicators was found, pro-inflammatory factors were found to be more associated to coagulation parameters, with the highest correlation between IL-6 and the International normalized ratio (INR) (r2 = 0.444, P &lt; 0.001). Conclusions: Our results suggested that cytokines play an important role in the pathogenesis of COVID-19. In addition, IL-6 seems more relevant in the evaluation of the condition of COVID-19 patients. © 2020 The Author(s)",
+				"itemID": "Zhang202047",
+				"language": "English",
+				"pages": "47-53",
+				"publicationTitle": "Clinica Chimica Acta",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087872687&doi=10.1016%2fj.cca.2020.07.002&partnerID=40&md5=0dc09d8434258376df732ecb51c0de5d",
+				"volume": "510",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "COVID-19"
+					},
+					{
+						"tag": "Coagulation"
+					},
+					{
+						"tag": "Correlation"
+					},
+					{
+						"tag": "Cytokines"
+					},
+					{
+						"tag": "EMTREE:Article"
+					},
+					{
+						"tag": "EMTREE:China"
+					},
+					{
+						"tag": "EMTREE:Severe acute respiratory syndrome coronavirus 2"
+					},
+					{
+						"tag": "EMTREE:aged"
+					},
+					{
+						"tag": "EMTREE:aging"
+					},
+					{
+						"tag": "EMTREE:blood clotting"
+					},
+					{
+						"tag": "EMTREE:comorbidity"
+					},
+					{
+						"tag": "EMTREE:coronavirus disease 2019"
+					},
+					{
+						"tag": "EMTREE:disease association"
+					},
+					{
+						"tag": "EMTREE:female"
+					},
+					{
+						"tag": "EMTREE:hospital admission"
+					},
+					{
+						"tag": "EMTREE:human"
+					},
+					{
+						"tag": "EMTREE:human cell"
+					},
+					{
+						"tag": "EMTREE:intensive care unit"
+					},
+					{
+						"tag": "EMTREE:interleukin 10"
+					},
+					{
+						"tag": "EMTREE:interleukin 1beta"
+					},
+					{
+						"tag": "EMTREE:interleukin 2 receptor"
+					},
+					{
+						"tag": "EMTREE:interleukin 6"
+					},
+					{
+						"tag": "EMTREE:interleukin 8"
+					},
+					{
+						"tag": "EMTREE:international normalized ratio"
+					},
+					{
+						"tag": "EMTREE:laboratory test"
+					},
+					{
+						"tag": "EMTREE:major clinical study"
+					},
+					{
+						"tag": "EMTREE:male"
+					},
+					{
+						"tag": "EMTREE:pathogenesis"
+					},
+					{
+						"tag": "EMTREE:platelet count"
+					},
+					{
+						"tag": "EMTREE:priority journal"
+					},
+					{
+						"tag": "EMTREE:protein expression"
+					},
+					{
+						"tag": "EMTREE:retrospective study"
+					},
+					{
+						"tag": "EMTREE:tumor necrosis factor, adult"
+					},
+					{
+						"tag": "IL-6"
+					}
+				],
+				"notes": [
+					{
+						"note": "<p>cited By 0</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@ARTICLE{EdgarPatricio2020,\nauthor={Edgar Patricio, C.-D. and Eleanor, T.H.G. and Francisco José, C.-Z. and Gabriela, A.C.M. and Hyland, A.-O. and Fernando, G.L. and María, T.A. and Beatriz, N. and Marcos, S.-D. and Alfredo, G.P.W.},\ntitle={Clinical and radiological profile of neuromyelitis optica spectrum disorders in an Ecuadorian cohort},\njournal={Multiple Sclerosis and Related Disorders},\nyear={2020},\nvolume={44},\ndoi={10.1016/j.msard.2020.102208},\nart_number={102208},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086449309&doi=10.1016%2fj.msard.2020.102208&partnerID=40&md5=97b459965bf00dcf87287d56505b6ca2},\naffiliation={Department of Neurology. Hospital Carlos Andrade Marín. Quito. Universidad Central del Ecuador. Quito, Address: Avenida 18 de Septiembre y Ayacucho, Ecuador; Department of Neurology. Hospital Teodoro Maldonado Carbo. Guayaquil, Address: Avenida 25 de Julio, Ecuador; Department of Neurology. Hospital de Especialidades Eugenio Espejo, Quito, Address: Avenida Gran Colombia, Ecuador; Department of Neurology. Hospital José Carrasco Arteaga de Cuenca, Address: Intersección Popayán, Ecuador; Department of Neurology. Hospital de Especialidades Eugenio Espejo, Quito, Address: Avenida Gran Colombia, Ecuador; Department of Neurology. Hospital Carlos Andrade Marín. Quito. Pontificia Universidad Católica del Ecuador. Quito, Address: Avenida 12 de Octubre, Ecuador},\nabstract={Background: Neuromyelitis optica spectrum disorder (NMOSD) is a complex disease characterized by a severe inflammation of the central nervous system (CNS). This disease typically manifests with recurrent optic neuritis (ON) and acute transverse myelitis (ATM). The clinical and radiological spectrum of NMOSD is little known in Latin America (LATAM) and few reports have been published in the literature so far. In Ecuador, no reports on NMOSD have been published. For this reason we aimed to assess the demographic, clinical and imaging characteristics of patients with NMOSD from third level hospitals from Ecuador. Methods: This is a descriptive study in which we assessed medical reports of patients with inflammatory demyelinating diseases who were attended in third level hospitals from Ecuador in 2017. Then we applied the 2015 diagnostic criteria, those patients who met the new NMOSD diagnostic criteria were selected and analyzed. Additionally, exploratory sub-analyses were subsequently carried out. Results: We identified 59 patients with NMOSD, the relative frequency of NMOSD was 15.9%. The multiple sclerosis (MS) /NMOSD ratio was 5.2:1. Twenty four percent of patients were newly defined as having NMOSD when 2015 criteria was applied. The median time to diagnoses was shorter by the 2015 criteria than 2006 criteria (p<0.001). NMOSD was more prevalent in women (female/male ratio 4.4:1). The disease onset was more frequent at the fourth decade of life. The most common symptoms at the disease onset were ON and the association of ON with ATM. The mean of expanded disability status scale (EDSS) was 4.8 (SD±1.8). Concomitant autoimmune diseases were infrequent in this population (11.9%). The brain magnetic resonance imaging (MRI) abnormalities were present in 25.7% of patients at disease onset. Spinal cord MRI showed longitudinally extensive transverse myelitis (LETM) in 91.5% of cases. Recurrent NMOSD was frequent in this cohort (88%). Positivity for antibodies against aquaporin-4 (AQP4-IgG) which was measured through indirect immunofluorescence assay (IIF) was identified in 81% of the patients tested. Patients with seronegative AQP4-IgG had higher grade of disability than seropositive patients (p<0.05). Ninety eight percent of patients received treatment with immunosuppressive drugs. Three patients died due to gastric cancer (1 patient) and infectious diseases (2 patients). Conclusions: This is the first descriptive study in an Ecuadorian cohort of patients with NMOSD. We show a wide epidemiological, clinical and radiological spectrum of NMOSD. © 2020 Elsevier B.V.},\nauthor_keywords={AQP4-IgG;  Ecuador;  Epidemiology;  Neuromyelitis optica spectrum disorder},\nkeywords={aquaporin 4;  azathioprine;  immunoglobulin G;  immunosuppressive agent;  mycophenolic acid;  prednisone;  rituximab, adult;  Article;  autoimmune disease;  cause of death;  cohort analysis;  controlled study;  demyelinating disease;  descriptive research;  Ecuador;  Ecuadorean;  Expanded Disability Status Scale;  female;  human;  immunofluorescence;  immunosuppressive treatment;  infection;  major clinical study;  male;  myelitis;  myelooptic neuropathy;  neuroimaging;  nuclear magnetic resonance imaging;  onset age;  prevalence;  recurrent disease;  retrospective study;  sex ratio;  spinal cord;  stomach cancer},\nchemicals_cas={aquaporin 4, 175960-54-0; azathioprine, 446-86-6; immunoglobulin G, 97794-27-9; mycophenolic acid, 23047-11-2, 24280-93-1; prednisone, 53-03-2; rituximab, 174722-31-7},\ncorrespondence_address1={Edgar Patricio, C.-D.; Department of Neurology. Hospital Carlos Andrade Marín. Quito. Universidad Central del Ecuador. Quito, Address: Avenida 18 de Septiembre y Ayacucho, Ecuador; email: patocorrea2010@yahoo.com},\npublisher={Elsevier B.V.},\nissn={22110348},\npubmed_id={32562910},\nlanguage={English},\nabbrev_source_title={Mult. Scler. Relat. Disord.},\ndocument_type={Article},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Clinical and radiological profile of neuromyelitis optica spectrum disorders in an Ecuadorian cohort",
+				"creators": [
+					{
+						"firstName": "C.-D.",
+						"lastName": "Edgar Patricio",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "T.H.G.",
+						"lastName": "Eleanor",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "C.-Z.",
+						"lastName": "Francisco José",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "A.C.M.",
+						"lastName": "Gabriela",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "A.-O.",
+						"lastName": "Hyland",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "G.L.",
+						"lastName": "Fernando",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "T.A.",
+						"lastName": "María",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "N.",
+						"lastName": "Beatriz",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.-D.",
+						"lastName": "Marcos",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "G.P.W.",
+						"lastName": "Alfredo",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020",
+				"DOI": "10.1016/j.msard.2020.102208",
+				"ISSN": "22110348",
+				"abstractNote": "Background: Neuromyelitis optica spectrum disorder (NMOSD) is a complex disease characterized by a severe inflammation of the central nervous system (CNS). This disease typically manifests with recurrent optic neuritis (ON) and acute transverse myelitis (ATM). The clinical and radiological spectrum of NMOSD is little known in Latin America (LATAM) and few reports have been published in the literature so far. In Ecuador, no reports on NMOSD have been published. For this reason we aimed to assess the demographic, clinical and imaging characteristics of patients with NMOSD from third level hospitals from Ecuador. Methods: This is a descriptive study in which we assessed medical reports of patients with inflammatory demyelinating diseases who were attended in third level hospitals from Ecuador in 2017. Then we applied the 2015 diagnostic criteria, those patients who met the new NMOSD diagnostic criteria were selected and analyzed. Additionally, exploratory sub-analyses were subsequently carried out. Results: We identified 59 patients with NMOSD, the relative frequency of NMOSD was 15.9%. The multiple sclerosis (MS) /NMOSD ratio was 5.2:1. Twenty four percent of patients were newly defined as having NMOSD when 2015 criteria was applied. The median time to diagnoses was shorter by the 2015 criteria than 2006 criteria (p<0.001). NMOSD was more prevalent in women (female/male ratio 4.4:1). The disease onset was more frequent at the fourth decade of life. The most common symptoms at the disease onset were ON and the association of ON with ATM. The mean of expanded disability status scale (EDSS) was 4.8 (SD±1.8). Concomitant autoimmune diseases were infrequent in this population (11.9%). The brain magnetic resonance imaging (MRI) abnormalities were present in 25.7% of patients at disease onset. Spinal cord MRI showed longitudinally extensive transverse myelitis (LETM) in 91.5% of cases. Recurrent NMOSD was frequent in this cohort (88%). Positivity for antibodies against aquaporin-4 (AQP4-IgG) which was measured through indirect immunofluorescence assay (IIF) was identified in 81% of the patients tested. Patients with seronegative AQP4-IgG had higher grade of disability than seropositive patients (p<0.05). Ninety eight percent of patients received treatment with immunosuppressive drugs. Three patients died due to gastric cancer (1 patient) and infectious diseases (2 patients). Conclusions: This is the first descriptive study in an Ecuadorian cohort of patients with NMOSD. We show a wide epidemiological, clinical and radiological spectrum of NMOSD. © 2020 Elsevier B.V.",
+				"itemID": "EdgarPatricio2020",
+				"language": "English",
+				"publicationTitle": "Multiple Sclerosis and Related Disorders",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086449309&doi=10.1016%2fj.msard.2020.102208&partnerID=40&md5=97b459965bf00dcf87287d56505b6ca2",
+				"volume": "44",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "AQP4-IgG"
+					},
+					{
+						"tag": "EMTREE:Article"
+					},
+					{
+						"tag": "EMTREE:Ecuador"
+					},
+					{
+						"tag": "EMTREE:Ecuadorean"
+					},
+					{
+						"tag": "EMTREE:Expanded Disability Status Scale"
+					},
+					{
+						"tag": "EMTREE:aquaporin 4"
+					},
+					{
+						"tag": "EMTREE:autoimmune disease"
+					},
+					{
+						"tag": "EMTREE:azathioprine"
+					},
+					{
+						"tag": "EMTREE:cause of death"
+					},
+					{
+						"tag": "EMTREE:cohort analysis"
+					},
+					{
+						"tag": "EMTREE:controlled study"
+					},
+					{
+						"tag": "EMTREE:demyelinating disease"
+					},
+					{
+						"tag": "EMTREE:descriptive research"
+					},
+					{
+						"tag": "EMTREE:female"
+					},
+					{
+						"tag": "EMTREE:human"
+					},
+					{
+						"tag": "EMTREE:immunofluorescence"
+					},
+					{
+						"tag": "EMTREE:immunoglobulin G"
+					},
+					{
+						"tag": "EMTREE:immunosuppressive agent"
+					},
+					{
+						"tag": "EMTREE:immunosuppressive treatment"
+					},
+					{
+						"tag": "EMTREE:infection"
+					},
+					{
+						"tag": "EMTREE:major clinical study"
+					},
+					{
+						"tag": "EMTREE:male"
+					},
+					{
+						"tag": "EMTREE:mycophenolic acid"
+					},
+					{
+						"tag": "EMTREE:myelitis"
+					},
+					{
+						"tag": "EMTREE:myelooptic neuropathy"
+					},
+					{
+						"tag": "EMTREE:neuroimaging"
+					},
+					{
+						"tag": "EMTREE:nuclear magnetic resonance imaging"
+					},
+					{
+						"tag": "EMTREE:onset age"
+					},
+					{
+						"tag": "EMTREE:prednisone"
+					},
+					{
+						"tag": "EMTREE:prevalence"
+					},
+					{
+						"tag": "EMTREE:recurrent disease"
+					},
+					{
+						"tag": "EMTREE:retrospective study"
+					},
+					{
+						"tag": "EMTREE:rituximab, adult"
+					},
+					{
+						"tag": "EMTREE:sex ratio"
+					},
+					{
+						"tag": "EMTREE:spinal cord"
+					},
+					{
+						"tag": "EMTREE:stomach cancer"
+					},
+					{
+						"tag": "Ecuador"
+					},
+					{
+						"tag": "Epidemiology"
+					},
+					{
+						"tag": "Neuromyelitis optica spectrum disorder"
+					}
+				],
+				"notes": [
+					{
+						"note": "<p>cited By 0</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@ARTICLE{Salama20203167,\nauthor={Salama, M. and Akan, A. and Mueller, M.R.},\ntitle={Transcutaneous Stimulation of Auricular Branch of the Vagus Nerve Attenuates the Acute Inflammatory Response After Lung Lobectomy},\njournal={World Journal of Surgery},\nyear={2020},\nvolume={44},\nnumber={9},\npages={3167-3174},\ndoi={10.1007/s00268-020-05543-w},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85083958097&doi=10.1007%2fs00268-020-05543-w&partnerID=40&md5=1877aeab77a87729f1a5c34953c76eb0},\naffiliation={Department of Thoracic Surgery, North Clinic, Bruennerstrasse 68, Vienna, 1210, Austria; Medical Faculty, Thoracic Surgery, Sigmund Freud University, Vienna, Austria; Institute of Thoracic Oncology, Karl Landsteiner Society, St. Poelten, Austria},\nabstract={Objectives: Systemic inflammation is a potentially debilitating complication of thoracic surgeries with significant physical and economic morbidity. There is compelling evidence for the role of the central nervous system in regulating inflammatory processes through humoral mechanisms. Activation of the afferent vagus nerve by cytokines triggers anti-inflammatory responses. Peripheral electrical stimulation of the vagus nerve in vivo during lethal endotoxemia in rats inhibited tumor necrosis factor synthesis and prevented shock development. However, the vagal regulatory role of systemic inflammation after lung lobectomy is unknown. Methods: One hundred patients who underwent lobectomy via thoracotomy were recruited and equally randomized to treated group or controls. Intermittent stimulation of the auricular branch of vagus nerve in the triangular fossa was applied in the treated group using neurostimulator V (Ducest®, Germany), starting 24 h preoperatively and continued till the 4th postoperative day (POD). Inflammatory interleukins (IL) were analyzed using ELISA preoperatively, on the 1st and 4th POD. Results: On the 1st POD, patients who underwent neurostimulation had reduced serum concentrations of CRP (p = 0.01), IL6 (p = 0.02) but elevated IL10 (p = 0.03) versus controls. On the 4th POD, serum concentrations of CRP, IL6 and IL10 were similar in both groups. Moreover, the treated group was associated with lower incidence of pneumonia (p = 0.04) and shorter hospitalization time (p = 0.04) versus controls. Conclusions: Modulations in the brain stem caused by noninvasive transcutaneous stimulation of the vagus nerve after lung lobectomy attenuate the acute postsurgical inflammatory response by the regulation of IL6 and IL10, resulting in reduced incidence of postoperative pneumonia and short hospitalization time. Clinical Trial Registry Number: NCT03204968. © 2020, Société Internationale de Chirurgie.},\nfunding_text 1={This study was supported by the grant to Dr. Salama from ACMIT—Austrian Center for Medical Innovation and Technology.},\ncorrespondence_address1={Mueller, M.R.; Department of Thoracic Surgery, North Clinic, Bruennerstrasse 68, Austria; email: michael.rolf.mueller@wienkav.at},\npublisher={Springer},\nissn={03642313},\ncoden={WJSUD},\npubmed_id={32358638},\nlanguage={English},\nabbrev_source_title={World J. Surg.},\ndocument_type={Article},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Transcutaneous Stimulation of Auricular Branch of the Vagus Nerve Attenuates the Acute Inflammatory Response After Lung Lobectomy",
+				"creators": [
+					{
+						"firstName": "M.",
+						"lastName": "Salama",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "A.",
+						"lastName": "Akan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.R.",
+						"lastName": "Mueller",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020",
+				"DOI": "10.1007/s00268-020-05543-w",
+				"ISSN": "03642313",
+				"abstractNote": "Objectives: Systemic inflammation is a potentially debilitating complication of thoracic surgeries with significant physical and economic morbidity. There is compelling evidence for the role of the central nervous system in regulating inflammatory processes through humoral mechanisms. Activation of the afferent vagus nerve by cytokines triggers anti-inflammatory responses. Peripheral electrical stimulation of the vagus nerve in vivo during lethal endotoxemia in rats inhibited tumor necrosis factor synthesis and prevented shock development. However, the vagal regulatory role of systemic inflammation after lung lobectomy is unknown. Methods: One hundred patients who underwent lobectomy via thoracotomy were recruited and equally randomized to treated group or controls. Intermittent stimulation of the auricular branch of vagus nerve in the triangular fossa was applied in the treated group using neurostimulator V (Ducest®, Germany), starting 24 h preoperatively and continued till the 4th postoperative day (POD). Inflammatory interleukins (IL) were analyzed using ELISA preoperatively, on the 1st and 4th POD. Results: On the 1st POD, patients who underwent neurostimulation had reduced serum concentrations of CRP (p = 0.01), IL6 (p = 0.02) but elevated IL10 (p = 0.03) versus controls. On the 4th POD, serum concentrations of CRP, IL6 and IL10 were similar in both groups. Moreover, the treated group was associated with lower incidence of pneumonia (p = 0.04) and shorter hospitalization time (p = 0.04) versus controls. Conclusions: Modulations in the brain stem caused by noninvasive transcutaneous stimulation of the vagus nerve after lung lobectomy attenuate the acute postsurgical inflammatory response by the regulation of IL6 and IL10, resulting in reduced incidence of postoperative pneumonia and short hospitalization time. Clinical Trial Registry Number: NCT03204968. © 2020, Société Internationale de Chirurgie.",
+				"issue": "9",
+				"itemID": "Salama20203167",
+				"language": "English",
+				"pages": "3167-3174",
+				"publicationTitle": "World Journal of Surgery",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85083958097&doi=10.1007%2fs00268-020-05543-w&partnerID=40&md5=1877aeab77a87729f1a5c34953c76eb0",
+				"volume": "44",
+				"attachments": [],
+				"tags": [],
+				"notes": [
+					{
+						"note": "<p>cited By 0</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@ARTICLE{Blincoe2020901,\nauthor={Blincoe, A. and Heeg, M. and Campbell, P.K. and Hines, M. and Khojah, A. and Klein-Gitelman, M. and Talano, J.-A. and Speckmann, C. and Touzot, F. and Lankester, A. and Legger, G.E. and Rivière, J.G. and Garcia-Prat, M. and Alonso, L. and Putti, M.C. and Lehmberg, K. and Maier, S. and El Chazli, Y. and Elmaksoud, M.A. and Astigarraga, I. and Kurjane, N. and Bulina, I. and Kenina, V. and Bryceson, Y. and Rascon, J. and Lortie, A. and Goldstein, G. and Booth, C. and Worth, A. and Wassmer, E. and Schmitt, E.G. and Warren, J.T. and Bednarski, J.J. and Ali, S. and Chiang, K.-Y. and Krueger, J. and Henry, M.M. and Holland, S.M. and Marsh, R.A. and Ehl, S. and Haddad, E.},\ntitle={Neuroinflammatory Disease as an Isolated Manifestation of Hemophagocytic Lymphohistiocytosis},\njournal={Journal of Clinical Immunology},\nyear={2020},\nvolume={40},\nnumber={6},\npages={901-916},\ndoi={10.1007/s10875-020-00814-6},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087567833&doi=10.1007%2fs10875-020-00814-6&partnerID=40&md5=a3b29cad9138e1a56f75e64ceb15eec3},\naffiliation={CHU Sainte-Justine, Department of Pediatrics, Department of Microbiology, Infectious Diseases and Immunology, University of Montreal, Montreal, QC  H3T 1C5, Canada; Department of Paediatric Immunology and Allergy, Starship Children’s Health, Auckland, New Zealand; Institute for Immunodeficiency, Center for Chronic Immunodeficiency, Medical Center, Faculty of Medicine, University of Freiburg, Breisacher Strasse 115, Freiburg, 79106, Germany; Center for Pediatrics, Medical Center - University of Freiburg, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Berta-Ottenstein-Programme, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Department of Oncology, St. Jude Children’s Research Hospital, Memphis, TN, United States; Department of Pediatric Medicine, Division of Critical Care, St Jude Children’s Research Hospital, Memphis, TN, United States; Department of Rheumatology, Ann and Robert H Lurie Children’s Hospital and Children’s Hospital of Chicago, Chicago, IL, United States; Department of Rheumatology, Northwestern University Feinberg School of Medicine, Chicago, IL, United States; Pediatric Hematology and Oncology, Children’s Hospital of Wisconsin-Milwaukee Campus, Milwaukee, WI, United States; Department of Pediatric and Adolescent Medicine, Division of Pediatric Hematology and Oncology, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Willem-Alexander Children’s Hospital, Department of Pediatrics, Leiden University Medical Center, Leiden, Netherlands; Department of Pediatrics, University of Groningen, University Medical Centre Groningen, Groningen, Netherlands; Pediatric Infectious Diseases and Immunodeficiencies Unit, Hospital Universitari Vall d’Hebron, Vall d’Hebron Research Institute, Universitat Autònoma de Barcelona, Barcelona, Spain; Jeffrey Modell Foundation Excellence Centre, Barcelona, Spain; Pediatric Hematology and Oncology Department, Hospital Universitari Vall d’Hebron, Vall d’Hebron Research Institute, Universitat Autònoma de Barcelona, Barcelona, Spain; Department of Pediatrics, University of Padua Medical School, Padua, Italy; Division of Pediatric Stem Cell Transplantation and Immunology, University Medical Center, Hamburg, Germany; Hematology and Oncology Unit, Alexandria University Children’s Hospital, Department of Pediatrics, Faculty of Medicine, Alexandria University, Alexandria, Egypt; Neurology Unit, Alexandria University Children’s Hospital, Department of Pediatrics, Faculty of Medicine, Alexandria University, Alexandria, Egypt; Department of Pediatrics, Hospital Universitario Cruces, IIS BioCruces Bizkaia, Department of Pediatrics, Faculty of Medicine, UPV/EHU, Barakaldo, Bizkaia, Spain; Stradins Clinical University Hospital, Riga, Latvia; Department of Biology and Microbiology, Rigas Stradins University, Riga, Latvia; Department of Rheumatology, Stradins Clinical University Hospital, Riga, Latvia; Department of Neurology, Hospital Gailezers, Riga, Latvia; Center for Hematology and Regenerative Medicine, Department of Medicine Huddinge, Karolinska Institutet, Karolinska University Hospital, Stockholm, Sweden; Center for Pediatric Oncology and Hematology, Vilnius University Hospital Santaros Klinikos, Vilnius, Lithuania; Institute of Clinical Medicine, Vilnius University, Vilnius, Lithuania; CHU Sainte Justine, Department of Neurology, Cerebral Electrophysiology Laboratory, Department of Neurosciences, University of Montreal, Montreal, QC, Canada; Department of Pediatric Hematology-Oncology, Hadassah-Hebrew University Medical Center, Ein Kerem, Jerusalem, Israel; Department of Pediatric Immunology, Great Ormond Street Hospital, London, WC1N 3JH, United Kingdom; Department of Neurology, Birmingham Women’s and Children’s Hospital, Birmingham, United Kingdom; Department of Pediatrics, Washington University School of Medicine in St. Louis, St. Louis, MO, United States; Division of Hematology/Oncology/BMT, The Hospital for Sick Children, Toronto, ON, Canada; Department of Pediatrics, University of Toronto, Toronto, ON, Canada; Centre for Cancer and Blood Disorders, Phoenix Children’s Hospital, Phoenix, United States; Division of Intramural Research, Laboratory of Clinical Immunology and Microbiology, National Institute of Allergy and Infectious Diseases, National Institutes of Health, Bethesda, United States; Department of Pediatrics, University of Cincinnati, Division of Bone Marrow Transplantation and Immune Deficiency, Cincinnati Children’s Medical Centre, Cincinnati, OH, United States},\nabstract={Isolated neuroinflammatory disease has been described in case reports of familial hemophagocytic lymphohistiocytosis (FHL), but the clinical spectrum of disease manifestations, response to therapy and prognosis remain poorly defined. We combined an international survey with a literature search to identify FHL patients with (i) initial presentation with isolated neurological symptoms; (ii) absence of cytopenia and splenomegaly at presentation; and (iii) systemic HLH features no earlier than 3 months after neurological presentation. Thirty-eight (20 unreported) patients were identified with initial diagnoses including acute demyelinating encephalopathy, leukoencephalopathy, CNS vasculitis, multiple sclerosis, and encephalitis. Median age at presentation was 6.5 years, most commonly with ataxia/gait disturbance (75%) and seizures (53%). Diffuse multifocal white matter changes (79%) and cerebellar involvement (61%) were common MRI findings. CSF cell count and protein were increased in 22/29 and 15/29 patients, respectively. Fourteen patients progressed to systemic inflammatory disease fulfilling HLH-2004 criteria at a mean of 36.9 months after initial neurological presentation. Mutations were detected in PRF1 in 23 patients (61%), RAB27A in 10 (26%), UNC13D in 3 (8%), LYST in 1 (3%), and STXBP2 in 1 (3%) with a mean interval to diagnosis of 28.3 months. Among 19 patients who underwent HSCT, 11 neurologically improved, 4 were stable, one relapsed, and 3 died. Among 14 non-transplanted patients, only 3 improved or had stable disease, one relapsed, and 10 died. Isolated CNS-HLH is a rare and often overlooked cause of inflammatory brain disease. HLH-directed therapy followed by HSCT seems to improve survival and outcome. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.},\nauthor_keywords={CNS disease;  CNS inflammation;  Familial hemophagocytic lymphohistiocytosis;  therapy},\nfunding_details={Bundesministerium fÃ¼r Bildung und ForschungBundesministerium fÃ¼r Bildung und Forschung, BMBF, 01EO1303},\nfunding_details={Deutsche ForschungsgemeinschaftDeutsche Forschungsgemeinschaft, DFG, SFB1160, TPA01},\nfunding_details={Deutsche KinderkrebsstiftungDeutsche Kinderkrebsstiftung, DKS 2018.11, DKS 2016.04},\nfunding_details={Deutsche ForschungsgemeinschaftDeutsche Forschungsgemeinschaft, DFG},\nfunding_text 1={This study was supported by the German Research Foundation (DFG SFB1160, TPA01), the Bundesministerium für Bildung und Forschung (01EO1303), the Deutsche Kinderkrebsstiftung (DKS 2016.04 and DKS 2018.11), and the Pediatric Immunology Research Chair, Bank of Montreal.},\ncorrespondence_address1={Haddad, E.; CHU Sainte-Justine, Department of Pediatrics, Department of Microbiology, Infectious Diseases and Immunology, University of Montreal, Institute for Immunodeficiency, Center for Chronic Immunodeficiency, Medical Center, Faculty of Medicine, University of Freiburg, Breisacher Strasse 115, Canada; email: elie.haddad@umontreal.ca},\npublisher={Springer},\nissn={02719142},\ncoden={JCIMD},\npubmed_id={32638196},\nlanguage={English},\nabbrev_source_title={J. Clin. Immunol.},\ndocument_type={Article},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Neuroinflammatory Disease as an Isolated Manifestation of Hemophagocytic Lymphohistiocytosis",
+				"creators": [
+					{
+						"firstName": "A.",
+						"lastName": "Blincoe",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.",
+						"lastName": "Heeg",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "P.K.",
+						"lastName": "Campbell",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.",
+						"lastName": "Hines",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "A.",
+						"lastName": "Khojah",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.",
+						"lastName": "Klein-Gitelman",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "J.-A.",
+						"lastName": "Talano",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "C.",
+						"lastName": "Speckmann",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "F.",
+						"lastName": "Touzot",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "A.",
+						"lastName": "Lankester",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "G.E.",
+						"lastName": "Legger",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "J.G.",
+						"lastName": "Rivière",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.",
+						"lastName": "Garcia-Prat",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "L.",
+						"lastName": "Alonso",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.C.",
+						"lastName": "Putti",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "K.",
+						"lastName": "Lehmberg",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.",
+						"lastName": "Maier",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Y.",
+						"lastName": "El Chazli",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.A.",
+						"lastName": "Elmaksoud",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "I.",
+						"lastName": "Astigarraga",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "N.",
+						"lastName": "Kurjane",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "I.",
+						"lastName": "Bulina",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "V.",
+						"lastName": "Kenina",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Y.",
+						"lastName": "Bryceson",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "J.",
+						"lastName": "Rascon",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "A.",
+						"lastName": "Lortie",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "G.",
+						"lastName": "Goldstein",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "C.",
+						"lastName": "Booth",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "A.",
+						"lastName": "Worth",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "E.",
+						"lastName": "Wassmer",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "E.G.",
+						"lastName": "Schmitt",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "J.T.",
+						"lastName": "Warren",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "J.J.",
+						"lastName": "Bednarski",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.",
+						"lastName": "Ali",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "K.-Y.",
+						"lastName": "Chiang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "J.",
+						"lastName": "Krueger",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.M.",
+						"lastName": "Henry",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.M.",
+						"lastName": "Holland",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "R.A.",
+						"lastName": "Marsh",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.",
+						"lastName": "Ehl",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "E.",
+						"lastName": "Haddad",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020",
+				"DOI": "10.1007/s10875-020-00814-6",
+				"ISSN": "02719142",
+				"abstractNote": "Isolated neuroinflammatory disease has been described in case reports of familial hemophagocytic lymphohistiocytosis (FHL), but the clinical spectrum of disease manifestations, response to therapy and prognosis remain poorly defined. We combined an international survey with a literature search to identify FHL patients with (i) initial presentation with isolated neurological symptoms; (ii) absence of cytopenia and splenomegaly at presentation; and (iii) systemic HLH features no earlier than 3 months after neurological presentation. Thirty-eight (20 unreported) patients were identified with initial diagnoses including acute demyelinating encephalopathy, leukoencephalopathy, CNS vasculitis, multiple sclerosis, and encephalitis. Median age at presentation was 6.5 years, most commonly with ataxia/gait disturbance (75%) and seizures (53%). Diffuse multifocal white matter changes (79%) and cerebellar involvement (61%) were common MRI findings. CSF cell count and protein were increased in 22/29 and 15/29 patients, respectively. Fourteen patients progressed to systemic inflammatory disease fulfilling HLH-2004 criteria at a mean of 36.9 months after initial neurological presentation. Mutations were detected in PRF1 in 23 patients (61%), RAB27A in 10 (26%), UNC13D in 3 (8%), LYST in 1 (3%), and STXBP2 in 1 (3%) with a mean interval to diagnosis of 28.3 months. Among 19 patients who underwent HSCT, 11 neurologically improved, 4 were stable, one relapsed, and 3 died. Among 14 non-transplanted patients, only 3 improved or had stable disease, one relapsed, and 10 died. Isolated CNS-HLH is a rare and often overlooked cause of inflammatory brain disease. HLH-directed therapy followed by HSCT seems to improve survival and outcome. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.",
+				"issue": "6",
+				"itemID": "Blincoe2020901",
+				"language": "English",
+				"pages": "901-916",
+				"publicationTitle": "Journal of Clinical Immunology",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087567833&doi=10.1007%2fs10875-020-00814-6&partnerID=40&md5=a3b29cad9138e1a56f75e64ceb15eec3",
+				"volume": "40",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "CNS disease"
+					},
+					{
+						"tag": "CNS inflammation"
+					},
+					{
+						"tag": "Familial hemophagocytic lymphohistiocytosis"
+					},
+					{
+						"tag": "therapy"
+					}
+				],
+				"notes": [
+					{
+						"note": "<p>cited By 0</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@ARTICLE{Al-Saud2020833,\nauthor={Al-Saud, B. and Al Alawi, Z. and Hussain, F.B. and Hershfield, M. and Alkuraya, F.S. and Al-Mayouf, S.M.},\ntitle={A Case with Purine Nucleoside Phosphorylase Deficiency Suffering from Late-Onset Systemic Lupus Erythematosus and Lymphoma},\njournal={Journal of Clinical Immunology},\nyear={2020},\nvolume={40},\nnumber={6},\npages={833-839},\ndoi={10.1007/s10875-020-00800-y},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086152473&doi=10.1007%2fs10875-020-00800-y&partnerID=40&md5=e53625b83074f1e86a0c52daba9e0535},\naffiliation={Section of Allergy and Immunology, Department of Pediatrics, Division of Allergy & Immunology, King Faisal Specialist Hospital & Research Center, P.O. Box 3354, MBC-58, Riyadh, 11211, Saudi Arabia; College of Medicine, Alfaisal University, Riyadh, Saudi Arabia; Department of Pediatrics, College of Medicine, King Faisal University, Alhasa, Saudi Arabia; Department of Radiology, King Faisal Specialist Hospital & Research Center, Riyadh, Saudi Arabia; Department of Medicine, Duke University Medical Center, Durham, NC, United States; Department of Genetics, King Faisal Specialist Hospital and Research Center, Riyadh, Saudi Arabia; Department of Pediatrics, Division of Rheumatology, King Faisal Specialist Hospital & Research Center, Riyadh, Saudi Arabia},\nabstract={Background: Purine nucleoside phosphorylase (PNP) deficiency accounts for about 4% of severe combined immunodeficiency diseases. PNP deficiency is a variable disease with recurrent infections and neurodevelopmental delay. Autoimmunity and malignancy can still occur in one-third of patients. Methods: Case report. Case Presentation: An 8-year-old Saudi female who was apparently healthy presented at the age of 7 years with confirmed systemic lupus erythematosus (SLE) and lupus nephritis that were poorly controlled with conventional therapy. She also had frequent sinopulmonary and varicella infections. Preliminary immunological workup showed severe lymphopenia and depressed lymphocyte proliferation assay. The uric acid was within normal levels at 179 μmol/L (normal range, 150 to 350 μmol/L) 6 weeks after blood transfusion. Genetic study revealed a homozygous missense mutation c.265G>A in the PNP gene, resulting in a substitution of glutamic acid to lysine at amino acid 89 of the encoded protein (E89K). The PNP serum level was 798 nmol/h/mg (normal level 1354 ± 561 nmol/h/mg) 6 weeks after blood transfusion. Hematopoietic stem cell transplantation (HSCT) was planned from a matched unrelated donor; however, she developed an EBV and varicella meningoencephalitis. Atypical malignant cells suggestive of lymphoma were discovered, likely induced by EBV, and suspicious lesions were shown on brain MRI and PET scan. Unfortunately, she passed away before HSCT due to multiorgan failure. Conclusion: This report emphasizes the challenges in recognizing PNP deficiency in a patient suffering from SLE. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.},\nauthor_keywords={CNS lymphoma;  Epstein-Barr virus;  PNP;  severe combined immunodeficiency;  systemic lupus erythematosus},\ncorrespondence_address1={Al-Saud, B.; Section of Allergy and Immunology, Department of Pediatrics, Division of Allergy & Immunology, King Faisal Specialist Hospital & Research Center, P.O. Box 3354, MBC-58, Saudi Arabia; email: balsaud@kfshrc.edu.sa},\npublisher={Springer},\nissn={02719142},\ncoden={JCIMD},\npubmed_id={32514656},\nlanguage={English},\nabbrev_source_title={J. Clin. Immunol.},\ndocument_type={Article},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "A Case with Purine Nucleoside Phosphorylase Deficiency Suffering from Late-Onset Systemic Lupus Erythematosus and Lymphoma",
+				"creators": [
+					{
+						"firstName": "B.",
+						"lastName": "Al-Saud",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Z.",
+						"lastName": "Al Alawi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "F.B.",
+						"lastName": "Hussain",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.",
+						"lastName": "Hershfield",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "F.S.",
+						"lastName": "Alkuraya",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.M.",
+						"lastName": "Al-Mayouf",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020",
+				"DOI": "10.1007/s10875-020-00800-y",
+				"ISSN": "02719142",
+				"abstractNote": "Background: Purine nucleoside phosphorylase (PNP) deficiency accounts for about 4% of severe combined immunodeficiency diseases. PNP deficiency is a variable disease with recurrent infections and neurodevelopmental delay. Autoimmunity and malignancy can still occur in one-third of patients. Methods: Case report. Case Presentation: An 8-year-old Saudi female who was apparently healthy presented at the age of 7 years with confirmed systemic lupus erythematosus (SLE) and lupus nephritis that were poorly controlled with conventional therapy. She also had frequent sinopulmonary and varicella infections. Preliminary immunological workup showed severe lymphopenia and depressed lymphocyte proliferation assay. The uric acid was within normal levels at 179 μmol/L (normal range, 150 to 350 μmol/L) 6 weeks after blood transfusion. Genetic study revealed a homozygous missense mutation c.265G>A in the PNP gene, resulting in a substitution of glutamic acid to lysine at amino acid 89 of the encoded protein (E89K). The PNP serum level was 798 nmol/h/mg (normal level 1354 ± 561 nmol/h/mg) 6 weeks after blood transfusion. Hematopoietic stem cell transplantation (HSCT) was planned from a matched unrelated donor; however, she developed an EBV and varicella meningoencephalitis. Atypical malignant cells suggestive of lymphoma were discovered, likely induced by EBV, and suspicious lesions were shown on brain MRI and PET scan. Unfortunately, she passed away before HSCT due to multiorgan failure. Conclusion: This report emphasizes the challenges in recognizing PNP deficiency in a patient suffering from SLE. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.",
+				"issue": "6",
+				"itemID": "Al-Saud2020833",
+				"language": "English",
+				"pages": "833-839",
+				"publicationTitle": "Journal of Clinical Immunology",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086152473&doi=10.1007%2fs10875-020-00800-y&partnerID=40&md5=e53625b83074f1e86a0c52daba9e0535",
+				"volume": "40",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "CNS lymphoma"
+					},
+					{
+						"tag": "Epstein-Barr virus"
+					},
+					{
+						"tag": "PNP"
+					},
+					{
+						"tag": "severe combined immunodeficiency"
+					},
+					{
+						"tag": "systemic lupus erythematosus"
+					}
+				],
+				"notes": [
+					{
+						"note": "<p>cited By 0</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@ARTICLE{Jabbour2020e523,\nauthor={Jabbour, E. and Richard-Carpentier, G. and Sasaki, Y. and Konopleva, M. and Patel, K. and Roberts, K. and Gu, Z. and Wang, F. and Huang, X. and Sasaki, K. and Short, N.J. and Jain, N. and Ravandi, F. and Daver, N.G. and Kadia, T.M. and Alvarado, Y. and DiNardo, C.D. and Issa, G.C. and Pemmaraju, N. and Garcia-Manero, G. and Verstovsek, S. and Wang, S. and Khoury, J.D. and Jorgensen, J. and Champlin, R. and Khouri, I. and Kebriaei, P. and Schroeder, H. and Khouri, M. and Mullighan, C.G. and Takahashi, K. and O'Brien, S.M. and Kantarjian, H.},\ntitle={Hyper-CVAD regimen in combination with ofatumumab as frontline therapy for adults with Philadelphia chromosome-negative B-cell acute lymphoblastic leukaemia: a single-arm, phase 2 trial},\njournal={The Lancet Haematology},\nyear={2020},\nvolume={7},\nnumber={7},\npages={e523-e533},\ndoi={10.1016/S2352-3026(20)30144-7},\nnote={cited By 1},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086706886&doi=10.1016%2fS2352-3026%2820%2930144-7&partnerID=40&md5=b0428e105a5e35d8cee4fd85c8fe906e},\naffiliation={Department of Leukemia, The University of Texas MD Anderson Cancer Center, Houston, TX, United States; Department of Hematopathology, The University of Texas MD Anderson Cancer Center, Houston, TX, United States; Department of Genomic Medicine, The University of Texas MD Anderson Cancer Center, Houston, TX, United States; Department of Biostatistics, The University of Texas MD Anderson Cancer Center, Houston, TX, United States; Department of Stem Cell Transplantation and Cellular Therapy, The University of Texas MD Anderson Cancer Center, Houston, TX, United States; Department of Pathology, St Jude Children's Research Hospital, Memphis, TN, United States; Division of Hematology/Oncology, Department of Medicine, UCI Health, Orange, CA, United States},\nabstract={Background: The addition of rituximab to intensive chemotherapy improves outcomes in patients with B-cell acute lymphoblastic leukaemia. Ofatumumab is an anti-CD20 monoclonal antibody that binds to the small extracellular loop of CD20 and has greater in vitro complement-mediated cytotoxicity than rituximab. In this study, we assessed the activity and safety of ofatumumab in combination with chemotherapy in patients with Philadelphia chromosome (Ph)-negative CD20-positive B-cell acute lymphoblastic leukaemia. Methods: This was a single-arm, phase 2 trial done at the MD Anderson Cancer Center (Houston, TX, USA). Patients with newly diagnosed, Ph-negative B-cell acute lymphoblastic leukaemia or lymphoblastic lymphoma with CD20 expression of at least 1% were eligible. Patients were treated with up to eight courses of the hyper-CVAD regimen (hyperfractionated cyclophosphamide, vincristine, doxorubicin, and dexamethasone) on courses 1, 3, 5, and 7 alternating with high-dose methotrexate and cytarabine on courses 2, 4, 6, and 8. Ofatumumab was administered on days 1 and 11 of courses 1 and 3 and on days 1 and 8 of courses 2 and 4 for a total of eight doses. The first dose of ofatumumab was 300 mg intravenously and all subsequent doses were 2000 mg intravenously. Patients received 30 courses of maintenance therapy with 6-mercaptopurine, vincristine, methotrexate, and prednisone (POMP), with four intensification courses (high-dose methotrexate plus L-asparaginase and hyper-CVAD plus ofatumumab on courses 6–7 and 18–19). The primary endpoints were event-free survival, overall response, and overall survival. All enrolled patients were included in the primary and safety analyses. The trial is registered with ClinicalTrials.gov, NCT01363128. Findings: Between Aug 26, 2011, and May 18, 2017, 69 patients (67 patients had B-cell acute lymphoblastic leukaemia and two had B-cell lymphoblastic lymphoma; median age 41 years [IQR 32-50]) were enrolled and treated, including 33 (48%) aged between 18 and 39 years. Nine (27%) of 33 patients had Ph-like acute lymphoblastic leukaemia. With a median follow-up of 44 months (26–53), 4-year event-free survival was 59% (95% CI 48–73); 69% (54–87) in adolescents and young adults aged 18–39 years. 4-year overall survival was 68% (58–81); 74% (60–91) in adolescents and young adults. The overall response rate was 98% (64 of 65 patients). The most common non-haematological grade 3 or 4 adverse events were infections (35 [54%] of 65 patients during induction and 53 [78%] of 68 patients during consolidation). Ten (14%) of 69 patients died in complete remission from sepsis (two [3%]), cardiac arrest (one [1%]), therapy-related acute myeloid leukaemia (two [3%]), and haematopoietic stem-cell transplantation complications (five [7%]). None of these deaths were considered related to ofatumumab treatment by the study investigators. Interpretation: The combination of hyper-CVAD plus ofatumumab is safe and active in adults with Ph-negative CD20-positive B-cell acute lymphoblastic leukaemia. Modifications of this regimen with the addition of novel monoclonal and bispecific antibody constructs targeting CD19 and CD22 might further improve outcomes and allow reduction in the intensity and duration of chemotherapy. Funding: Novartis. © 2020 Elsevier Ltd},\nkeywords={asparaginase;  asparaginase macrogol;  bilirubin;  CD20 antigen;  creatinine;  cyclophosphamide;  cytarabine;  dexamethasone;  doxorubicin;  filgrastim;  folinate calcium;  granulocyte colony stimulating factor;  mercaptopurine;  methotrexate;  ofatumumab;  pegfilgrastim;  prednisone;  vincristine;  antineoplastic agent;  cyclophosphamide;  dexamethasone;  doxorubicin;  monoclonal antibody;  ofatumumab, abdominal pain;  abnormally high substrate concentration in blood;  acute kidney failure;  acute lymphoblastic leukemia;  adult;  Article;  bleeding;  blood cell count;  bone pain;  cancer chemotherapy;  clinical outcome;  constipation;  continuous infusion;  creatinine blood level;  cytogenetics;  cytotoxicity;  diarrhea;  dizziness;  drug dose intensification;  drug megadose;  drug safety;  edema;  epistaxis;  faintness;  fatigue;  female;  flow cytometry;  follow up;  gene expression;  headache;  heart arrhythmia;  hematopoietic stem cell transplantation;  human;  hyperbilirubinemia;  hyperglycemia;  hyperuricemia;  hypoalbuminemia;  hypocalcemia;  hypokalemia;  hyponatremia;  hypophosphatemia;  infection;  insomnia;  maintenance therapy;  major clinical study;  male;  middle aged;  mucosa inflammation;  multiple cycle treatment;  nausea and vomiting;  neutrophil count;  neutrophil recovery;  overall survival;  peripheral neuropathy;  phase 2 clinical trial;  Philadelphia 1 chromosome;  platelet count;  priority journal;  progression free survival;  rash;  recurrence free survival;  RNA sequence;  thrombosis;  transcriptome sequencing;  treatment response;  whole exome sequencing;  acute lymphoblastic leukemia;  adolescent;  aged;  clinical trial;  controlled study;  Philadelphia 1 chromosome;  randomized controlled trial;  survival analysis;  young adult, Adolescent;  Adult;  Aged;  Antibodies, Monoclonal, Humanized;  Antineoplastic Combined Chemotherapy Protocols;  Cyclophosphamide;  Dexamethasone;  Doxorubicin;  Female;  Humans;  Male;  Middle Aged;  Philadelphia Chromosome;  Precursor Cell Lymphoblastic Leukemia-Lymphoma;  Survival Analysis;  Young Adult},\nchemicals_cas={asparaginase, 9015-68-3, 1349719-22-7; asparaginase macrogol, 130167-69-0; bilirubin, 18422-02-1, 635-65-4; creatinine, 19230-81-0, 60-27-5; cyclophosphamide, 50-18-0; cytarabine, 147-94-4, 69-74-9; dexamethasone, 50-02-2; doxorubicin, 23214-92-8, 25316-40-9; filgrastim, 121181-53-1; folinate calcium, 1492-18-8, 51057-63-7; mercaptopurine, 31441-78-8, 50-44-2, 6112-76-1; methotrexate, 15475-56-6, 59-05-2, 7413-34-5; ofatumumab, 679818-59-8; pegfilgrastim, 208265-92-3; prednisone, 53-03-2; vincristine, 57-22-7; Antibodies, Monoclonal, Humanized; Cyclophosphamide; Dexamethasone; Doxorubicin; ofatumumab},\nfunding_details={NovartisNovartis},\nfunding_details={Astellas Pharma USAstellas Pharma US},\nfunding_details={American Lebanese Syrian Associated CharitiesAmerican Lebanese Syrian Associated Charities, ALSAC},\nfunding_details={AbbVieAbbVie},\nfunding_details={PfizerPfizer},\nfunding_details={Bristol-Myers SquibbBristol-Myers Squibb, BMS},\nfunding_details={National Cancer InstituteNational Cancer Institute, NCI, R35 CA197695},\nfunding_details={Eli Lilly and CompanyEli Lilly and Company},\nfunding_details={AmgenAmgen},\nfunding_details={Takeda Pharmaceuticals U.S.A.Takeda Pharmaceuticals U.S.A., TPUSA},\nfunding_details={ServierServier},\nfunding_details={AstraZenecaAstraZeneca},\nfunding_details={Jazz PharmaceuticalsJazz Pharmaceuticals},\nfunding_details={Janssen BiotechJanssen Biotech},\nfunding_details={CelgeneCelgene},\nfunding_details={Daiichi Sankyo CompanyDaiichi Sankyo Company},\nfunding_details={GenentechGenentech},\nfunding_details={NovartisNovartis},\nfunding_text 1={EJ received research grants and consulting fees from AbbVie, Adaptive Biotechnologies, Amgen, Astellas, Bristol-Myers Squibb, Daiichi Sankyo, Novartis, Pfizer, and Takeda. MK received research grants and consulting fees from AbbVie, Genentech, F Hoffman La-Roche, and Stemline Therapeutics; consulting fees from Amgen, Forty-Seven, and Kisoji; research grants from Eli Lilly, Cellectis, Calithera, Ablynx, Agios, Ascentage, and Astra Zeneca; stock options from Reata Pharmaceutical and Kisoji; and received royalties from Reata Pharmaceuticals. NJ received research grants and consulting fees from Servier, Pharmacyclics, AstraZeneca, Genentech, Verastem, Pfizer, AbbVie, ADC Therapeutics, Precision Biosciences, and Adaptive Biotechnologies; research grants from Bristol-Myers Squibb, Celgene, Seattle Genetics, and Incyte; and consulting fees from Janssen. NJS received research grants from Takeda and Astellas and consulting fees from Takeda, AstraZeneca, and Amgen. NGD received research grants, consulting fees, and honoraria from Pfizer, Bristol-Myers Squibb, Novartis, Incyte, Immunogen, Astellas, and AbbVie; research grants and consulting fees from Daiichi-Sankyo, Karyopharm, and Sunesis; consulting fees and honoraria from Otsuka; research grants only from Servier, Genentech, NOHLA, Glycomimetics, Sobi, Hanmi, and Forty Seven; and consulting fees only from Celgene, Jazz, and Agios. CDD received research grants and consulting fees from AbbVie and Celgene; and consulting fees from Agios, Jazz, Syros, and Daiichi-Sankyo; and attended a scientific advisory board for Notable Labs. GCI received consulting fees from Novartis. NP received research grants from Affymetrix and Sager Strong Foundation and received consulting fees from Pacylex Pharmaceuticals, Incyte, Novartis, LFB Biotechnologies, Stemline Therapeutics, Celgene, AbbVie, MustangBio, Roche Diagnostics, Blueprint Medicines, and DAVA Oncology. CGM received research grants and consulting fees from AbbVie, Illumina, and Pfizer, and is supported by a National Cancer Institute R35 Outstanding Investigator award R35 CA197695 and the American Lebanese Syrian Associated Charities of St Jude Children's Research Hospital. KT received consulting fees from GlaxoSmithKline, Symbio Pharmaceuticals, and Celgene and received honoraria from Dava Oncology. HK received research grants and honoraria from AbbVie, Agios, Amgen, Immunogen, and Pfizer; research grants from Ariad, Astex, Bristol-Myers Squibb, Cyclacel, Daiichi-Sankyo, Jazz Pharma, and Novartis; and honoraria from Takeda; and attended an advisory board for Actinium. All other authors declare no competing interests.},\nfunding_text 2={This study was funded by Novartis, who provided free study drug and partial funding for a research nurse. Novartis had no role in study design, data collection, data analysis, data interpretation, or writing of the report.},\ncorrespondence_address1={Jabbour, E.; Department of Leukemia, The University of Texas MD Anderson Cancer CenterUnited States; email: ejabbour@mdanderson.org},\npublisher={Elsevier Ltd},\nissn={23523026},\npubmed_id={32589978},\nlanguage={English},\nabbrev_source_title={Lancet Haematol.},\ndocument_type={Article},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Hyper-CVAD regimen in combination with ofatumumab as frontline therapy for adults with Philadelphia chromosome-negative B-cell acute lymphoblastic leukaemia: a single-arm, phase 2 trial",
+				"creators": [
+					{
+						"firstName": "E.",
+						"lastName": "Jabbour",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "G.",
+						"lastName": "Richard-Carpentier",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Y.",
+						"lastName": "Sasaki",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.",
+						"lastName": "Konopleva",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "K.",
+						"lastName": "Patel",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "K.",
+						"lastName": "Roberts",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Z.",
+						"lastName": "Gu",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "F.",
+						"lastName": "Wang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "X.",
+						"lastName": "Huang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "K.",
+						"lastName": "Sasaki",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "N.J.",
+						"lastName": "Short",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "N.",
+						"lastName": "Jain",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "F.",
+						"lastName": "Ravandi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "N.G.",
+						"lastName": "Daver",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "T.M.",
+						"lastName": "Kadia",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "Y.",
+						"lastName": "Alvarado",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "C.D.",
+						"lastName": "DiNardo",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "G.C.",
+						"lastName": "Issa",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "N.",
+						"lastName": "Pemmaraju",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "G.",
+						"lastName": "Garcia-Manero",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.",
+						"lastName": "Verstovsek",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.",
+						"lastName": "Wang",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "J.D.",
+						"lastName": "Khoury",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "J.",
+						"lastName": "Jorgensen",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "R.",
+						"lastName": "Champlin",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "I.",
+						"lastName": "Khouri",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "P.",
+						"lastName": "Kebriaei",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "H.",
+						"lastName": "Schroeder",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.",
+						"lastName": "Khouri",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "C.G.",
+						"lastName": "Mullighan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "K.",
+						"lastName": "Takahashi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "S.M.",
+						"lastName": "O'Brien",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "H.",
+						"lastName": "Kantarjian",
+						"creatorType": "author"
+					}
+				],
+				"date": "2020",
+				"DOI": "10.1016/S2352-3026(20)30144-7",
+				"ISSN": "23523026",
+				"abstractNote": "Background: The addition of rituximab to intensive chemotherapy improves outcomes in patients with B-cell acute lymphoblastic leukaemia. Ofatumumab is an anti-CD20 monoclonal antibody that binds to the small extracellular loop of CD20 and has greater in vitro complement-mediated cytotoxicity than rituximab. In this study, we assessed the activity and safety of ofatumumab in combination with chemotherapy in patients with Philadelphia chromosome (Ph)-negative CD20-positive B-cell acute lymphoblastic leukaemia. Methods: This was a single-arm, phase 2 trial done at the MD Anderson Cancer Center (Houston, TX, USA). Patients with newly diagnosed, Ph-negative B-cell acute lymphoblastic leukaemia or lymphoblastic lymphoma with CD20 expression of at least 1% were eligible. Patients were treated with up to eight courses of the hyper-CVAD regimen (hyperfractionated cyclophosphamide, vincristine, doxorubicin, and dexamethasone) on courses 1, 3, 5, and 7 alternating with high-dose methotrexate and cytarabine on courses 2, 4, 6, and 8. Ofatumumab was administered on days 1 and 11 of courses 1 and 3 and on days 1 and 8 of courses 2 and 4 for a total of eight doses. The first dose of ofatumumab was 300 mg intravenously and all subsequent doses were 2000 mg intravenously. Patients received 30 courses of maintenance therapy with 6-mercaptopurine, vincristine, methotrexate, and prednisone (POMP), with four intensification courses (high-dose methotrexate plus L-asparaginase and hyper-CVAD plus ofatumumab on courses 6–7 and 18–19). The primary endpoints were event-free survival, overall response, and overall survival. All enrolled patients were included in the primary and safety analyses. The trial is registered with ClinicalTrials.gov, NCT01363128. Findings: Between Aug 26, 2011, and May 18, 2017, 69 patients (67 patients had B-cell acute lymphoblastic leukaemia and two had B-cell lymphoblastic lymphoma; median age 41 years [IQR 32-50]) were enrolled and treated, including 33 (48%) aged between 18 and 39 years. Nine (27%) of 33 patients had Ph-like acute lymphoblastic leukaemia. With a median follow-up of 44 months (26–53), 4-year event-free survival was 59% (95% CI 48–73); 69% (54–87) in adolescents and young adults aged 18–39 years. 4-year overall survival was 68% (58–81); 74% (60–91) in adolescents and young adults. The overall response rate was 98% (64 of 65 patients). The most common non-haematological grade 3 or 4 adverse events were infections (35 [54%] of 65 patients during induction and 53 [78%] of 68 patients during consolidation). Ten (14%) of 69 patients died in complete remission from sepsis (two [3%]), cardiac arrest (one [1%]), therapy-related acute myeloid leukaemia (two [3%]), and haematopoietic stem-cell transplantation complications (five [7%]). None of these deaths were considered related to ofatumumab treatment by the study investigators. Interpretation: The combination of hyper-CVAD plus ofatumumab is safe and active in adults with Ph-negative CD20-positive B-cell acute lymphoblastic leukaemia. Modifications of this regimen with the addition of novel monoclonal and bispecific antibody constructs targeting CD19 and CD22 might further improve outcomes and allow reduction in the intensity and duration of chemotherapy. Funding: Novartis. © 2020 Elsevier Ltd",
+				"issue": "7",
+				"itemID": "Jabbour2020e523",
+				"language": "English",
+				"pages": "e523-e533",
+				"publicationTitle": "The Lancet Haematology",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086706886&doi=10.1016%2fS2352-3026%2820%2930144-7&partnerID=40&md5=b0428e105a5e35d8cee4fd85c8fe906e",
+				"volume": "7",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "EMTREE:Article"
+					},
+					{
+						"tag": "EMTREE:CD20 antigen"
+					},
+					{
+						"tag": "EMTREE:Philadelphia 1 chromosome"
+					},
+					{
+						"tag": "EMTREE:Philadelphia 1 chromosome"
+					},
+					{
+						"tag": "EMTREE:RNA sequence"
+					},
+					{
+						"tag": "EMTREE:abnormally high substrate concentration in blood"
+					},
+					{
+						"tag": "EMTREE:acute kidney failure"
+					},
+					{
+						"tag": "EMTREE:acute lymphoblastic leukemia"
+					},
+					{
+						"tag": "EMTREE:acute lymphoblastic leukemia"
+					},
+					{
+						"tag": "EMTREE:adolescent"
+					},
+					{
+						"tag": "EMTREE:adult"
+					},
+					{
+						"tag": "EMTREE:aged"
+					},
+					{
+						"tag": "EMTREE:antineoplastic agent"
+					},
+					{
+						"tag": "EMTREE:asparaginase"
+					},
+					{
+						"tag": "EMTREE:asparaginase macrogol"
+					},
+					{
+						"tag": "EMTREE:bilirubin"
+					},
+					{
+						"tag": "EMTREE:bleeding"
+					},
+					{
+						"tag": "EMTREE:blood cell count"
+					},
+					{
+						"tag": "EMTREE:bone pain"
+					},
+					{
+						"tag": "EMTREE:cancer chemotherapy"
+					},
+					{
+						"tag": "EMTREE:clinical outcome"
+					},
+					{
+						"tag": "EMTREE:clinical trial"
+					},
+					{
+						"tag": "EMTREE:constipation"
+					},
+					{
+						"tag": "EMTREE:continuous infusion"
+					},
+					{
+						"tag": "EMTREE:controlled study"
+					},
+					{
+						"tag": "EMTREE:creatinine"
+					},
+					{
+						"tag": "EMTREE:creatinine blood level"
+					},
+					{
+						"tag": "EMTREE:cyclophosphamide"
+					},
+					{
+						"tag": "EMTREE:cyclophosphamide"
+					},
+					{
+						"tag": "EMTREE:cytarabine"
+					},
+					{
+						"tag": "EMTREE:cytogenetics"
+					},
+					{
+						"tag": "EMTREE:cytotoxicity"
+					},
+					{
+						"tag": "EMTREE:dexamethasone"
+					},
+					{
+						"tag": "EMTREE:dexamethasone"
+					},
+					{
+						"tag": "EMTREE:diarrhea"
+					},
+					{
+						"tag": "EMTREE:dizziness"
+					},
+					{
+						"tag": "EMTREE:doxorubicin"
+					},
+					{
+						"tag": "EMTREE:doxorubicin"
+					},
+					{
+						"tag": "EMTREE:drug dose intensification"
+					},
+					{
+						"tag": "EMTREE:drug megadose"
+					},
+					{
+						"tag": "EMTREE:drug safety"
+					},
+					{
+						"tag": "EMTREE:edema"
+					},
+					{
+						"tag": "EMTREE:epistaxis"
+					},
+					{
+						"tag": "EMTREE:faintness"
+					},
+					{
+						"tag": "EMTREE:fatigue"
+					},
+					{
+						"tag": "EMTREE:female"
+					},
+					{
+						"tag": "EMTREE:filgrastim"
+					},
+					{
+						"tag": "EMTREE:flow cytometry"
+					},
+					{
+						"tag": "EMTREE:folinate calcium"
+					},
+					{
+						"tag": "EMTREE:follow up"
+					},
+					{
+						"tag": "EMTREE:gene expression"
+					},
+					{
+						"tag": "EMTREE:granulocyte colony stimulating factor"
+					},
+					{
+						"tag": "EMTREE:headache"
+					},
+					{
+						"tag": "EMTREE:heart arrhythmia"
+					},
+					{
+						"tag": "EMTREE:hematopoietic stem cell transplantation"
+					},
+					{
+						"tag": "EMTREE:human"
+					},
+					{
+						"tag": "EMTREE:hyperbilirubinemia"
+					},
+					{
+						"tag": "EMTREE:hyperglycemia"
+					},
+					{
+						"tag": "EMTREE:hyperuricemia"
+					},
+					{
+						"tag": "EMTREE:hypoalbuminemia"
+					},
+					{
+						"tag": "EMTREE:hypocalcemia"
+					},
+					{
+						"tag": "EMTREE:hypokalemia"
+					},
+					{
+						"tag": "EMTREE:hyponatremia"
+					},
+					{
+						"tag": "EMTREE:hypophosphatemia"
+					},
+					{
+						"tag": "EMTREE:infection"
+					},
+					{
+						"tag": "EMTREE:insomnia"
+					},
+					{
+						"tag": "EMTREE:maintenance therapy"
+					},
+					{
+						"tag": "EMTREE:major clinical study"
+					},
+					{
+						"tag": "EMTREE:male"
+					},
+					{
+						"tag": "EMTREE:mercaptopurine"
+					},
+					{
+						"tag": "EMTREE:methotrexate"
+					},
+					{
+						"tag": "EMTREE:middle aged"
+					},
+					{
+						"tag": "EMTREE:monoclonal antibody"
+					},
+					{
+						"tag": "EMTREE:mucosa inflammation"
+					},
+					{
+						"tag": "EMTREE:multiple cycle treatment"
+					},
+					{
+						"tag": "EMTREE:nausea and vomiting"
+					},
+					{
+						"tag": "EMTREE:neutrophil count"
+					},
+					{
+						"tag": "EMTREE:neutrophil recovery"
+					},
+					{
+						"tag": "EMTREE:ofatumumab"
+					},
+					{
+						"tag": "EMTREE:ofatumumab, abdominal pain"
+					},
+					{
+						"tag": "EMTREE:overall survival"
+					},
+					{
+						"tag": "EMTREE:pegfilgrastim"
+					},
+					{
+						"tag": "EMTREE:peripheral neuropathy"
+					},
+					{
+						"tag": "EMTREE:phase 2 clinical trial"
+					},
+					{
+						"tag": "EMTREE:platelet count"
+					},
+					{
+						"tag": "EMTREE:prednisone"
+					},
+					{
+						"tag": "EMTREE:priority journal"
+					},
+					{
+						"tag": "EMTREE:progression free survival"
+					},
+					{
+						"tag": "EMTREE:randomized controlled trial"
+					},
+					{
+						"tag": "EMTREE:rash"
+					},
+					{
+						"tag": "EMTREE:recurrence free survival"
+					},
+					{
+						"tag": "EMTREE:survival analysis"
+					},
+					{
+						"tag": "EMTREE:thrombosis"
+					},
+					{
+						"tag": "EMTREE:transcriptome sequencing"
+					},
+					{
+						"tag": "EMTREE:treatment response"
+					},
+					{
+						"tag": "EMTREE:vincristine"
+					},
+					{
+						"tag": "EMTREE:whole exome sequencing"
+					},
+					{
+						"tag": "EMTREE:young adult"
+					},
+					{
+						"tag": "MeSH:Adolescent"
+					},
+					{
+						"tag": "MeSH:Adult"
+					},
+					{
+						"tag": "MeSH:Aged"
+					},
+					{
+						"tag": "MeSH:Antibodies, Monoclonal, Humanized"
+					},
+					{
+						"tag": "MeSH:Antineoplastic Combined Chemotherapy Protocols"
+					},
+					{
+						"tag": "MeSH:Cyclophosphamide"
+					},
+					{
+						"tag": "MeSH:Dexamethasone"
+					},
+					{
+						"tag": "MeSH:Doxorubicin"
+					},
+					{
+						"tag": "MeSH:Female"
+					},
+					{
+						"tag": "MeSH:Humans"
+					},
+					{
+						"tag": "MeSH:Male"
+					},
+					{
+						"tag": "MeSH:Middle Aged"
+					},
+					{
+						"tag": "MeSH:Philadelphia Chromosome"
+					},
+					{
+						"tag": "MeSH:Precursor Cell Lymphoblastic Leukemia-Lymphoma"
+					},
+					{
+						"tag": "MeSH:Survival Analysis"
+					},
+					{
+						"tag": "MeSH:Young Adult"
+					}
+				],
+				"notes": [
+					{
+						"note": "<p>cited By 1</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	}
 ]
 /** END TEST CASES **/
