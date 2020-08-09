@@ -5,7 +5,7 @@
 	"target": "scopusbib",
 	"minVersion": "2.1.9",
 	"maxVersion": "",
-	"priority": 200,
+	"priority": 1,
 	"configOptions": {
 		"async": true,
 		"getCollections": true
@@ -18,7 +18,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 1,
-	"lastUpdated": "2020-08-09 21:54:12"
+	"lastUpdated": "2020-08-09 21:57:12"
 }
 
 /*
@@ -470,6 +470,12 @@ function processField(item, field, value, rawValue) {
 			AUTHORkeywords[i]=""+AUTHORkeywords[i];
 		}
 		item.tags = (item.tags === undefined ) ? AUTHORkeywords : item.tags.concat(AUTHORkeywords)
+	} else if (field == "chemicals_cas") {
+		let CASkeywords = value.split(keywordDelimRe2);
+		for(var i=0;i<CASkeywords.length;i++){
+			CASkeywords[i]="CAS:"+CASkeywords[i];
+		}
+		item.tags = (item.tags === undefined ) ? CASkeywords : item.tags.concat(CASkeywords)
 	} else if (field == "comment" || field == "annote" || field == "review" || field == "notes") {
 		item.notes.push({note:Zotero.Utilities.text2html(value)});
 	} else if (field == "pdf" || field == "path" /*Papers2 compatibility*/) {
