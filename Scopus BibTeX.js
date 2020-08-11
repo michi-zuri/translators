@@ -18,7 +18,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 1,
-	"lastUpdated": "2020-08-09 21:57:12"
+	"lastUpdated": "2020-08-11 20:43:08"
 }
 
 /*
@@ -121,6 +121,7 @@ var extraIdentifiers = {
 	mrnumber: 'MR',
 	zmnumber: 'Zbl',
 	pmid: 'PMID',
+	pubmed_id: 'PMID',
 	pmcid: 'PMCID'
 
 	//Mostly from Wikipedia citation templates
@@ -189,6 +190,7 @@ var inputFieldMap = {
 	// import also BibLaTeX fields:
 	journaltitle:"publicationTitle",
 	shortjournal:"journalAbbreviation",
+	abbrev_source_title:"journalAbbreviation",
 	eventtitle:"conferenceName",
 	pagetotal:"numPages",
 	version:"version"
@@ -469,7 +471,9 @@ function processField(item, field, value, rawValue) {
 		for(var i=0;i<AUTHORkeywords.length;i++){
 			AUTHORkeywords[i]=""+AUTHORkeywords[i];
 		}
-		item.tags = (item.tags === undefined ) ? AUTHORkeywords : item.tags.concat(AUTHORkeywords)
+		item.tags = (item.tags === undefined ) ? AUTHORkeywords : item.tags.concat(AUTHORkeywords);
+	} else if (field == "coden") {
+		item.tags = (item.tags === undefined ) ? "CODEN:"+value : item.tags.concat("CODEN:"+value);
 	} else if (field == "chemicals_cas") {
 		let CASkeywords = value.split(keywordDelimRe2);
 		for(var i=0;i<CASkeywords.length;i++){
@@ -477,6 +481,13 @@ function processField(item, field, value, rawValue) {
 		}
 		item.tags = (item.tags === undefined ) ? CASkeywords : item.tags.concat(CASkeywords)
 	} else if (field == "comment" || field == "annote" || field == "review" || field == "notes") {
+		item.notes.push({note:Zotero.Utilities.text2html(value)});
+	} else if (field == "comment" || field == "annote" || field == "review" || field == "notes" || field == "affiliation" || field == "correspondence_address1" ) {
+		if (field === "affiliation") {
+			value = "Affiliation(s): "+value;
+		} else if (field === "correspondence_address1") {
+			value = "Correspondence to: "+value
+		} 
 		item.notes.push({note:Zotero.Utilities.text2html(value)});
 	} else if (field == "pdf" || field == "path" /*Papers2 compatibility*/) {
 		item.attachments.push({path:value, mimeType:"application/pdf"});
@@ -500,6 +511,22 @@ function processField(item, field, value, rawValue) {
 
 		attachment = parseFilePathRecord(rawValue.slice(start));
 		if (attachment) item.attachments.push(attachment);
+	} else if (field == "document_type") {
+		if ( value === "Book Chapter" && item.itemType === "book") {
+			item.pages = item.numPages;
+			item.numPages = '';
+			item.itemType = "bookSection";
+			item.journalAbbreviation = '';
+		} else if ( value === "Book" ) {
+			item.title = item.publicationTitle ;
+			item.publicationTitle = "";
+			item.journalAbbreviation = '';
+		} else {
+			item.rights = "Publisher: "+item.publisher;
+			item.publisher = '';
+		}
+	} else if (field == "source") {
+		item.libraryCatalog = value ;
 	} else if (field == "eprint" || field == "eprinttype") {
 		// Support for IDs exported by BibLaTeX
 		if (field == 'eprint') item._eprint = value;
@@ -719,7 +746,7 @@ function unescapeBibTeX(value) {
 	value = value.replace(/\s+/g, " ");
 
 	// Unescape HTML entities coming from web translators
-	if (Zotero.parentTranslator && value.includes('&')) {
+	if (value.includes('&')) {
 		value = value.replace(/&#?\w+;/g, function(entity) {
 			var char = ZU.unescapeHTML(entity);
 			if (char == entity) char = ZU.unescapeHTML(entity.toLowerCase()); // Sometimes case can be incorrect and entities are case-sensitive
@@ -1401,7 +1428,7 @@ function doExport() {
 		}
 
 		if (item.publicationTitle) {
-			if (item.itemType == "bookSection" || item.itemType == "conferencePaper") {
+			if (item.itemType == "bookSection" || item.itemType == "book" || item.itemType == "conferencePaper") {
 				writeField("booktitle", item.publicationTitle);
 			} else if (Zotero.getOption("useJournalAbbreviation") && item.journalAbbreviation){
 				writeField("journal", item.journalAbbreviation);
@@ -3080,72 +3107,6 @@ var reversemappingTable = {
 var testCases = [
 	{
 		"type": "import",
-		"input": "@article{Adams2001,\nauthor = {Adams, Nancy K and DeSilva, Shanaka L and Self, Steven and Salas, Guido and Schubring, Steven and Permenter, Jason L and Arbesman, Kendra},\nfile = {:Users/heatherwright/Documents/Scientific Papers/Adams\\_Huaynaputina.pdf:pdf;::},\njournal = {Bulletin of Volcanology},\nkeywords = {Vulcanian eruptions,breadcrust,plinian},\npages = {493--518},\ntitle = {{The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru}},\nvolume = {62},\nyear = {2001}\n}",
-		"items": [
-			{
-				"itemType": "journalArticle",
-				"title": "The physical volcanology of the 1600 eruption of Huaynaputina, southern Peru",
-				"creators": [
-					{
-						"firstName": "Nancy K",
-						"lastName": "Adams",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Shanaka L",
-						"lastName": "DeSilva",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Steven",
-						"lastName": "Self",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Guido",
-						"lastName": "Salas",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Steven",
-						"lastName": "Schubring",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Jason L",
-						"lastName": "Permenter",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Kendra",
-						"lastName": "Arbesman",
-						"creatorType": "author"
-					}
-				],
-				"date": "2001",
-				"itemID": "Adams2001",
-				"pages": "493–518",
-				"publicationTitle": "Bulletin of Volcanology",
-				"volume": "62",
-				"attachments": [
-					{
-						"path": "Users/heatherwright/Documents/Scientific Papers/Adams_Huaynaputina.pdf",
-						"mimeType": "application/pdf",
-						"title": "Attachment"
-					}
-				],
-				"tags": [
-					"Vulcanian eruptions",
-					"breadcrust",
-					"plinian"
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "import",
 		"input": "@Book{abramowitz+stegun,\n author    = \"Milton {Abramowitz} and Irene A. {Stegun}\",\n title     = \"Handbook of Mathematical Functions with\n              Formulas, Graphs, and Mathematical Tables\",\n publisher = \"Dover\",\n year      =  1964,\n address   = \"New York\",\n edition   = \"ninth Dover printing, tenth GPO printing\"\n}\n\n@Book{Torre2008,\n author    = \"Joe Torre and Tom Verducci\",\n publisher = \"Doubleday\",\n title     = \"The Yankee Years\",\n year      =  2008,\n isbn      = \"0385527403\"\n}\n",
 		"items": [
 			{
@@ -3517,144 +3478,6 @@ var testCases = [
 	},
 	{
 		"type": "import",
-		"input": "@article{sasson_increasing_2013,\n    title = {Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates: a science advisory from the American Heart Association for healthcare providers, policymakers, public health departments, and community leaders},\n\tvolume = {127},\n\tissn = {1524-4539},\n\tshorttitle = {Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates},\n\tdoi = {10.1161/CIR.0b013e318288b4dd},\n\tlanguage = {eng},\n\tnumber = {12},\n\tjournal = {Circulation},\n\tauthor = {Sasson, Comilla and Meischke, Hendrika and Abella, Benjamin S and Berg, Robert A and Bobrow, Bentley J and Chan, Paul S and Root, Elisabeth Dowling and Heisler, Michele and Levy, Jerrold H and Link, Mark and Masoudi, Frederick and Ong, Marcus and Sayre, Michael R and Rumsfeld, John S and Rea, Thomas D and {American Heart Association Council on Quality of Care and Outcomes Research} and {Emergency Cardiovascular Care Committee} and {Council on Cardiopulmonary, Critical Care, Perioperative and Resuscitation} and {Council on Clinical Cardiology} and {Council on Cardiovascular Surgery and Anesthesia}},\n\tmonth = mar,\n\tyear = {2013},\n\tnote = {{PMID:} 23439512},\n\tkeywords = {Administrative Personnel, American Heart Association, Cardiopulmonary Resuscitation, Community Health Services, Health Personnel, Heart Arrest, Humans, Leadership, Public Health, United States},\n\tpages = {1342--1350}\n}",
-		"items": [
-			{
-				"itemType": "journalArticle",
-				"title": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates: a science advisory from the American Heart Association for healthcare providers, policymakers, public health departments, and community leaders",
-				"creators": [
-					{
-						"firstName": "Comilla",
-						"lastName": "Sasson",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Hendrika",
-						"lastName": "Meischke",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Benjamin S",
-						"lastName": "Abella",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Robert A",
-						"lastName": "Berg",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Bentley J",
-						"lastName": "Bobrow",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Paul S",
-						"lastName": "Chan",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Elisabeth Dowling",
-						"lastName": "Root",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Michele",
-						"lastName": "Heisler",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Jerrold H",
-						"lastName": "Levy",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Mark",
-						"lastName": "Link",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Frederick",
-						"lastName": "Masoudi",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Marcus",
-						"lastName": "Ong",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Michael R",
-						"lastName": "Sayre",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "John S",
-						"lastName": "Rumsfeld",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Thomas D",
-						"lastName": "Rea",
-						"creatorType": "author"
-					},
-					{
-						"lastName": "American Heart Association Council on Quality of Care and Outcomes Research",
-						"creatorType": "author",
-						"fieldMode": 1
-					},
-					{
-						"lastName": "Emergency Cardiovascular Care Committee",
-						"creatorType": "author",
-						"fieldMode": 1
-					},
-					{
-						"lastName": "Council on Cardiopulmonary, Critical Care, Perioperative and Resuscitation",
-						"creatorType": "author",
-						"fieldMode": 1
-					},
-					{
-						"lastName": "Council on Clinical Cardiology",
-						"creatorType": "author",
-						"fieldMode": 1
-					},
-					{
-						"lastName": "Council on Cardiovascular Surgery and Anesthesia",
-						"creatorType": "author",
-						"fieldMode": 1
-					}
-				],
-				"date": "March 2013",
-				"DOI": "10.1161/CIR.0b013e318288b4dd",
-				"ISSN": "1524-4539",
-				"extra": "PMID: 23439512",
-				"issue": "12",
-				"itemID": "sasson_increasing_2013",
-				"language": "eng",
-				"pages": "1342–1350",
-				"publicationTitle": "Circulation",
-				"shortTitle": "Increasing cardiopulmonary resuscitation provision in communities with low bystander cardiopulmonary resuscitation rates",
-				"volume": "127",
-				"attachments": [],
-				"tags": [
-					"Administrative Personnel",
-					"American Heart Association",
-					"Cardiopulmonary Resuscitation",
-					"Community Health Services",
-					"Health Personnel",
-					"Heart Arrest",
-					"Humans",
-					"Leadership",
-					"Public Health",
-					"United States"
-				],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "import",
 		"input": "@article{smith_testing_????,\n    title = {Testing identifier import},\n\tauthor = {Smith, John},\n\tdoi = {10.12345/123456},\n\tlccn = {L123456},\n\tmrnumber = {MR123456},\n\tzmnumber = {ZM123456},\n\tpmid = {P123456},\n\tpmcid = {PMC123456},\n\teprinttype = {arxiv},\n\teprint = {AX123456}\n}",
 		"items": [
 			{
@@ -3741,60 +3564,6 @@ var testCases = [
 				"url": "http://digital.ub.uni-paderborn.de/hs/content/titleinfo/1561",
 				"attachments": [],
 				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "import",
-		"input": "@inproceedings{Giannotti:2007:TPM:1281192.1281230,\n          author = {Giannotti, Fosca and Nanni, Mirco and Pinelli, Fabio and Pedreschi, Dino},\n          title = {Trajectory Pattern Mining},\n          booktitle = {Proceedings of the 13th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining},\n          series = {KDD '07},\n          year = {2007},\n          isbn = {978-1-59593-609-7},\n          location = {San Jose, California, USA},\n          pages = {330--339},\n          numpages = {10},\n          url = {http://doi.acm.org/10.1145/1281192.1281230},\n          doi = {10.1145/1281192.1281230},\n          acmid = {1281230},\n          publisher = {ACM},\n          address = {New York, NY, USA},\n          keywords = {spatio-temporal data mining, trajectory patterns},\n         }",
-		"items": [
-			{
-				"itemType": "conferencePaper",
-				"title": "Trajectory Pattern Mining",
-				"creators": [
-					{
-						"firstName": "Fosca",
-						"lastName": "Giannotti",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Mirco",
-						"lastName": "Nanni",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Fabio",
-						"lastName": "Pinelli",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Dino",
-						"lastName": "Pedreschi",
-						"creatorType": "author"
-					}
-				],
-				"date": "2007",
-				"DOI": "10.1145/1281192.1281230",
-				"ISBN": "978-1-59593-609-7",
-				"extra": "event-place: San Jose, California, USA",
-				"itemID": "Giannotti:2007:TPM:1281192.1281230",
-				"pages": "330–339",
-				"place": "New York, NY, USA",
-				"proceedingsTitle": "Proceedings of the 13th ACM SIGKDD International Conference on Knowledge Discovery and Data Mining",
-				"publisher": "ACM",
-				"series": "KDD '07",
-				"url": "http://doi.acm.org/10.1145/1281192.1281230",
-				"attachments": [],
-				"tags": [
-					{
-						"tag": "spatio-temporal data mining"
-					},
-					{
-						"tag": "trajectory patterns"
-					}
-				],
 				"notes": [],
 				"seeAlso": []
 			}
@@ -3923,35 +3692,6 @@ var testCases = [
 	},
 	{
 		"type": "import",
-		"input": "@String {meta:maintainer = \"Xavier D\\\\'ecoret\"}\n\n@\n  %a\npreamble\n  %a\n{ \"Maintained by \" # meta:maintainer }\n@String(Stefan = \"Stefan Swe{\\\\i}g\")\n@String(and = \" and \")\n\n@Book{sweig42,\n  Author =\t stefan # And # meta:maintainer,\n  title =\t { The {impossible} TEL---book },\n  publisher =\t { D\\\\\"ead Po$_{eee}$t Society},\n  yEAr =\t 1942,\n  month =        mar\n}",
-		"items": [
-			{
-				"itemType": "book",
-				"title": "The impossible ℡—book",
-				"creators": [
-					{
-						"firstName": "Stefan",
-						"lastName": "Swe\\ıg",
-						"creatorType": "author"
-					},
-					{
-						"firstName": "Xavier",
-						"lastName": "D\\écoret",
-						"creatorType": "author"
-					}
-				],
-				"date": "März 1942",
-				"itemID": "sweig42",
-				"publisher": "D\\ëad Po<sub>eee</sub>t Society",
-				"attachments": [],
-				"tags": [],
-				"notes": [],
-				"seeAlso": []
-			}
-		]
-	},
-	{
-		"type": "import",
 		"input": "@ARTICLE{Zhang202047,\nauthor={Zhang, D. and Zhou, X. and Yan, S. and Tian, R. and Su, L. and Ding, X. and Xiao, M. and Chen, Y. and Zhao, H. and Chen, H. and Zhang, H. and Li, Z. and Li, Q. and Xu, Y. and Yan, X. and Li, Y. and Zhang, S.},\ntitle={Correlation between cytokines and coagulation-related parameters in patients with coronavirus disease 2019 admitted to ICU},\njournal={Clinica Chimica Acta},\nyear={2020},\nvolume={510},\npages={47-53},\ndoi={10.1016/j.cca.2020.07.002},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087872687&doi=10.1016%2fj.cca.2020.07.002&partnerID=40&md5=0dc09d8434258376df732ecb51c0de5d},\naffiliation={Department of Clinical Laboratory, Peking Union Medical College Hospital, Peking Union Medical College and Chinese Academy of Medical Sciences, Beijing, 100730, China; Department of Pulmonary and Critical Care Medicine, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences, Beijing, 100730, China; Department of Cardiology, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences, Beijing, 100730, China},\nabstract={Background: The novel SARS-CoV-2 caused a large number of infections and deaths worldwide. Thus, new ideas for an appropriated assessment of patients’ condition and clinical treatment are of utmost importance. Therefore, in this study, the laboratory parameters of patients with coronavirus disease 2019 (COVID-19) were evaluated to identify the correlation between cytokine expression and other laboratory parameters. Methods: A retrospective and single-center study was performed in Wuhan, involving 83 severe or critical COVID-19 patients admitted to the intensive care unit (ICU). Laboratory parameters in ICU patients with laboratory-confirmed infection of SARS-CoV2 were collected. The association between parameters was assessed by Spearman's rank correlation. Results: Patients’ median age was 66 years (IQR, 57–73), and 55 (66%) were men. Among the 83 patients, 61 (73%) had 1 or more coexisting medical condition. The median concentration of IL-2R, IL-6, IL8, IL10, and TNFα were above the normal range, without IL-1β. A significant negative correlation between IL-6 and platelet count was discovered (r2 = −0.448, P &lt; 0.001) as well as a significant correlation between IL-6 and other platelet parameters. Finally, a correlation between multiple cytokines and coagulation indicators was found, pro-inflammatory factors were found to be more associated to coagulation parameters, with the highest correlation between IL-6 and the International normalized ratio (INR) (r2 = 0.444, P &lt; 0.001). Conclusions: Our results suggested that cytokines play an important role in the pathogenesis of COVID-19. In addition, IL-6 seems more relevant in the evaluation of the condition of COVID-19 patients. © 2020 The Author(s)},\nauthor_keywords={Coagulation;  Correlation;  COVID-19;  Cytokines;  IL-6},\nkeywords={interleukin 10;  interleukin 1beta;  interleukin 2 receptor;  interleukin 6;  interleukin 8;  tumor necrosis factor, adult;  aged;  aging;  Article;  blood clotting;  China;  comorbidity;  coronavirus disease 2019;  disease association;  female;  hospital admission;  human;  human cell;  intensive care unit;  international normalized ratio;  laboratory test;  major clinical study;  male;  pathogenesis;  platelet count;  priority journal;  protein expression;  retrospective study;  Severe acute respiratory syndrome coronavirus 2},\nchemicals_cas={interleukin 8, 114308-91-7},\nfunding_details={2017-I2M-3-001},\nfunding_details={National Natural Science Foundation of ChinaNational Natural Science Foundation of China, NSFC, 81671618, 81871302},\nfunding_text 1={This research was supported by grants from the National Natural Science Foundation of China Grants ( 81671618 , 81871302 ), CAMS Innovation Fund for Medical Sciences (CIFMS) ( 2017-I2M-3-001 ), CAMS Innovation Fund for Medical Sciences (CIFMS) ( 2017-I2M-B&R-01 ).},\ncorrespondence_address1={Li, Y.; Department of Clinical Laboratory, Peking Union Medical College Hospital, Peking Union Medical College and Chinese Academy of Medical SciencesChina; email: yongzhelipumch@126.com},\npublisher={Elsevier B.V.},\nissn={00098981},\ncoden={CCATA},\npubmed_id={32645391},\nlanguage={English},\nabbrev_source_title={Clin. Chim. Acta},\ndocument_type={Article},\nsource={Scopus},\n}",
 		"items": [
 			{
@@ -4047,15 +3787,25 @@ var testCases = [
 				"date": "2020",
 				"DOI": "10.1016/j.cca.2020.07.002",
 				"ISSN": "00098981",
-				"abstractNote": "Background: The novel SARS-CoV-2 caused a large number of infections and deaths worldwide. Thus, new ideas for an appropriated assessment of patients’ condition and clinical treatment are of utmost importance. Therefore, in this study, the laboratory parameters of patients with coronavirus disease 2019 (COVID-19) were evaluated to identify the correlation between cytokine expression and other laboratory parameters. Methods: A retrospective and single-center study was performed in Wuhan, involving 83 severe or critical COVID-19 patients admitted to the intensive care unit (ICU). Laboratory parameters in ICU patients with laboratory-confirmed infection of SARS-CoV2 were collected. The association between parameters was assessed by Spearman's rank correlation. Results: Patients’ median age was 66 years (IQR, 57–73), and 55 (66%) were men. Among the 83 patients, 61 (73%) had 1 or more coexisting medical condition. The median concentration of IL-2R, IL-6, IL8, IL10, and TNFα were above the normal range, without IL-1β. A significant negative correlation between IL-6 and platelet count was discovered (r2 = −0.448, P &lt; 0.001) as well as a significant correlation between IL-6 and other platelet parameters. Finally, a correlation between multiple cytokines and coagulation indicators was found, pro-inflammatory factors were found to be more associated to coagulation parameters, with the highest correlation between IL-6 and the International normalized ratio (INR) (r2 = 0.444, P &lt; 0.001). Conclusions: Our results suggested that cytokines play an important role in the pathogenesis of COVID-19. In addition, IL-6 seems more relevant in the evaluation of the condition of COVID-19 patients. © 2020 The Author(s)",
+				"abstractNote": "Background: The novel SARS-CoV-2 caused a large number of infections and deaths worldwide. Thus, new ideas for an appropriated assessment of patients’ condition and clinical treatment are of utmost importance. Therefore, in this study, the laboratory parameters of patients with coronavirus disease 2019 (COVID-19) were evaluated to identify the correlation between cytokine expression and other laboratory parameters. Methods: A retrospective and single-center study was performed in Wuhan, involving 83 severe or critical COVID-19 patients admitted to the intensive care unit (ICU). Laboratory parameters in ICU patients with laboratory-confirmed infection of SARS-CoV2 were collected. The association between parameters was assessed by Spearman's rank correlation. Results: Patients’ median age was 66 years (IQR, 57–73), and 55 (66%) were men. Among the 83 patients, 61 (73%) had 1 or more coexisting medical condition. The median concentration of IL-2R, IL-6, IL8, IL10, and TNFα were above the normal range, without IL-1β. A significant negative correlation between IL-6 and platelet count was discovered (r2 = −0.448, P < 0.001) as well as a significant correlation between IL-6 and other platelet parameters. Finally, a correlation between multiple cytokines and coagulation indicators was found, pro-inflammatory factors were found to be more associated to coagulation parameters, with the highest correlation between IL-6 and the International normalized ratio (INR) (r2 = 0.444, P < 0.001). Conclusions: Our results suggested that cytokines play an important role in the pathogenesis of COVID-19. In addition, IL-6 seems more relevant in the evaluation of the condition of COVID-19 patients. © 2020 The Author(s)",
+				"extra": "PMID: 32645391",
 				"itemID": "Zhang202047",
+				"journalAbbreviation": "Clin. Chim. Acta",
 				"language": "English",
+				"libraryCatalog": "Scopus",
 				"pages": "47-53",
 				"publicationTitle": "Clinica Chimica Acta",
+				"rights": "Publisher: Elsevier B.V.",
 				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087872687&doi=10.1016%2fj.cca.2020.07.002&partnerID=40&md5=0dc09d8434258376df732ecb51c0de5d",
 				"volume": "510",
 				"attachments": [],
 				"tags": [
+					{
+						"tag": "CAS:interleukin 8, 114308-91-7"
+					},
+					{
+						"tag": "CODEN:CCATA"
+					},
 					{
 						"tag": "COVID-19"
 					},
@@ -4162,6 +3912,12 @@ var testCases = [
 				"notes": [
 					{
 						"note": "<p>cited By 0</p>"
+					},
+					{
+						"note": "<p>Affiliation(s): Department of Clinical Laboratory, Peking Union Medical College Hospital, Peking Union Medical College and Chinese Academy of Medical Sciences, Beijing, 100730, China; Department of Pulmonary and Critical Care Medicine, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences, Beijing, 100730, China; Department of Cardiology, Peking Union Medical College Hospital, Chinese Academy of Medical Sciences, Beijing, 100730, China</p>"
+					},
+					{
+						"note": "<p>Correspondence to: Li, Y.; Department of Clinical Laboratory, Peking Union Medical College Hospital, Peking Union Medical College and Chinese Academy of Medical SciencesChina; email: yongzhelipumch@126.com</p>"
 					}
 				],
 				"seeAlso": []
@@ -4231,15 +3987,37 @@ var testCases = [
 				"DOI": "10.1016/j.msard.2020.102208",
 				"ISSN": "22110348",
 				"abstractNote": "Background: Neuromyelitis optica spectrum disorder (NMOSD) is a complex disease characterized by a severe inflammation of the central nervous system (CNS). This disease typically manifests with recurrent optic neuritis (ON) and acute transverse myelitis (ATM). The clinical and radiological spectrum of NMOSD is little known in Latin America (LATAM) and few reports have been published in the literature so far. In Ecuador, no reports on NMOSD have been published. For this reason we aimed to assess the demographic, clinical and imaging characteristics of patients with NMOSD from third level hospitals from Ecuador. Methods: This is a descriptive study in which we assessed medical reports of patients with inflammatory demyelinating diseases who were attended in third level hospitals from Ecuador in 2017. Then we applied the 2015 diagnostic criteria, those patients who met the new NMOSD diagnostic criteria were selected and analyzed. Additionally, exploratory sub-analyses were subsequently carried out. Results: We identified 59 patients with NMOSD, the relative frequency of NMOSD was 15.9%. The multiple sclerosis (MS) /NMOSD ratio was 5.2:1. Twenty four percent of patients were newly defined as having NMOSD when 2015 criteria was applied. The median time to diagnoses was shorter by the 2015 criteria than 2006 criteria (p<0.001). NMOSD was more prevalent in women (female/male ratio 4.4:1). The disease onset was more frequent at the fourth decade of life. The most common symptoms at the disease onset were ON and the association of ON with ATM. The mean of expanded disability status scale (EDSS) was 4.8 (SD±1.8). Concomitant autoimmune diseases were infrequent in this population (11.9%). The brain magnetic resonance imaging (MRI) abnormalities were present in 25.7% of patients at disease onset. Spinal cord MRI showed longitudinally extensive transverse myelitis (LETM) in 91.5% of cases. Recurrent NMOSD was frequent in this cohort (88%). Positivity for antibodies against aquaporin-4 (AQP4-IgG) which was measured through indirect immunofluorescence assay (IIF) was identified in 81% of the patients tested. Patients with seronegative AQP4-IgG had higher grade of disability than seropositive patients (p<0.05). Ninety eight percent of patients received treatment with immunosuppressive drugs. Three patients died due to gastric cancer (1 patient) and infectious diseases (2 patients). Conclusions: This is the first descriptive study in an Ecuadorian cohort of patients with NMOSD. We show a wide epidemiological, clinical and radiological spectrum of NMOSD. © 2020 Elsevier B.V.",
+				"extra": "PMID: 32562910",
 				"itemID": "EdgarPatricio2020",
+				"journalAbbreviation": "Mult. Scler. Relat. Disord.",
 				"language": "English",
+				"libraryCatalog": "Scopus",
 				"publicationTitle": "Multiple Sclerosis and Related Disorders",
+				"rights": "Publisher: Elsevier B.V.",
 				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086449309&doi=10.1016%2fj.msard.2020.102208&partnerID=40&md5=97b459965bf00dcf87287d56505b6ca2",
 				"volume": "44",
 				"attachments": [],
 				"tags": [
 					{
 						"tag": "AQP4-IgG"
+					},
+					{
+						"tag": "CAS:aquaporin 4, 175960-54-0"
+					},
+					{
+						"tag": "CAS:azathioprine, 446-86-6"
+					},
+					{
+						"tag": "CAS:immunoglobulin G, 97794-27-9"
+					},
+					{
+						"tag": "CAS:mycophenolic acid, 23047-11-2, 24280-93-1"
+					},
+					{
+						"tag": "CAS:prednisone, 53-03-2"
+					},
+					{
+						"tag": "CAS:rituximab, 174722-31-7"
 					},
 					{
 						"tag": "EMTREE:Article"
@@ -4359,6 +4137,12 @@ var testCases = [
 				"notes": [
 					{
 						"note": "<p>cited By 0</p>"
+					},
+					{
+						"note": "<p>Affiliation(s): Department of Neurology. Hospital Carlos Andrade Marín. Quito. Universidad Central del Ecuador. Quito, Address: Avenida 18 de Septiembre y Ayacucho, Ecuador; Department of Neurology. Hospital Teodoro Maldonado Carbo. Guayaquil, Address: Avenida 25 de Julio, Ecuador; Department of Neurology. Hospital de Especialidades Eugenio Espejo, Quito, Address: Avenida Gran Colombia, Ecuador; Department of Neurology. Hospital José Carrasco Arteaga de Cuenca, Address: Intersección Popayán, Ecuador; Department of Neurology. Hospital de Especialidades Eugenio Espejo, Quito, Address: Avenida Gran Colombia, Ecuador; Department of Neurology. Hospital Carlos Andrade Marín. Quito. Pontificia Universidad Católica del Ecuador. Quito, Address: Avenida 12 de Octubre, Ecuador</p>"
+					},
+					{
+						"note": "<p>Correspondence to: Edgar Patricio, C.-D.; Department of Neurology. Hospital Carlos Andrade Marín. Quito. Universidad Central del Ecuador. Quito, Address: Avenida 18 de Septiembre y Ayacucho, Ecuador; email: patocorrea2010@yahoo.com</p>"
 					}
 				],
 				"seeAlso": []
@@ -4393,18 +4177,32 @@ var testCases = [
 				"DOI": "10.1007/s00268-020-05543-w",
 				"ISSN": "03642313",
 				"abstractNote": "Objectives: Systemic inflammation is a potentially debilitating complication of thoracic surgeries with significant physical and economic morbidity. There is compelling evidence for the role of the central nervous system in regulating inflammatory processes through humoral mechanisms. Activation of the afferent vagus nerve by cytokines triggers anti-inflammatory responses. Peripheral electrical stimulation of the vagus nerve in vivo during lethal endotoxemia in rats inhibited tumor necrosis factor synthesis and prevented shock development. However, the vagal regulatory role of systemic inflammation after lung lobectomy is unknown. Methods: One hundred patients who underwent lobectomy via thoracotomy were recruited and equally randomized to treated group or controls. Intermittent stimulation of the auricular branch of vagus nerve in the triangular fossa was applied in the treated group using neurostimulator V (Ducest®, Germany), starting 24 h preoperatively and continued till the 4th postoperative day (POD). Inflammatory interleukins (IL) were analyzed using ELISA preoperatively, on the 1st and 4th POD. Results: On the 1st POD, patients who underwent neurostimulation had reduced serum concentrations of CRP (p = 0.01), IL6 (p = 0.02) but elevated IL10 (p = 0.03) versus controls. On the 4th POD, serum concentrations of CRP, IL6 and IL10 were similar in both groups. Moreover, the treated group was associated with lower incidence of pneumonia (p = 0.04) and shorter hospitalization time (p = 0.04) versus controls. Conclusions: Modulations in the brain stem caused by noninvasive transcutaneous stimulation of the vagus nerve after lung lobectomy attenuate the acute postsurgical inflammatory response by the regulation of IL6 and IL10, resulting in reduced incidence of postoperative pneumonia and short hospitalization time. Clinical Trial Registry Number: NCT03204968. © 2020, Société Internationale de Chirurgie.",
+				"extra": "PMID: 32358638",
 				"issue": "9",
 				"itemID": "Salama20203167",
+				"journalAbbreviation": "World J. Surg.",
 				"language": "English",
+				"libraryCatalog": "Scopus",
 				"pages": "3167-3174",
 				"publicationTitle": "World Journal of Surgery",
+				"rights": "Publisher: Springer",
 				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85083958097&doi=10.1007%2fs00268-020-05543-w&partnerID=40&md5=1877aeab77a87729f1a5c34953c76eb0",
 				"volume": "44",
 				"attachments": [],
-				"tags": [],
+				"tags": [
+					{
+						"tag": "CODEN:WJSUD"
+					}
+				],
 				"notes": [
 					{
 						"note": "<p>cited By 0</p>"
+					},
+					{
+						"note": "<p>Affiliation(s): Department of Thoracic Surgery, North Clinic, Bruennerstrasse 68, Vienna, 1210, Austria; Medical Faculty, Thoracic Surgery, Sigmund Freud University, Vienna, Austria; Institute of Thoracic Oncology, Karl Landsteiner Society, St. Poelten, Austria</p>"
+					},
+					{
+						"note": "<p>Correspondence to: Mueller, M.R.; Department of Thoracic Surgery, North Clinic, Bruennerstrasse 68, Austria; email: michael.rolf.mueller@wienkav.at</p>"
 					}
 				],
 				"seeAlso": []
@@ -4629,11 +4427,15 @@ var testCases = [
 				"DOI": "10.1007/s10875-020-00814-6",
 				"ISSN": "02719142",
 				"abstractNote": "Isolated neuroinflammatory disease has been described in case reports of familial hemophagocytic lymphohistiocytosis (FHL), but the clinical spectrum of disease manifestations, response to therapy and prognosis remain poorly defined. We combined an international survey with a literature search to identify FHL patients with (i) initial presentation with isolated neurological symptoms; (ii) absence of cytopenia and splenomegaly at presentation; and (iii) systemic HLH features no earlier than 3 months after neurological presentation. Thirty-eight (20 unreported) patients were identified with initial diagnoses including acute demyelinating encephalopathy, leukoencephalopathy, CNS vasculitis, multiple sclerosis, and encephalitis. Median age at presentation was 6.5 years, most commonly with ataxia/gait disturbance (75%) and seizures (53%). Diffuse multifocal white matter changes (79%) and cerebellar involvement (61%) were common MRI findings. CSF cell count and protein were increased in 22/29 and 15/29 patients, respectively. Fourteen patients progressed to systemic inflammatory disease fulfilling HLH-2004 criteria at a mean of 36.9 months after initial neurological presentation. Mutations were detected in PRF1 in 23 patients (61%), RAB27A in 10 (26%), UNC13D in 3 (8%), LYST in 1 (3%), and STXBP2 in 1 (3%) with a mean interval to diagnosis of 28.3 months. Among 19 patients who underwent HSCT, 11 neurologically improved, 4 were stable, one relapsed, and 3 died. Among 14 non-transplanted patients, only 3 improved or had stable disease, one relapsed, and 10 died. Isolated CNS-HLH is a rare and often overlooked cause of inflammatory brain disease. HLH-directed therapy followed by HSCT seems to improve survival and outcome. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.",
+				"extra": "PMID: 32638196",
 				"issue": "6",
 				"itemID": "Blincoe2020901",
+				"journalAbbreviation": "J. Clin. Immunol.",
 				"language": "English",
+				"libraryCatalog": "Scopus",
 				"pages": "901-916",
 				"publicationTitle": "Journal of Clinical Immunology",
+				"rights": "Publisher: Springer",
 				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85087567833&doi=10.1007%2fs10875-020-00814-6&partnerID=40&md5=a3b29cad9138e1a56f75e64ceb15eec3",
 				"volume": "40",
 				"attachments": [],
@@ -4645,6 +4447,9 @@ var testCases = [
 						"tag": "CNS inflammation"
 					},
 					{
+						"tag": "CODEN:JCIMD"
+					},
+					{
 						"tag": "Familial hemophagocytic lymphohistiocytosis"
 					},
 					{
@@ -4654,6 +4459,12 @@ var testCases = [
 				"notes": [
 					{
 						"note": "<p>cited By 0</p>"
+					},
+					{
+						"note": "<p>Affiliation(s): CHU Sainte-Justine, Department of Pediatrics, Department of Microbiology, Infectious Diseases and Immunology, University of Montreal, Montreal, QC H3T 1C5, Canada; Department of Paediatric Immunology and Allergy, Starship Children’s Health, Auckland, New Zealand; Institute for Immunodeficiency, Center for Chronic Immunodeficiency, Medical Center, Faculty of Medicine, University of Freiburg, Breisacher Strasse 115, Freiburg, 79106, Germany; Center for Pediatrics, Medical Center - University of Freiburg, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Berta-Ottenstein-Programme, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Department of Oncology, St. Jude Children’s Research Hospital, Memphis, TN, United States; Department of Pediatric Medicine, Division of Critical Care, St Jude Children’s Research Hospital, Memphis, TN, United States; Department of Rheumatology, Ann and Robert H Lurie Children’s Hospital and Children’s Hospital of Chicago, Chicago, IL, United States; Department of Rheumatology, Northwestern University Feinberg School of Medicine, Chicago, IL, United States; Pediatric Hematology and Oncology, Children’s Hospital of Wisconsin-Milwaukee Campus, Milwaukee, WI, United States; Department of Pediatric and Adolescent Medicine, Division of Pediatric Hematology and Oncology, Faculty of Medicine, University of Freiburg, Freiburg, Germany; Willem-Alexander Children’s Hospital, Department of Pediatrics, Leiden University Medical Center, Leiden, Netherlands; Department of Pediatrics, University of Groningen, University Medical Centre Groningen, Groningen, Netherlands; Pediatric Infectious Diseases and Immunodeficiencies Unit, Hospital Universitari Vall d’Hebron, Vall d’Hebron Research Institute, Universitat Autònoma de Barcelona, Barcelona, Spain; Jeffrey Modell Foundation Excellence Centre, Barcelona, Spain; Pediatric Hematology and Oncology Department, Hospital Universitari Vall d’Hebron, Vall d’Hebron Research Institute, Universitat Autònoma de Barcelona, Barcelona, Spain; Department of Pediatrics, University of Padua Medical School, Padua, Italy; Division of Pediatric Stem Cell Transplantation and Immunology, University Medical Center, Hamburg, Germany; Hematology and Oncology Unit, Alexandria University Children’s Hospital, Department of Pediatrics, Faculty of Medicine, Alexandria University, Alexandria, Egypt; Neurology Unit, Alexandria University Children’s Hospital, Department of Pediatrics, Faculty of Medicine, Alexandria University, Alexandria, Egypt; Department of Pediatrics, Hospital Universitario Cruces, IIS BioCruces Bizkaia, Department of Pediatrics, Faculty of Medicine, UPV/EHU, Barakaldo, Bizkaia, Spain; Stradins Clinical University Hospital, Riga, Latvia; Department of Biology and Microbiology, Rigas Stradins University, Riga, Latvia; Department of Rheumatology, Stradins Clinical University Hospital, Riga, Latvia; Department of Neurology, Hospital Gailezers, Riga, Latvia; Center for Hematology and Regenerative Medicine, Department of Medicine Huddinge, Karolinska Institutet, Karolinska University Hospital, Stockholm, Sweden; Center for Pediatric Oncology and Hematology, Vilnius University Hospital Santaros Klinikos, Vilnius, Lithuania; Institute of Clinical Medicine, Vilnius University, Vilnius, Lithuania; CHU Sainte Justine, Department of Neurology, Cerebral Electrophysiology Laboratory, Department of Neurosciences, University of Montreal, Montreal, QC, Canada; Department of Pediatric Hematology-Oncology, Hadassah-Hebrew University Medical Center, Ein Kerem, Jerusalem, Israel; Department of Pediatric Immunology, Great Ormond Street Hospital, London, WC1N 3JH, United Kingdom; Department of Neurology, Birmingham Women’s and Children’s Hospital, Birmingham, United Kingdom; Department of Pediatrics, Washington University School of Medicine in St. Louis, St. Louis, MO, United States; Division of Hematology/Oncology/BMT, The Hospital for Sick Children, Toronto, ON, Canada; Department of Pediatrics, University of Toronto, Toronto, ON, Canada; Centre for Cancer and Blood Disorders, Phoenix Children’s Hospital, Phoenix, United States; Division of Intramural Research, Laboratory of Clinical Immunology and Microbiology, National Institute of Allergy and Infectious Diseases, National Institutes of Health, Bethesda, United States; Department of Pediatrics, University of Cincinnati, Division of Bone Marrow Transplantation and Immune Deficiency, Cincinnati Children’s Medical Centre, Cincinnati, OH, United States</p>"
+					},
+					{
+						"note": "<p>Correspondence to: Haddad, E.; CHU Sainte-Justine, Department of Pediatrics, Department of Microbiology, Infectious Diseases and Immunology, University of Montreal, Institute for Immunodeficiency, Center for Chronic Immunodeficiency, Medical Center, Faculty of Medicine, University of Freiburg, Breisacher Strasse 115, Canada; email: elie.haddad@umontreal.ca</p>"
 					}
 				],
 				"seeAlso": []
@@ -4703,17 +4514,24 @@ var testCases = [
 				"DOI": "10.1007/s10875-020-00800-y",
 				"ISSN": "02719142",
 				"abstractNote": "Background: Purine nucleoside phosphorylase (PNP) deficiency accounts for about 4% of severe combined immunodeficiency diseases. PNP deficiency is a variable disease with recurrent infections and neurodevelopmental delay. Autoimmunity and malignancy can still occur in one-third of patients. Methods: Case report. Case Presentation: An 8-year-old Saudi female who was apparently healthy presented at the age of 7 years with confirmed systemic lupus erythematosus (SLE) and lupus nephritis that were poorly controlled with conventional therapy. She also had frequent sinopulmonary and varicella infections. Preliminary immunological workup showed severe lymphopenia and depressed lymphocyte proliferation assay. The uric acid was within normal levels at 179 μmol/L (normal range, 150 to 350 μmol/L) 6 weeks after blood transfusion. Genetic study revealed a homozygous missense mutation c.265G>A in the PNP gene, resulting in a substitution of glutamic acid to lysine at amino acid 89 of the encoded protein (E89K). The PNP serum level was 798 nmol/h/mg (normal level 1354 ± 561 nmol/h/mg) 6 weeks after blood transfusion. Hematopoietic stem cell transplantation (HSCT) was planned from a matched unrelated donor; however, she developed an EBV and varicella meningoencephalitis. Atypical malignant cells suggestive of lymphoma were discovered, likely induced by EBV, and suspicious lesions were shown on brain MRI and PET scan. Unfortunately, she passed away before HSCT due to multiorgan failure. Conclusion: This report emphasizes the challenges in recognizing PNP deficiency in a patient suffering from SLE. © 2020, Springer Science+Business Media, LLC, part of Springer Nature.",
+				"extra": "PMID: 32514656",
 				"issue": "6",
 				"itemID": "Al-Saud2020833",
+				"journalAbbreviation": "J. Clin. Immunol.",
 				"language": "English",
+				"libraryCatalog": "Scopus",
 				"pages": "833-839",
 				"publicationTitle": "Journal of Clinical Immunology",
+				"rights": "Publisher: Springer",
 				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086152473&doi=10.1007%2fs10875-020-00800-y&partnerID=40&md5=e53625b83074f1e86a0c52daba9e0535",
 				"volume": "40",
 				"attachments": [],
 				"tags": [
 					{
 						"tag": "CNS lymphoma"
+					},
+					{
+						"tag": "CODEN:JCIMD"
 					},
 					{
 						"tag": "Epstein-Barr virus"
@@ -4731,6 +4549,12 @@ var testCases = [
 				"notes": [
 					{
 						"note": "<p>cited By 0</p>"
+					},
+					{
+						"note": "<p>Affiliation(s): Section of Allergy and Immunology, Department of Pediatrics, Division of Allergy &amp; Immunology, King Faisal Specialist Hospital &amp; Research Center, P.O. Box 3354, MBC-58, Riyadh, 11211, Saudi Arabia; College of Medicine, Alfaisal University, Riyadh, Saudi Arabia; Department of Pediatrics, College of Medicine, King Faisal University, Alhasa, Saudi Arabia; Department of Radiology, King Faisal Specialist Hospital &amp; Research Center, Riyadh, Saudi Arabia; Department of Medicine, Duke University Medical Center, Durham, NC, United States; Department of Genetics, King Faisal Specialist Hospital and Research Center, Riyadh, Saudi Arabia; Department of Pediatrics, Division of Rheumatology, King Faisal Specialist Hospital &amp; Research Center, Riyadh, Saudi Arabia</p>"
+					},
+					{
+						"note": "<p>Correspondence to: Al-Saud, B.; Section of Allergy and Immunology, Department of Pediatrics, Division of Allergy &amp; Immunology, King Faisal Specialist Hospital &amp; Research Center, P.O. Box 3354, MBC-58, Saudi Arabia; email: balsaud@kfshrc.edu.sa</p>"
 					}
 				],
 				"seeAlso": []
@@ -4915,15 +4739,82 @@ var testCases = [
 				"DOI": "10.1016/S2352-3026(20)30144-7",
 				"ISSN": "23523026",
 				"abstractNote": "Background: The addition of rituximab to intensive chemotherapy improves outcomes in patients with B-cell acute lymphoblastic leukaemia. Ofatumumab is an anti-CD20 monoclonal antibody that binds to the small extracellular loop of CD20 and has greater in vitro complement-mediated cytotoxicity than rituximab. In this study, we assessed the activity and safety of ofatumumab in combination with chemotherapy in patients with Philadelphia chromosome (Ph)-negative CD20-positive B-cell acute lymphoblastic leukaemia. Methods: This was a single-arm, phase 2 trial done at the MD Anderson Cancer Center (Houston, TX, USA). Patients with newly diagnosed, Ph-negative B-cell acute lymphoblastic leukaemia or lymphoblastic lymphoma with CD20 expression of at least 1% were eligible. Patients were treated with up to eight courses of the hyper-CVAD regimen (hyperfractionated cyclophosphamide, vincristine, doxorubicin, and dexamethasone) on courses 1, 3, 5, and 7 alternating with high-dose methotrexate and cytarabine on courses 2, 4, 6, and 8. Ofatumumab was administered on days 1 and 11 of courses 1 and 3 and on days 1 and 8 of courses 2 and 4 for a total of eight doses. The first dose of ofatumumab was 300 mg intravenously and all subsequent doses were 2000 mg intravenously. Patients received 30 courses of maintenance therapy with 6-mercaptopurine, vincristine, methotrexate, and prednisone (POMP), with four intensification courses (high-dose methotrexate plus L-asparaginase and hyper-CVAD plus ofatumumab on courses 6–7 and 18–19). The primary endpoints were event-free survival, overall response, and overall survival. All enrolled patients were included in the primary and safety analyses. The trial is registered with ClinicalTrials.gov, NCT01363128. Findings: Between Aug 26, 2011, and May 18, 2017, 69 patients (67 patients had B-cell acute lymphoblastic leukaemia and two had B-cell lymphoblastic lymphoma; median age 41 years [IQR 32-50]) were enrolled and treated, including 33 (48%) aged between 18 and 39 years. Nine (27%) of 33 patients had Ph-like acute lymphoblastic leukaemia. With a median follow-up of 44 months (26–53), 4-year event-free survival was 59% (95% CI 48–73); 69% (54–87) in adolescents and young adults aged 18–39 years. 4-year overall survival was 68% (58–81); 74% (60–91) in adolescents and young adults. The overall response rate was 98% (64 of 65 patients). The most common non-haematological grade 3 or 4 adverse events were infections (35 [54%] of 65 patients during induction and 53 [78%] of 68 patients during consolidation). Ten (14%) of 69 patients died in complete remission from sepsis (two [3%]), cardiac arrest (one [1%]), therapy-related acute myeloid leukaemia (two [3%]), and haematopoietic stem-cell transplantation complications (five [7%]). None of these deaths were considered related to ofatumumab treatment by the study investigators. Interpretation: The combination of hyper-CVAD plus ofatumumab is safe and active in adults with Ph-negative CD20-positive B-cell acute lymphoblastic leukaemia. Modifications of this regimen with the addition of novel monoclonal and bispecific antibody constructs targeting CD19 and CD22 might further improve outcomes and allow reduction in the intensity and duration of chemotherapy. Funding: Novartis. © 2020 Elsevier Ltd",
+				"extra": "PMID: 32589978",
 				"issue": "7",
 				"itemID": "Jabbour2020e523",
+				"journalAbbreviation": "Lancet Haematol.",
 				"language": "English",
+				"libraryCatalog": "Scopus",
 				"pages": "e523-e533",
 				"publicationTitle": "The Lancet Haematology",
+				"rights": "Publisher: Elsevier Ltd",
 				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85086706886&doi=10.1016%2fS2352-3026%2820%2930144-7&partnerID=40&md5=b0428e105a5e35d8cee4fd85c8fe906e",
 				"volume": "7",
 				"attachments": [],
 				"tags": [
+					{
+						"tag": "CAS:Antibodies, Monoclonal, Humanized"
+					},
+					{
+						"tag": "CAS:Cyclophosphamide"
+					},
+					{
+						"tag": "CAS:Dexamethasone"
+					},
+					{
+						"tag": "CAS:Doxorubicin"
+					},
+					{
+						"tag": "CAS:asparaginase macrogol, 130167-69-0"
+					},
+					{
+						"tag": "CAS:asparaginase, 9015-68-3, 1349719-22-7"
+					},
+					{
+						"tag": "CAS:bilirubin, 18422-02-1, 635-65-4"
+					},
+					{
+						"tag": "CAS:creatinine, 19230-81-0, 60-27-5"
+					},
+					{
+						"tag": "CAS:cyclophosphamide, 50-18-0"
+					},
+					{
+						"tag": "CAS:cytarabine, 147-94-4, 69-74-9"
+					},
+					{
+						"tag": "CAS:dexamethasone, 50-02-2"
+					},
+					{
+						"tag": "CAS:doxorubicin, 23214-92-8, 25316-40-9"
+					},
+					{
+						"tag": "CAS:filgrastim, 121181-53-1"
+					},
+					{
+						"tag": "CAS:folinate calcium, 1492-18-8, 51057-63-7"
+					},
+					{
+						"tag": "CAS:mercaptopurine, 31441-78-8, 50-44-2, 6112-76-1"
+					},
+					{
+						"tag": "CAS:methotrexate, 15475-56-6, 59-05-2, 7413-34-5"
+					},
+					{
+						"tag": "CAS:ofatumumab"
+					},
+					{
+						"tag": "CAS:ofatumumab, 679818-59-8"
+					},
+					{
+						"tag": "CAS:pegfilgrastim, 208265-92-3"
+					},
+					{
+						"tag": "CAS:prednisone, 53-03-2"
+					},
+					{
+						"tag": "CAS:vincristine, 57-22-7"
+					},
 					{
 						"tag": "EMTREE:Article"
 					},
@@ -5270,6 +5161,425 @@ var testCases = [
 				"notes": [
 					{
 						"note": "<p>cited By 1</p>"
+					},
+					{
+						"note": "<p>Affiliation(s): Department of Leukemia, The University of Texas MD Anderson Cancer Center, Houston, TX, United States; Department of Hematopathology, The University of Texas MD Anderson Cancer Center, Houston, TX, United States; Department of Genomic Medicine, The University of Texas MD Anderson Cancer Center, Houston, TX, United States; Department of Biostatistics, The University of Texas MD Anderson Cancer Center, Houston, TX, United States; Department of Stem Cell Transplantation and Cellular Therapy, The University of Texas MD Anderson Cancer Center, Houston, TX, United States; Department of Pathology, St Jude Children&apos;s Research Hospital, Memphis, TN, United States; Division of Hematology/Oncology, Department of Medicine, UCI Health, Orange, CA, United States</p>"
+					},
+					{
+						"note": "<p>Correspondence to: Jabbour, E.; Department of Leukemia, The University of Texas MD Anderson Cancer CenterUnited States; email: ejabbour@mdanderson.org</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@ARTICLE{Certo2019259,\nauthor={Certo, F. and Maione, M. and Visocchi, M. and Barbagallo, G.M.V.},\ntitle={Retro-odontoid degenerative pseudotumour causing spinal cord compression and myelopathy: Current evidence on the role of posterior C1–C2 fixation in treatment},\njournal={Acta Neurochirurgica, Supplementum},\nyear={2019},\nvolume={125},\npages={259-264},\ndoi={10.1007/978-3-319-62515-7_37},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85059495296&doi=10.1007%2f978-3-319-62515-7_37&partnerID=40&md5=29c49321bf3dff7da4b9437e2ae1a9f4},\naffiliation={Department of Neurological Surgery, Policlinico “Gaspare Rodolico” University Hospital, Catania, Italy; Institute of Neurosurgery, Catholic University of Rome, Rome, Italy},\nabstract={Background: A retro-odontoid pseudotumour compressing the spinal cord and causing myelopathy is often associated with an inflammatory condition such as rheumatoid arthritis. A degenerative non-inflammatory retro-odontoid pseudotumour responsible for clinically relevant spinal cord compression is a rare condition described in small clinical series and is likely associated with craniovertebral junction hypermobility or instability–like conditions. For several years, direct removal of the lesion through an anterior or lateral approach has been advocated as the best surgical option. However, in the last decade the posterior approach to the craniovertebral junction, to perform C1–C2 fixation and C1 laminectomy without removal of the retro-odontoid tissue, has demonstrated its efficacy in reducing retro-odontoid pannus as well as in obtaining improvement of myelopathy. Methods: In this paper we analyse the clinical and radiological outcomes of seven patients (five males and two females) treated with posterior C1–C2 fixation and C1 laminectomy for a degenerative non-inflammatory retro-odontoid pseudotumour responsible for spinal cord compression. C1 laminectomy provided immediate spinal cord decompression. We also review the relevant literature focusing on associated cervical degenerative conditions that may contribute to triggering or acceleration of atlantoaxial hypermobility or ‘instability’, causing formation of the retro-odontoid tissue. Results: The mean follow-up period (of six followed-up patients) was 55.8 months (range 10–96 months). In all cases the Nurick score at the latest follow-up visit demonstrated clinical improvement; magnetic resonance imaging during follow-up demonstrated progressive reduction of the retro-odontoid pseudotumour in all but one patient, who died of surgery-unrelated disease in the early postoperative period. No vascular or neural damage secondary to C1–C2 fixation was observed. Conclusion: C1–C2 fixation associated with C1 laminectomy is an effective surgical option to treat myelopathy secondary to a degenerative retro-odontoid pseudotumour. In these cases, direct removal of intracanalar tissue compressing the spinal cord is not required, as C1–C2 fixation is sufficient to cause its disappearance. © Springer International Publishing AG, part of Springer Nature 2019.},\nauthor_keywords={Atlantoaxial fixation;  Cervical myelopathy;  Craniovertebral junction;  Odontoid process;  Retro-odontoid pseudotumour},\nkeywords={silver, adult;  aged;  brain pseudotumor;  clinical article;  cohort analysis;  computed tomographic angiography;  female;  follow up;  foramen magnum;  human;  laminectomy;  male;  medical literature;  middle aged;  nuclear magnetic resonance imaging;  odontoid process;  pannus;  peroperative complication;  postoperative care;  postoperative period;  retro odontoid degenerative pseudotumour;  spinal cord compression;  spinal cord decompression;  spinal cord disease;  spine stabilization;  X ray;  x-ray computed tomography;  case report;  complication;  first cervical vertebra;  odontoid process;  plasma cell granuloma;  procedures;  second cervical vertebra;  spinal cord compression;  spinal cord disease;  spine fusion, Axis, Cervical Vertebra;  Cervical Atlas;  Female;  Granuloma, Plasma Cell;  Humans;  Laminectomy;  Male;  Odontoid Process;  Spinal Cord Compression;  Spinal Cord Diseases;  Spinal Fusion},\nchemicals_cas={silver, 7440-22-4},\nfunding_text 1={Compliance with Ethical Standards No financial support was received for this work.},\ncorrespondence_address1={Barbagallo, G.M.V.; Department of Neurological Surgery, Policlinico “Gaspare Rodolico” University HospitalItaly; email: giuseppebarbagal@hotmail.com},\npublisher={Springer-Verlag Wien},\nissn={00651419},\ncoden={ANCSB},\npubmed_id={30610331},\nlanguage={English},\nabbrev_source_title={Acta Neurochir. Suppl.},\ndocument_type={Book Chapter},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "journalArticle",
+				"title": "Retro-odontoid degenerative pseudotumour causing spinal cord compression and myelopathy: Current evidence on the role of posterior C1–C2 fixation in treatment",
+				"creators": [
+					{
+						"firstName": "F.",
+						"lastName": "Certo",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.",
+						"lastName": "Maione",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "M.",
+						"lastName": "Visocchi",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "G.M.V.",
+						"lastName": "Barbagallo",
+						"creatorType": "author"
+					}
+				],
+				"date": "2019",
+				"DOI": "10.1007/978-3-319-62515-7_37",
+				"ISSN": "00651419",
+				"abstractNote": "Background: A retro-odontoid pseudotumour compressing the spinal cord and causing myelopathy is often associated with an inflammatory condition such as rheumatoid arthritis. A degenerative non-inflammatory retro-odontoid pseudotumour responsible for clinically relevant spinal cord compression is a rare condition described in small clinical series and is likely associated with craniovertebral junction hypermobility or instability–like conditions. For several years, direct removal of the lesion through an anterior or lateral approach has been advocated as the best surgical option. However, in the last decade the posterior approach to the craniovertebral junction, to perform C1–C2 fixation and C1 laminectomy without removal of the retro-odontoid tissue, has demonstrated its efficacy in reducing retro-odontoid pannus as well as in obtaining improvement of myelopathy. Methods: In this paper we analyse the clinical and radiological outcomes of seven patients (five males and two females) treated with posterior C1–C2 fixation and C1 laminectomy for a degenerative non-inflammatory retro-odontoid pseudotumour responsible for spinal cord compression. C1 laminectomy provided immediate spinal cord decompression. We also review the relevant literature focusing on associated cervical degenerative conditions that may contribute to triggering or acceleration of atlantoaxial hypermobility or ‘instability’, causing formation of the retro-odontoid tissue. Results: The mean follow-up period (of six followed-up patients) was 55.8 months (range 10–96 months). In all cases the Nurick score at the latest follow-up visit demonstrated clinical improvement; magnetic resonance imaging during follow-up demonstrated progressive reduction of the retro-odontoid pseudotumour in all but one patient, who died of surgery-unrelated disease in the early postoperative period. No vascular or neural damage secondary to C1–C2 fixation was observed. Conclusion: C1–C2 fixation associated with C1 laminectomy is an effective surgical option to treat myelopathy secondary to a degenerative retro-odontoid pseudotumour. In these cases, direct removal of intracanalar tissue compressing the spinal cord is not required, as C1–C2 fixation is sufficient to cause its disappearance. © Springer International Publishing AG, part of Springer Nature 2019.",
+				"extra": "PMID: 30610331",
+				"itemID": "Certo2019259",
+				"journalAbbreviation": "Acta Neurochir. Suppl.",
+				"language": "English",
+				"libraryCatalog": "Scopus",
+				"pages": "259-264",
+				"publicationTitle": "Acta Neurochirurgica, Supplementum",
+				"rights": "Publisher: Springer-Verlag Wien",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85059495296&doi=10.1007%2f978-3-319-62515-7_37&partnerID=40&md5=29c49321bf3dff7da4b9437e2ae1a9f4",
+				"volume": "125",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "Atlantoaxial fixation"
+					},
+					{
+						"tag": "CAS:silver, 7440-22-4"
+					},
+					{
+						"tag": "CODEN:ANCSB"
+					},
+					{
+						"tag": "Cervical myelopathy"
+					},
+					{
+						"tag": "Craniovertebral junction"
+					},
+					{
+						"tag": "EMTREE:X ray"
+					},
+					{
+						"tag": "EMTREE:aged"
+					},
+					{
+						"tag": "EMTREE:brain pseudotumor"
+					},
+					{
+						"tag": "EMTREE:case report"
+					},
+					{
+						"tag": "EMTREE:clinical article"
+					},
+					{
+						"tag": "EMTREE:cohort analysis"
+					},
+					{
+						"tag": "EMTREE:complication"
+					},
+					{
+						"tag": "EMTREE:computed tomographic angiography"
+					},
+					{
+						"tag": "EMTREE:female"
+					},
+					{
+						"tag": "EMTREE:first cervical vertebra"
+					},
+					{
+						"tag": "EMTREE:follow up"
+					},
+					{
+						"tag": "EMTREE:foramen magnum"
+					},
+					{
+						"tag": "EMTREE:human"
+					},
+					{
+						"tag": "EMTREE:laminectomy"
+					},
+					{
+						"tag": "EMTREE:male"
+					},
+					{
+						"tag": "EMTREE:medical literature"
+					},
+					{
+						"tag": "EMTREE:middle aged"
+					},
+					{
+						"tag": "EMTREE:nuclear magnetic resonance imaging"
+					},
+					{
+						"tag": "EMTREE:odontoid process"
+					},
+					{
+						"tag": "EMTREE:odontoid process"
+					},
+					{
+						"tag": "EMTREE:pannus"
+					},
+					{
+						"tag": "EMTREE:peroperative complication"
+					},
+					{
+						"tag": "EMTREE:plasma cell granuloma"
+					},
+					{
+						"tag": "EMTREE:postoperative care"
+					},
+					{
+						"tag": "EMTREE:postoperative period"
+					},
+					{
+						"tag": "EMTREE:procedures"
+					},
+					{
+						"tag": "EMTREE:retro odontoid degenerative pseudotumour"
+					},
+					{
+						"tag": "EMTREE:second cervical vertebra"
+					},
+					{
+						"tag": "EMTREE:silver, adult"
+					},
+					{
+						"tag": "EMTREE:spinal cord compression"
+					},
+					{
+						"tag": "EMTREE:spinal cord compression"
+					},
+					{
+						"tag": "EMTREE:spinal cord decompression"
+					},
+					{
+						"tag": "EMTREE:spinal cord disease"
+					},
+					{
+						"tag": "EMTREE:spinal cord disease"
+					},
+					{
+						"tag": "EMTREE:spine fusion"
+					},
+					{
+						"tag": "EMTREE:spine stabilization"
+					},
+					{
+						"tag": "EMTREE:x-ray computed tomography"
+					},
+					{
+						"tag": "MeSH:Axis, Cervical Vertebra"
+					},
+					{
+						"tag": "MeSH:Cervical Atlas"
+					},
+					{
+						"tag": "MeSH:Female"
+					},
+					{
+						"tag": "MeSH:Granuloma, Plasma Cell"
+					},
+					{
+						"tag": "MeSH:Humans"
+					},
+					{
+						"tag": "MeSH:Laminectomy"
+					},
+					{
+						"tag": "MeSH:Male"
+					},
+					{
+						"tag": "MeSH:Odontoid Process"
+					},
+					{
+						"tag": "MeSH:Spinal Cord Compression"
+					},
+					{
+						"tag": "MeSH:Spinal Cord Diseases"
+					},
+					{
+						"tag": "MeSH:Spinal Fusion"
+					},
+					{
+						"tag": "Odontoid process"
+					},
+					{
+						"tag": "Retro-odontoid pseudotumour"
+					}
+				],
+				"notes": [
+					{
+						"note": "<p>cited By 0</p>"
+					},
+					{
+						"note": "<p>Affiliation(s): Department of Neurological Surgery, Policlinico “Gaspare Rodolico” University Hospital, Catania, Italy; Institute of Neurosurgery, Catholic University of Rome, Rome, Italy</p>"
+					},
+					{
+						"note": "<p>Correspondence to: Barbagallo, G.M.V.; Department of Neurological Surgery, Policlinico “Gaspare Rodolico” University HospitalItaly; email: giuseppebarbagal@hotmail.com</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@BOOK{Stoute201851,\nauthor={Stoute, J.A.},\ntitle={Role of complement in severe malarial anemia},\njournal={Complement Activation in Malaria Immunity and Pathogenesis},\nyear={2018},\npages={51-64},\ndoi={10.1007/978-3-319-77258-5_3},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85063812815&doi=10.1007%2f978-3-319-77258-5_3&partnerID=40&md5=427ac97d0891aa3ca91260b103f152ad},\naffiliation={Department of Medicine, and Microbiology and Immunology, Penn State University College of Medicine, Hershey, PA, United States},\nabstract={Plasmodium falciparum is responsible for the deaths of hundreds of thousands of children every year. Most of these deaths are the result of complications such as severe malarial anemia (SMA). There are now considerable data that suggest that complement plays a role in the development of anemia during malaria infection by opsonization of uninfected erythrocytes with C3 fragments which can lead to phagocytosis of erythrocytes. The increased susceptibility to complement deposition of erythrocytes seems to be related to the loss of complement regulatory proteins, in particular CR1, and to age-related decreases in their expression in young children. Further, there is evidence that malaria treatment exacerbates complement activation and may lead to increased opsonization of uninfected erythrocytes. The evidence suggests that complement is an attractive target for adjunctive therapy during the treatment of SMA. Genetic studies have not revealed any strong associations between CR1 polymorphisms and severe malarial anemia. Further genetic association studies between polymorphisms of the complement genes and susceptibility to SMA are needed to identify additional potential therapeutic targets. © Springer International Publishing AG, part of Springer Nature 2018.},\nauthor_keywords={Anemia;  Antibody;  Complement;  Coombs testing;  CR1;  Erythrocyte;  Erythrophagocytosis;  Malaria;  Opsonization;  Red blood cell},\ncorrespondence_address1={Stoute, J.A.; Department of Medicine, and Microbiology and Immunology, Penn State University College of MedicineUnited States; email: jstoute@psu.edu},\npublisher={Springer International Publishing},\nisbn={9783319772585; 9783319772578},\nlanguage={English},\nabbrev_source_title={Complement Activation in Malaria Immun. and Pathogenesis},\ndocument_type={Book Chapter},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "bookSection",
+				"title": "Role of complement in severe malarial anemia",
+				"creators": [
+					{
+						"firstName": "J.A.",
+						"lastName": "Stoute",
+						"creatorType": "author"
+					}
+				],
+				"date": "2018",
+				"ISBN": "9783319772585; 9783319772578",
+				"abstractNote": "Plasmodium falciparum is responsible for the deaths of hundreds of thousands of children every year. Most of these deaths are the result of complications such as severe malarial anemia (SMA). There are now considerable data that suggest that complement plays a role in the development of anemia during malaria infection by opsonization of uninfected erythrocytes with C3 fragments which can lead to phagocytosis of erythrocytes. The increased susceptibility to complement deposition of erythrocytes seems to be related to the loss of complement regulatory proteins, in particular CR1, and to age-related decreases in their expression in young children. Further, there is evidence that malaria treatment exacerbates complement activation and may lead to increased opsonization of uninfected erythrocytes. The evidence suggests that complement is an attractive target for adjunctive therapy during the treatment of SMA. Genetic studies have not revealed any strong associations between CR1 polymorphisms and severe malarial anemia. Further genetic association studies between polymorphisms of the complement genes and susceptibility to SMA are needed to identify additional potential therapeutic targets. © Springer International Publishing AG, part of Springer Nature 2018.",
+				"bookTitle": "Complement Activation in Malaria Immunity and Pathogenesis",
+				"extra": "DOI: 10.1007/978-3-319-77258-5_3",
+				"itemID": "Stoute201851",
+				"language": "English",
+				"libraryCatalog": "Scopus",
+				"pages": "51-64",
+				"publisher": "Springer International Publishing",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85063812815&doi=10.1007%2f978-3-319-77258-5_3&partnerID=40&md5=427ac97d0891aa3ca91260b103f152ad",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "Anemia"
+					},
+					{
+						"tag": "Antibody"
+					},
+					{
+						"tag": "CR1"
+					},
+					{
+						"tag": "Complement"
+					},
+					{
+						"tag": "Coombs testing"
+					},
+					{
+						"tag": "Erythrocyte"
+					},
+					{
+						"tag": "Erythrophagocytosis"
+					},
+					{
+						"tag": "Malaria"
+					},
+					{
+						"tag": "Opsonization"
+					},
+					{
+						"tag": "Red blood cell"
+					}
+				],
+				"notes": [
+					{
+						"note": "<p>cited By 0</p>"
+					},
+					{
+						"note": "<p>Affiliation(s): Department of Medicine, and Microbiology and Immunology, Penn State University College of Medicine, Hershey, PA, United States</p>"
+					},
+					{
+						"note": "<p>Correspondence to: Stoute, J.A.; Department of Medicine, and Microbiology and Immunology, Penn State University College of MedicineUnited States; email: jstoute@psu.edu</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@BOOK{Crager20081,\nauthor={Crager, K.E.},\ntitle={Hell under the rising sun: Texan pows and the building of the burma-thailand death railway},\njournal={Hell Under The Rising Sun: Texan Pows and The Building of The Burma-Thailand Death Railway},\nyear={2008},\npages={1-196},\nnote={cited By 5},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-84896582314&partnerID=40&md5=4bb8cae9d5ebe0c235807798299a631d},\nabstract={Late in 1940, the young men of the 2nd Battalion, 131st Field Artillery Regiment stepped off the trucks at Camp Bowie in Brownwood, Texas, ready to complete the training they would need for active duty in World War II. Many of them had grown up together in Jacksboro, Texas, and almost all of them were eager to face any challenge. Just over a year later, these carefree young Texans would be confronted by horrors they could never have imagined. The battalion was en route to bolster the Allied defense of the Philippines when they received news of the Japanese bombing of Pearl Harbor. Soon, they found themselves ashore on Java, with orders to assist the Dutch, British, and Australian defense of the island against imminent Japanese invasion. When war came to Java in March 1942, the Japanese forces overwhelmed the numerically inferior Allied defenders in little more than a week. For more than three years, the Texans, along with the sailors and marines who survived the sinking of the USS Houston, were prisoners of the Imperial Japanese Army. Beginning in late 1942, these prisoners-of-war were shipped to Burma to accelerate completion of the Burma-Thailand railway. These men labored alongside other Allied prisoners and Asian conscript laborers to build more than 260 miles of railroad for their Japanese taskmasters. They suffered abscessed wounds, near-starvation, daily beatings, and debilitating disease, and 89 of the original 534 Texans taken prisoner died in the infested, malarial jungles. The survivors received a hero's welcome from Gov. Coke Stevenson, who declared October 29, 1945, as \"Lost Battalion Day\" when they finally returned to Texas. Kelly E. Crager consulted official documentary sources of the National Archives and the U.S. Army and mined the personal memoirs and oral history interviews of the \"Lost Battalion\" members. He focuses on the treatment the men received in their captivity and surmises that a main factor in the battalion's comparatively high survival rate (84 percent of the 2nd Battalion) was the comraderie of the Texans and their commitment to care for each other. This narrative is grueling, yet ultimately inspiring. Hell under the Rising Sun will be a valuable addition to the collections of World War II historians and interested general readers alike. © 2008 Texas A & M University Press. All rights reserved.},\ncorrespondence_address1={Crager, K.E.},\npublisher={Texas A and M University Press},\nisbn={9781585446353},\nlanguage={English},\nabbrev_source_title={Hell Under The Rising Sun: Texan Pows and The Bldg. of The Burma-Thailand Death Rlwy.},\ndocument_type={Book},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "book",
+				"title": "Hell Under The Rising Sun: Texan Pows and The Building of The Burma-Thailand Death Railway",
+				"creators": [
+					{
+						"firstName": "K.E.",
+						"lastName": "Crager",
+						"creatorType": "author"
+					}
+				],
+				"date": "2008",
+				"ISBN": "9781585446353",
+				"abstractNote": "Late in 1940, the young men of the 2nd Battalion, 131st Field Artillery Regiment stepped off the trucks at Camp Bowie in Brownwood, Texas, ready to complete the training they would need for active duty in World War II. Many of them had grown up together in Jacksboro, Texas, and almost all of them were eager to face any challenge. Just over a year later, these carefree young Texans would be confronted by horrors they could never have imagined. The battalion was en route to bolster the Allied defense of the Philippines when they received news of the Japanese bombing of Pearl Harbor. Soon, they found themselves ashore on Java, with orders to assist the Dutch, British, and Australian defense of the island against imminent Japanese invasion. When war came to Java in March 1942, the Japanese forces overwhelmed the numerically inferior Allied defenders in little more than a week. For more than three years, the Texans, along with the sailors and marines who survived the sinking of the USS Houston, were prisoners of the Imperial Japanese Army. Beginning in late 1942, these prisoners-of-war were shipped to Burma to accelerate completion of the Burma-Thailand railway. These men labored alongside other Allied prisoners and Asian conscript laborers to build more than 260 miles of railroad for their Japanese taskmasters. They suffered abscessed wounds, near-starvation, daily beatings, and debilitating disease, and 89 of the original 534 Texans taken prisoner died in the infested, malarial jungles. The survivors received a hero's welcome from Gov. Coke Stevenson, who declared October 29, 1945, as \"Lost Battalion Day\" when they finally returned to Texas. Kelly E. Crager consulted official documentary sources of the National Archives and the U.S. Army and mined the personal memoirs and oral history interviews of the \"Lost Battalion\" members. He focuses on the treatment the men received in their captivity and surmises that a main factor in the battalion's comparatively high survival rate (84 percent of the 2nd Battalion) was the comraderie of the Texans and their commitment to care for each other. This narrative is grueling, yet ultimately inspiring. Hell under the Rising Sun will be a valuable addition to the collections of World War II historians and interested general readers alike. © 2008 Texas A & M University Press. All rights reserved.",
+				"itemID": "Crager20081",
+				"language": "English",
+				"libraryCatalog": "Scopus",
+				"numPages": "1-196",
+				"publisher": "Texas A and M University Press",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-84896582314&partnerID=40&md5=4bb8cae9d5ebe0c235807798299a631d",
+				"attachments": [],
+				"tags": [],
+				"notes": [
+					{
+						"note": "<p>cited By 5</p>"
+					},
+					{
+						"note": "<p>Correspondence to: Crager, K.E.</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@BOOK{DeFranco2016106,\nauthor={DeFranco, A.L.},\ntitle={Signaling Pathways Downstream of TLRs and IL-1 Family Receptors},\njournal={Encyclopedia of Immunobiology},\nyear={2016},\nvolume={3},\npages={106-114},\ndoi={10.1016/B978-0-12-374279-7.11017-3},\nnote={cited By 0},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85043245142&doi=10.1016%2fB978-0-12-374279-7.11017-3&partnerID=40&md5=256e307660fbe43d9f2aacd87be6264b},\naffiliation={University of California, San Francisco, San Francisco, CA, United States},\nabstract={Toll-like receptors (TLRs) and IL-1 family receptors share similar cytoplasmic domains, referred to as TIR domains. This structural similarity underlies considerable commonality in the intracellular signaling reactions activated by ligand binding to these receptors. Most of these receptors signal through a cytoplasmic protein called MyD88, which has a TIR domain and a death domain. The former interacts either directly with receptors or indirectly with them through another TIR-domain-containing adaptor molecule called TIRAP. Receptor-induced clustering of two MyD88 molecules leads to the assembly of a death domain-mediated helical complex of MyD88 with death domain-containing protein kinases of the IRAK family, a complex called the Myddosome. The Myddosome is a signaling platform that leads via phosphorylations and TRAF6-dependent polyubiquitin chain-dependent protein-protein interactions to activation of NF-κB, IRF5, and MAP kinases, ultimately inducing cytokine gene transcription. While this signaling mechanism is responsible for most of the results of TLR and IL-1R signaling, TLR3 and TLR4 couple to another TIR-domain-containing signaling molecule, TRIF, which is dedicated to inducing production of type 1 interferons. Recent work has illuminated many important negative regulators of these signaling pathways, which may be important for preventing inflammatory disease. © 2016 Elsevier Ltd All rights reserved.},\nauthor_keywords={IL-1 receptor;  IL-1 receptor-associated kinase (IRAK);  Interferon;  MyD88;  Myddosome;  NF-κB;  TIR domain;  TIR-domain-containing adaptor for inducing interferon-β (TRIF);  TNF receptor-associated factors (TRAFs);  Toll-like receptor (TLR);  Ubiquitin-signaling pathways},\ncorrespondence_address1={DeFranco, A.L.; University of California, San FranciscoUnited States},\npublisher={Elsevier Inc.},\nisbn={9780080921525},\nlanguage={English},\nabbrev_source_title={Encycl. of Immunobiol.},\ndocument_type={Book Chapter},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "bookSection",
+				"title": "Signaling Pathways Downstream of TLRs and IL-1 Family Receptors",
+				"creators": [
+					{
+						"firstName": "A.L.",
+						"lastName": "DeFranco",
+						"creatorType": "author"
+					}
+				],
+				"date": "2016",
+				"ISBN": "9780080921525",
+				"abstractNote": "Toll-like receptors (TLRs) and IL-1 family receptors share similar cytoplasmic domains, referred to as TIR domains. This structural similarity underlies considerable commonality in the intracellular signaling reactions activated by ligand binding to these receptors. Most of these receptors signal through a cytoplasmic protein called MyD88, which has a TIR domain and a death domain. The former interacts either directly with receptors or indirectly with them through another TIR-domain-containing adaptor molecule called TIRAP. Receptor-induced clustering of two MyD88 molecules leads to the assembly of a death domain-mediated helical complex of MyD88 with death domain-containing protein kinases of the IRAK family, a complex called the Myddosome. The Myddosome is a signaling platform that leads via phosphorylations and TRAF6-dependent polyubiquitin chain-dependent protein-protein interactions to activation of NF-κB, IRF5, and MAP kinases, ultimately inducing cytokine gene transcription. While this signaling mechanism is responsible for most of the results of TLR and IL-1R signaling, TLR3 and TLR4 couple to another TIR-domain-containing signaling molecule, TRIF, which is dedicated to inducing production of type 1 interferons. Recent work has illuminated many important negative regulators of these signaling pathways, which may be important for preventing inflammatory disease. © 2016 Elsevier Ltd All rights reserved.",
+				"bookTitle": "Encyclopedia of Immunobiology",
+				"extra": "DOI: 10.1016/B978-0-12-374279-7.11017-3",
+				"itemID": "DeFranco2016106",
+				"language": "English",
+				"libraryCatalog": "Scopus",
+				"pages": "106-114",
+				"publisher": "Elsevier Inc.",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85043245142&doi=10.1016%2fB978-0-12-374279-7.11017-3&partnerID=40&md5=256e307660fbe43d9f2aacd87be6264b",
+				"volume": "3",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "IL-1 receptor"
+					},
+					{
+						"tag": "IL-1 receptor-associated kinase (IRAK)"
+					},
+					{
+						"tag": "Interferon"
+					},
+					{
+						"tag": "MyD88"
+					},
+					{
+						"tag": "Myddosome"
+					},
+					{
+						"tag": "NF-κB"
+					},
+					{
+						"tag": "TIR domain"
+					},
+					{
+						"tag": "TIR-domain-containing adaptor for inducing interferon-β (TRIF)"
+					},
+					{
+						"tag": "TNF receptor-associated factors (TRAFs)"
+					},
+					{
+						"tag": "Toll-like receptor (TLR)"
+					},
+					{
+						"tag": "Ubiquitin-signaling pathways"
+					}
+				],
+				"notes": [
+					{
+						"note": "<p>cited By 0</p>"
+					},
+					{
+						"note": "<p>Affiliation(s): University of California, San Francisco, San Francisco, CA, United States</p>"
+					},
+					{
+						"note": "<p>Correspondence to: DeFranco, A.L.; University of California, San FranciscoUnited States</p>"
 					}
 				],
 				"seeAlso": []
