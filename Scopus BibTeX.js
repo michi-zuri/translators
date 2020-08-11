@@ -18,7 +18,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 1,
-	"lastUpdated": "2020-08-11 20:44:34"
+	"lastUpdated": "2020-08-11 20:55:21"
 }
 
 /*
@@ -513,7 +513,7 @@ function processField(item, field, value, rawValue) {
 		if (attachment) item.attachments.push(attachment);
 	} else if (field == "document_type") {
 		if ( value === "Book Chapter" && item.itemType === "book") {
-			item.pages = item.numPages.search(/-/);
+			item.pages = item.numPages;
 			item.numPages = '';
 			item.itemType = "bookSection";
 			item.journalAbbreviation = '';
@@ -521,6 +521,7 @@ function processField(item, field, value, rawValue) {
 			item.title = item.publicationTitle ;
 			item.publicationTitle = "";
 			item.journalAbbreviation = '';
+			item.numPages = item.numPages.substr(item.numPages.search(/-/)+1);
 		} else {
 			item.rights = "Publisher: "+item.publisher;
 			item.publisher = '';
@@ -5492,7 +5493,7 @@ var testCases = [
 				"itemID": "Crager20081",
 				"language": "English",
 				"libraryCatalog": "Scopus",
-				"numPages": "1-196",
+				"numPages": "196",
 				"publisher": "Texas A and M University Press",
 				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-84896582314&partnerID=40&md5=4bb8cae9d5ebe0c235807798299a631d",
 				"attachments": [],
