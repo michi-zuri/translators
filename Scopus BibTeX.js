@@ -18,7 +18,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 1,
-	"lastUpdated": "2020-08-11 20:43:08"
+	"lastUpdated": "2020-08-11 20:44:34"
 }
 
 /*
@@ -513,7 +513,7 @@ function processField(item, field, value, rawValue) {
 		if (attachment) item.attachments.push(attachment);
 	} else if (field == "document_type") {
 		if ( value === "Book Chapter" && item.itemType === "book") {
-			item.pages = item.numPages;
+			item.pages = item.numPages.search(/-/);
 			item.numPages = '';
 			item.itemType = "bookSection";
 			item.journalAbbreviation = '';
