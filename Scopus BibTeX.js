@@ -18,7 +18,7 @@
 	},
 	"inRepository": true,
 	"translatorType": 1,
-	"lastUpdated": "2020-08-11 20:55:21"
+	"lastUpdated": "2020-08-11 21:30:54"
 }
 
 /*
@@ -338,6 +338,7 @@ function processField(item, field, value, rawValue) {
 			item.journalAbbreviation = item.publicationTitle;
 		}
 		item.publicationTitle = value;
+	} else if (field == "fjournal") {
 	} else if (field == "author" || field == "editor" || field == "translator") {
 		// parse authors/editors/translators
 		var names = splitUnprotected(rawValue.trim(), /\s+and\s+/gi);
@@ -522,7 +523,10 @@ function processField(item, field, value, rawValue) {
 			item.publicationTitle = "";
 			item.journalAbbreviation = '';
 			item.numPages = item.numPages.substr(item.numPages.search(/-/)+1);
-		} else {
+		} else if ( value === "Conference Paper"){
+			item.journalAbbreviation = '';
+		}
+		else {
 			item.rights = "Publisher: "+item.publisher;
 			item.publisher = '';
 		}
@@ -5581,6 +5585,120 @@ var testCases = [
 					},
 					{
 						"note": "<p>Correspondence to: DeFranco, A.L.; University of California, San FranciscoUnited States</p>"
+					}
+				],
+				"seeAlso": []
+			}
+		]
+	},
+	{
+		"type": "import",
+		"input": "@CONFERENCE{Srinivasan2019381,\nauthor={Srinivasan, S. and Montgomery, K.S. and LeGuyader, C.L.M. and Su, F.Y. and Convertine, A.J. and Jackson, C. and Rochford, R. and Stayton, P.S.},\ntitle={Liver targeted primaquine drugamers for the treatment of malaria in high risk settings},\njournal={Transactions of the Annual Meeting of the Society for Biomaterials and the Annual International Biomaterials Symposium},\nyear={2019},\nvolume={40},\npages={381},\nnote={cited By 0; Conference of 42nd Society for Biomaterials Annual Meeting and Exposition 2019: The Pinnacle of Biomaterials Innovation and Excellence ; Conference Date: 3 April 2019 Through 6 April 2019;  Conference Code:147567},\nurl={https://www.scopus.com/inward/record.uri?eid=2-s2.0-85065448538&partnerID=40&md5=143162e2a932a44f603f652876b00d53},\naffiliation={Department of Bioengineering and Molecular Engineering and Sciences Institute, University of Washington, Seattle, WA  98195, United States; Department of Immunology and Microbiology, University of Colorado, Aurora, CO  80045, United States},\nabstract={Statement of purpose: Malaria still exists as a serious global health issues despite extensive measures to eradicate the disease and prevent the spread. This infection is caused by Plasmodium parasites. There were an estimated 216 million infections and a death toll of 445, 000 in 2016 (WHO). Primaquine (PQ), an 8-aminoquinoline antimalarial is widely used to treat both liver stage infection and blood parasites, and is the only FDA approved drug for the prevention of hypnozoite stage of P. vivax and P. ovale and stage V gametocyte of P. falciparum. However, the downside is that the 14-day dosing regimen necessitated by its short elimination half-life (3~6 h) poses a high risk for hemolytic anemia in individuals with genetic deficiency in glucose-6-phosphate dehydrogenase (G6PD), and this limits the therapeutic index of PQ in public health settings. To reduce the mass drug administration and associated toxicity, we have designed long acting controlled delivery materials (drugamers) to specifically deliver PQ to the liver hepatocytes and minimize blood PQ exposure levels. © 2019 Omnipress - All rights reserved.},\nkeywords={Amines;  Blood;  Diseases;  Health risks;  Targeted drug delivery, 8-aminoquinoline;  Controlled delivery;  Drug administration;  Exposure level;  Genetic deficiencies;  Glucose-6-phosphate dehydrogenase;  Plasmodium parasites;  Therapeutic index, Controlled drug delivery},\npublisher={Society for Biomaterials},\nissn={15267547},\nisbn={9781510883901},\nlanguage={English},\nabbrev_source_title={Trans. Annu. Meet. Soc. Biomater. Annu. Int. Biomater. Symp.},\ndocument_type={Conference Paper},\nsource={Scopus},\n}",
+		"items": [
+			{
+				"itemType": "conferencePaper",
+				"title": "Liver targeted primaquine drugamers for the treatment of malaria in high risk settings",
+				"creators": [
+					{
+						"firstName": "S.",
+						"lastName": "Srinivasan",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "K.S.",
+						"lastName": "Montgomery",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "C.L.M.",
+						"lastName": "LeGuyader",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "F.Y.",
+						"lastName": "Su",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "A.J.",
+						"lastName": "Convertine",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "C.",
+						"lastName": "Jackson",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "R.",
+						"lastName": "Rochford",
+						"creatorType": "author"
+					},
+					{
+						"firstName": "P.S.",
+						"lastName": "Stayton",
+						"creatorType": "author"
+					}
+				],
+				"date": "2019",
+				"ISBN": "9781510883901",
+				"abstractNote": "Statement of purpose: Malaria still exists as a serious global health issues despite extensive measures to eradicate the disease and prevent the spread. This infection is caused by Plasmodium parasites. There were an estimated 216 million infections and a death toll of 445, 000 in 2016 (WHO). Primaquine (PQ), an 8-aminoquinoline antimalarial is widely used to treat both liver stage infection and blood parasites, and is the only FDA approved drug for the prevention of hypnozoite stage of P. vivax and P. ovale and stage V gametocyte of P. falciparum. However, the downside is that the 14-day dosing regimen necessitated by its short elimination half-life (3 6 h) poses a high risk for hemolytic anemia in individuals with genetic deficiency in glucose-6-phosphate dehydrogenase (G6PD), and this limits the therapeutic index of PQ in public health settings. To reduce the mass drug administration and associated toxicity, we have designed long acting controlled delivery materials (drugamers) to specifically deliver PQ to the liver hepatocytes and minimize blood PQ exposure levels. © 2019 Omnipress - All rights reserved.",
+				"itemID": "Srinivasan2019381",
+				"language": "English",
+				"libraryCatalog": "Scopus",
+				"pages": "381",
+				"proceedingsTitle": "Transactions of the Annual Meeting of the Society for Biomaterials and the Annual International Biomaterials Symposium",
+				"publisher": "Society for Biomaterials",
+				"url": "https://www.scopus.com/inward/record.uri?eid=2-s2.0-85065448538&partnerID=40&md5=143162e2a932a44f603f652876b00d53",
+				"volume": "40",
+				"attachments": [],
+				"tags": [
+					{
+						"tag": "EMTREE:Amines"
+					},
+					{
+						"tag": "EMTREE:Blood"
+					},
+					{
+						"tag": "EMTREE:Controlled delivery"
+					},
+					{
+						"tag": "EMTREE:Diseases"
+					},
+					{
+						"tag": "EMTREE:Drug administration"
+					},
+					{
+						"tag": "EMTREE:Exposure level"
+					},
+					{
+						"tag": "EMTREE:Genetic deficiencies"
+					},
+					{
+						"tag": "EMTREE:Glucose-6-phosphate dehydrogenase"
+					},
+					{
+						"tag": "EMTREE:Health risks"
+					},
+					{
+						"tag": "EMTREE:Plasmodium parasites"
+					},
+					{
+						"tag": "EMTREE:Targeted drug delivery, 8-aminoquinoline"
+					},
+					{
+						"tag": "EMTREE:Therapeutic index"
+					},
+					{
+						"tag": "MeSH:Controlled drug delivery"
+					}
+				],
+				"notes": [
+					{
+						"note": "<p>cited By 0; Conference of 42nd Society for Biomaterials Annual Meeting and Exposition 2019: The Pinnacle of Biomaterials Innovation and Excellence ; Conference Date: 3 April 2019 Through 6 April 2019; Conference Code:147567</p>"
+					},
+					{
+						"note": "<p>Affiliation(s): Department of Bioengineering and Molecular Engineering and Sciences Institute, University of Washington, Seattle, WA 98195, United States; Department of Immunology and Microbiology, University of Colorado, Aurora, CO 80045, United States</p>"
 					}
 				],
 				"seeAlso": []
